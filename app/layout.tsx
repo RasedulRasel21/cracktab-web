@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Poppins({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const sans = Inter({
-  subsets: ["latin"],
+// Self-hosted Urbanist (files in /public/fonts) — used site-wide.
+const urbanist = localFont({
+  src: [
+    { path: "../public/fonts/Urbanist-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/Urbanist-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/Urbanist-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/Urbanist-Bold.ttf", weight: "700", style: "normal" },
+  ],
   variable: "--font-sans",
   display: "swap",
 });
@@ -56,10 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${urbanist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white font-sans">
         {children}
       </body>

@@ -27,7 +27,7 @@
   --color-line: var(--line);
   --color-surface: var(--surface);
 
-  --font-display: var(--font-display);
+  --font-display: var(--font-sans);
   --font-sans: var(--font-sans);
 }
 

@@ -1,8 +1,5 @@
 export const CALENDLY_URL = "https://calendly.com/cracktab2025/30min";
 
-/** Hero showreel video (file lives in /public). */
-export const SHOWREEL_SRC = "/sample-video.mp4";
-
 export type NavLink = { label: string; href: string };
 
 // Primary menu group (from the brief)
@@ -90,6 +87,7 @@ export const stats: { value: string; label: string }[] = [
   { value: "173+", label: "Stores Built" },
   { value: "8+", label: "Running Projects" },
   { value: "35+", label: "Returning Clients" },
+  { value: "5", label: "Available Countries" },
 ];
 
 // ------------------------------------------------------------------

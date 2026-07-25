@@ -12,11 +12,11 @@ export default function Logo({ className = "" }: { className?: string }) {
       className={`group inline-flex items-center gap-2.5 ${className}`}
     >
       <span className="flex items-center gap-1.5" aria-hidden="true">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+        <span className="h-3 w-3 rounded-full bg-accent" />
       </span>
-      <span className="font-display text-[1.35rem] font-bold lowercase leading-none tracking-tight text-white">
+      <span className="font-display text-[1.6rem] font-bold lowercase leading-none tracking-tight text-white">
         cracktab
       </span>
     </Link>

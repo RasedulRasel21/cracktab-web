@@ -43,7 +43,7 @@ function SocialIcon({ name }: { name: string }) {
 
 export default function Footer() {
   return (
-    <footer className="relative flex min-h-dvh flex-col overflow-hidden border-t border-line bg-black text-white">
+    <footer className="relative flex min-h-[55vh] flex-col overflow-hidden border-t border-line bg-black text-white">
       {/* Giant brand watermark — centered, content overlaps it */}
       <span
         aria-hidden="true"
@@ -52,7 +52,7 @@ export default function Footer() {
         cracktab®
       </span>
 
-      <div className="relative z-10 flex w-full flex-1 flex-col justify-between px-6 pb-10 pt-24 sm:px-10 sm:pt-28 lg:px-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-360 flex-1 flex-col justify-between px-5 pb-10 pt-16 sm:px-8 sm:pt-20">
         {/* Top: nav (left) + address (right) */}
         <div className="flex flex-col gap-12 sm:flex-row sm:justify-between">
           <div className="grid grid-cols-2 gap-10 sm:gap-16">

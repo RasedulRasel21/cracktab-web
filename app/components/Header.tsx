@@ -23,7 +23,7 @@ export default function Header() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:h-20 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-360 items-center justify-between gap-2 px-5 sm:h-20 sm:px-8">
         {/* Left — hamburger */}
         <div className="flex flex-1 items-center justify-start">
           <MenuPanel />
