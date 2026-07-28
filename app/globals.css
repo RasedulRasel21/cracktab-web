@@ -92,11 +92,62 @@ body {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Neon rotating-stroke button (glowing light travelling the border)  */
+/* ------------------------------------------------------------------ */
+@property --nangle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes neon-spin {
+  to {
+    --nangle: 360deg;
+  }
+}
+.neon-btn {
+  position: relative;
+}
+.neon-btn::before,
+.neon-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--nangle),
+    transparent 0turn 0.48turn,
+    var(--accent) 0.68turn,
+    var(--accent-strong) 0.85turn,
+    #ecffbe 0.93turn,
+    transparent 1turn
+  );
+  animation: neon-spin 2.4s linear infinite;
+  pointer-events: none;
+}
+/* the crisp travelling stroke (ring via mask) */
+.neon-btn::before {
+  padding: 3px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+/* the soft neon glow */
+.neon-btn::after {
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.95;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;
   }
   .animate-marquee {
+    animation: none !important;
+  }
+  .neon-btn::before,
+  .neon-btn::after {
     animation: none !important;
   }
 }

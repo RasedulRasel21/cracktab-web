@@ -43,14 +43,29 @@ function SocialIcon({ name }: { name: string }) {
 
 export default function Footer() {
   return (
-    <footer className="relative flex min-h-[55vh] flex-col overflow-hidden border-t border-line bg-black text-white">
-      {/* Giant brand watermark — centered, content overlaps it */}
-      <span
+    <footer className="relative flex min-h-[55vh] flex-col overflow-hidden bg-black text-white">
+      {/* Giant brand watermark — stretches full page width; content overlaps it */}
+      <svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 translate-y-[16%] whitespace-nowrap text-center font-display text-[19vw] font-bold leading-none tracking-tighter text-white/6"
+        viewBox="0 0 820 200"
+        preserveAspectRatio="xMidYMax meet"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 w-full translate-y-[8%]"
       >
-        cracktab®
-      </span>
+        <text
+          x="410"
+          y="168"
+          textAnchor="middle"
+          textLength="820"
+          lengthAdjust="spacingAndGlyphs"
+          fontSize="200"
+          fontWeight="700"
+          fill="#ffffff"
+          fillOpacity="0.06"
+          className="font-display"
+        >
+          cracktab
+        </text>
+      </svg>
 
       <div className="relative z-10 mx-auto flex w-full max-w-360 flex-1 flex-col justify-between px-5 pb-10 pt-16 sm:px-8 sm:pt-20">
         {/* Top: nav (left) + address (right) */}
@@ -77,8 +92,8 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Address — right side */}
-          <div className="flex flex-col gap-4 text-sm text-white/70 sm:max-w-sm sm:items-end sm:text-right">
+          {/* Address — right side, left-aligned text, two lines per office */}
+          <div className="flex flex-col gap-5 text-sm text-white/70 sm:items-start sm:text-left">
             <a
               href={contact.phoneHref}
               className="font-semibold text-white transition-colors hover:text-accent"
@@ -87,15 +102,17 @@ export default function Footer() {
             </a>
             {contact.offices.map((office) => (
               <p key={office.label} className="leading-relaxed">
-                <span className="font-semibold text-white">{office.label}:</span>{" "}
-                {office.address}
+                <span className="block font-semibold text-white">
+                  {office.label}
+                </span>
+                <span className="block">{office.address}</span>
               </p>
             ))}
           </div>
         </div>
 
         {/* Bottom bar: copyright + legal (left) · socials (right) */}
-        <div className="mt-16 flex flex-col gap-6 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-6 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/50">
             <span>© 2026 Cracktab. All rights reserved.</span>
             <Link href="/imprint" className="transition-colors hover:text-white">

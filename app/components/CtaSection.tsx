@@ -1,6 +1,6 @@
 export default function CtaSection() {
   return (
-    <section className="border-t border-line bg-black py-20 sm:py-28">
+    <section className="bg-black py-20 sm:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
           {/* Left — heading */}

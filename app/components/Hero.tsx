@@ -15,6 +15,13 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.25)_40%,transparent_70%)]"
         />
 
+        {/* Bottom fade — dissolves the ASCII field into black so the next
+            section blends in seamlessly instead of cutting off abruptly */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-48 bg-[linear-gradient(to_bottom,transparent,#000)]"
+        />
+
         <div className="relative z-10 mx-auto flex w-full max-w-360 flex-1 flex-col justify-between px-5 py-28 sm:px-8">
           {/* Top group: badge button + headline */}
           <div>
@@ -32,15 +39,16 @@ export default function Hero() {
             </a>
 
             <h1 className="mt-8 max-w-4xl font-display text-[clamp(2.75rem,7.5vw,6rem)] font-medium leading-[1.08] tracking-tight text-white">
-              Shopify Stores Built To{" "}
-              <span className="text-accent">Perform.</span>
+              Shopify Stores Built
+              <br />
+              To <span className="text-accent">Perform.</span>
             </h1>
           </div>
 
           {/* Description + Shopify badge — bottom right, narrow (multi-line) */}
           <div className="mt-16 flex justify-start sm:justify-end">
             <div className="max-w-sm">
-              <p className="text-base leading-relaxed text-muted sm:text-lg">
+              <p className="text-base font-medium leading-relaxed text-white/90 [text-shadow:0_1px_16px_rgba(0,0,0,0.95)] sm:text-lg">
                 From launch to scale, Cracktab designs and develops Shopify
                 stores that look premium, move fast, and turn browsers into
                 buyers — built for brands ready to grow beyond their current
@@ -52,7 +60,7 @@ export default function Hero() {
                 width={262}
                 height={116}
                 priority
-                className="mt-8 h-14 w-auto sm:h-16"
+                className="-ml-1.5 mt-8 h-14 w-auto sm:h-16"
               />
             </div>
           </div>

@@ -118,14 +118,32 @@ function ShopifyPlus() {
 function CaseCard({ card }: { card: Card }) {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const arrowRef = useRef<HTMLSpanElement>(null);
+  const rafRef = useRef(0);
+  const pos = useRef({ x: 0, y: 0 });
 
-  const onMove = (e: React.MouseEvent) => {
+  // Write the arrow position at most once per frame, using GPU transform.
+  const paint = () => {
+    rafRef.current = 0;
     const c = cardRef.current;
     const a = arrowRef.current;
     if (!c || !a) return;
     const r = c.getBoundingClientRect();
-    a.style.left = `${e.clientX - r.left}px`;
-    a.style.top = `${e.clientY - r.top}px`;
+    a.style.transform = `translate3d(${pos.current.x - r.left}px, ${
+      pos.current.y - r.top
+    }px, 0) translate(-50%, -50%)`;
+  };
+
+  const onMove = (e: React.MouseEvent) => {
+    pos.current.x = e.clientX;
+    pos.current.y = e.clientY;
+    if (!rafRef.current) rafRef.current = requestAnimationFrame(paint);
+  };
+
+  const onLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = 0;
+    }
   };
 
   return (
@@ -134,6 +152,7 @@ function CaseCard({ card }: { card: Card }) {
         ref={cardRef}
         href={card.href}
         onMouseMove={onMove}
+        onMouseLeave={onLeave}
         className="group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]"
       >
         {/* image */}
@@ -153,7 +172,7 @@ function CaseCard({ card }: { card: Card }) {
         <span
           ref={arrowRef}
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-accent-ink opacity-0 [transition:left_180ms_ease-out,top_180ms_ease-out,opacity_300ms_ease] group-hover/card:opacity-100"
+          className="pointer-events-none absolute left-0 top-0 flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-ink opacity-0 [transition:transform_140ms_ease-out,opacity_300ms_ease] [will-change:transform] group-hover/card:opacity-100"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -212,7 +231,7 @@ function Row({
 
 export default function Showcase() {
   return (
-    <section className="overflow-hidden border-t border-line py-20 sm:py-28">
+    <section className="overflow-hidden py-20 sm:py-28">
       <div className="mx-auto mb-12 w-full max-w-360 px-5 sm:mb-16 sm:px-8">
         <h2 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.02] tracking-tight text-white">
           Our finest <span className="text-accent">Case Studies</span>

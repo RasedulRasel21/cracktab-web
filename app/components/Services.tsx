@@ -25,8 +25,8 @@ export default function Services() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="services" className="border-t border-line py-20 sm:py-28">
-      <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <section id="services" className="py-20 sm:py-28">
+      <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.85fr] lg:gap-52">
         {/* Left — heading */}
         <div className="lg:sticky lg:top-28 lg:self-start">
           <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
