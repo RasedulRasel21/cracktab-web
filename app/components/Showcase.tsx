@@ -216,10 +216,11 @@ function Row({
   return (
     <div className="group flex overflow-hidden">
       <ul
-        className={`flex w-max gap-5 pr-5 animate-marquee group-hover:[animation-play-state:paused] ${
-          reverse ? "[animation-direction:reverse]" : ""
-        }`}
-        style={{ animationDuration: duration }}
+        className="flex w-max gap-5 pr-5 animate-marquee group-hover:[animation-play-state:paused]"
+        style={{
+          animationDuration: duration,
+          animationDirection: reverse ? "reverse" : "normal",
+        }}
       >
         {loop.map((card, i) => (
           <CaseCard key={`${card.title}-${i}`} card={card} />

@@ -5,19 +5,16 @@ import Link from "next/link";
 import { services } from "../lib/site";
 
 function PlusIcon({ open }: { open: boolean }) {
+  // Plus that collapses to a minus (vertical bar scales to 0) when open.
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden="true"
-      className={`shrink-0 text-accent transition-transform duration-300 ${
-        open ? "rotate-45" : ""
-      }`}
-    >
-      <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
+    <span className="relative flex h-5 w-5 shrink-0 items-center justify-center text-accent">
+      <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
+      <span
+        className={`absolute h-3.5 w-0.5 rounded-full bg-current transition-transform duration-300 ${
+          open ? "scale-y-0" : "scale-y-100"
+        }`}
+      />
+    </span>
   );
 }
 
@@ -79,10 +76,17 @@ export default function Services() {
                       <div className="mt-5">
                         <Link
                           href={s.href}
-                          className="inline-flex h-10 items-center gap-2 rounded-full border border-line px-5 font-display text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-accent hover:bg-accent hover:text-accent-ink"
+                          className="group/btn inline-flex h-10 items-center gap-2 rounded-full border border-line bg-transparent px-5 font-display text-xs font-semibold uppercase tracking-[0.12em] text-white transition-[color,background-color,border-color] duration-[400ms] ease-out hover:border-accent hover:bg-accent hover:text-accent-ink"
                         >
                           Know more
-                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            aria-hidden="true"
+                            className="transition-transform duration-300 group-hover/btn:translate-x-1"
+                          >
                             <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </Link>

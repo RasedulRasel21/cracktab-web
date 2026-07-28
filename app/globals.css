@@ -70,7 +70,12 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee-x 36s linear infinite;
+  /* longhands (not the shorthand) so utilities/inline styles can still set
+     animation-direction and animation-play-state without being reset */
+  animation-name: marquee-x;
+  animation-duration: 36s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
   will-change: transform;
 }
 
