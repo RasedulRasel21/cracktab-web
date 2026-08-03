@@ -37,6 +37,15 @@ export default function Services() {
             A quick look at what we do — each one links out to its own page with
             the full detail.
           </p>
+          <Link
+            href="/services"
+            className="group/all mt-6 inline-flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:text-accent"
+          >
+            View all services
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="transition-transform duration-300 group-hover/all:translate-x-1">
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
         </div>
 
         {/* Right — expandable list */}

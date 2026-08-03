@@ -115,10 +115,10 @@ export default function Footer() {
         <div className="mt-16 flex flex-col gap-6 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/50">
             <span>© 2026 Cracktab. All rights reserved.</span>
-            <Link href="/imprint" className="transition-colors hover:text-white">
+            <Link href="#" className="transition-colors hover:text-white">
               Imprint
             </Link>
-            <Link href="/privacy" className="transition-colors hover:text-white">
+            <Link href="#" className="transition-colors hover:text-white">
               Privacy Policy
             </Link>
           </div>

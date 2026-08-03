@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 // Self-hosted Urbanist (files in /public/fonts) — used site-wide.
 const urbanist = localFont({
@@ -57,7 +59,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${urbanist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white font-sans">
-        {children}
+        <Header />
+        <main className="flex flex-1 flex-col">{children}</main>
+        <Footer />
       </body>
     </html>
   );
