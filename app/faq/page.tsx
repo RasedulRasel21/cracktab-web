@@ -13,6 +13,7 @@ export default function FaqPage() {
   return (
     <>
       <PageHeader
+        center
         eyebrow="FAQ"
         title={
           <>
@@ -23,10 +24,8 @@ export default function FaqPage() {
       />
 
       <section className="pb-20 sm:pb-28">
-        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-          <div className="max-w-3xl">
-            <Accordion items={generalFaq} />
-          </div>
+        <div className="mx-auto w-full max-w-3xl px-5 sm:px-8">
+          <Accordion items={generalFaq} />
         </div>
       </section>
 

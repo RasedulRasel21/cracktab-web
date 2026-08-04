@@ -2,22 +2,22 @@ export const CALENDLY_URL = "https://calendly.com/cracktab2025/30min";
 
 export type NavLink = { label: string; href: string };
 
-// Primary menu group. Only the built pages (Services, Our Works, About Us)
-// link out for this client review; the rest are parked on "#".
+// Primary menu group. Shopify Themes/Apps are outbound links to the external
+// theme/app stores (no page yet), so they stay parked on "#".
 export const primaryNav: NavLink[] = [
   { label: "Our Works", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "Shopify Themes", href: "#" },
   { label: "Shopify Apps", href: "#" },
   { label: "About Us", href: "/about" },
-  { label: "Contact", href: "#" },
+  { label: "Contact", href: "/contact" },
 ];
 
-// Secondary, lighter group — parked until built.
+// Secondary, lighter group
 export const secondaryNav: NavLink[] = [
-  { label: "FAQ", href: "#" },
-  { label: "Imprint", href: "#" },
-  { label: "Privacy Policy", href: "#" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Imprint", href: "/imprint" },
+  { label: "Privacy Policy", href: "/privacy" },
 ];
 
 // ------------------------------------------------------------------
@@ -115,8 +115,9 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Contact", href: "#" },
-      { label: "Blog", href: "#" },
+      { label: "Contact", href: "/contact" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Blog", href: "/blog" },
     ],
   },
 ];
@@ -525,32 +526,32 @@ export const works: Work[] = [
   {
     name: "The Conscious Bar",
     teaser: "Clean-beauty Shopify Plus store built for eco-conscious shoppers.",
-    img: pexels(3735618),
+    img: "/works/Theconsciousbar.png",
   },
   {
     name: "ForChics",
     teaser: "Vegan beauty brand rebuilt around trust and verified reviews.",
-    img: pexels(2113855),
+    img: "/works/ForChics.png",
   },
   {
     name: "Femdisc",
     teaser: "Educational, comparison-first store for a newer product category.",
-    img: pexels(3762879),
+    img: "/works/Femdisc.png",
   },
   {
     name: "Lockeroom",
     teaser: "Rehab and recovery store built around symptom-based shopping.",
-    img: pexels(4498482),
+    img: "/works/Lockeroom.jpg",
   },
   {
     name: "Luxe Cosmetics",
     teaser: "Premium Shopify Plus store for a luxury lash and brow line.",
-    img: pexels(2688992),
+    img: "/works/Luxe-cosmetics.jpg",
   },
   {
     name: "SeeTrue Glasses",
     teaser: "Refined, international-ready eyewear store.",
-    img: pexels(701877),
+    img: "/works/Seetrueglasses.jpg",
   },
 ];
 

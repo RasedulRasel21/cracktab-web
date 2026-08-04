@@ -42,9 +42,9 @@ export default async function ServiceDetailPage({
             <h2 className="font-display text-2xl font-medium tracking-tight text-white">
               What&apos;s included
             </h2>
-            <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+            <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
               {service.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-sm text-white/85">
+                <li key={b} className="flex items-start gap-3 text-sm text-white/85 lg:text-base">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="mt-0.5 shrink-0 text-accent">
                     <path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
