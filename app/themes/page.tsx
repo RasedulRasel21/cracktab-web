@@ -121,9 +121,21 @@ export default function ThemesPage() {
         subtitle="Designed by Cracktab's senior UI/UX engineers and optimized out-of-the-box for mobile-first conversions and Core Web Vitals."
       />
 
-      {/* 2. Catalog */}
+      {/* 2. Live theme showcase / catalog grid */}
       <section className="pb-20 sm:pb-28">
         <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
+          <div className="mb-10 max-w-2xl">
+            <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              Live theme showcase
+            </span>
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+              Browse the collection
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              Filter by industry to find the theme built for your kind of store.
+            </p>
+          </div>
           <ThemeCatalog />
         </div>
       </section>

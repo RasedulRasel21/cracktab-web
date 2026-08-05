@@ -7,7 +7,7 @@ export type NavLink = { label: string; href: string };
 export const primaryNav: NavLink[] = [
   { label: "Our Works", href: "/work" },
   { label: "Services", href: "/services" },
-  { label: "Shopify Themes", href: "#" },
+  { label: "Shopify Themes", href: "/themes" },
   { label: "Shopify Apps", href: "#" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -107,7 +107,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     links: [
       { label: "Our Works", href: "/work" },
       { label: "Services", href: "/services" },
-      { label: "Shopify Themes", href: "#" },
+      { label: "Shopify Themes", href: "/themes" },
       { label: "Shopify Apps", href: "#" },
     ],
   },
