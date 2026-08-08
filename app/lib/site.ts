@@ -151,7 +151,11 @@ export type ServiceDetail = {
   name: string;
   heading: string;
   intro: string;
+  whoFor: string;
+  whyMatters: string;
+  process: string[];
   bullets: string[];
+  examples: string[]; // case-study slugs featured under "Example Work"
 };
 
 export const serviceDetails: ServiceDetail[] = [
@@ -160,7 +164,16 @@ export const serviceDetails: ServiceDetail[] = [
     name: "Shopify Development",
     heading: "Shopify Development Services",
     intro:
-      "Need a Shopify store that actually sells? We build stores from scratch, migrate growing brands to Shopify Plus, and handle the full range of ecommerce development that goes into a site people can actually shop on. No templates, no shortcuts — just a store built to convert.",
+      "Need a Shopify store that actually sells? Our Shopify development services cover everything from ground-up Shopify store development to complex Shopify Plus development and Shopify ecommerce development. No templates, no shortcuts — just a store built to convert.",
+    whoFor:
+      "Brands launching a new Shopify store, or outgrowing a DIY theme and ready for something built around their actual catalog and traffic.",
+    whyMatters:
+      "A slow or generic store costs you sales before a visitor even sees your products. We build every store from scratch, custom coded around your brand and your customer's path to purchase, then tuned for speed on every device. Because we handle development end to end, you get one team accountable for the result instead of piecing together freelancers.",
+    process: [
+      "Discovery and technical scoping",
+      "Custom design and build",
+      "Testing and performance tuning before launch",
+    ],
     bullets: [
       "Custom theme development",
       "Shopify Plus implementation",
@@ -171,13 +184,23 @@ export const serviceDetails: ServiceDetail[] = [
       "Inventory management",
       "Multi-currency support",
     ],
+    examples: ["seetrue-glasses", "the-conscious-bar"],
   },
   {
     slug: "shopify-app-development",
     name: "Shopify App Development",
     heading: "Shopify App Development Services",
     intro:
-      "Need functionality that off-the-shelf apps just can't deliver? We build custom apps from scratch, connect your store to the tools you already run through API integrations, and automate the workflows that are currently eating up your team's time.",
+      "Need functionality that off-the-shelf apps can't deliver? Our Shopify app development services and custom Shopify app development services cover Shopify application development, API integrations, and automation workflows — with solutions built around exactly how you operate.",
+    whoFor:
+      "Stores with a workflow or feature request that no existing app quite covers, often growing brands hitting the limits of off-the-shelf tools.",
+    whyMatters:
+      "Generic apps solve generic problems. When your workflow doesn't fit the Shopify App Store, a custom build closes that gap without forcing your business to change how it works. We test every app against your real store traffic before launch, so reliability isn't an afterthought.",
+    process: [
+      "Map the exact workflow",
+      "Build and test against real store data",
+      "Deploy with monitoring in place",
+    ],
     bullets: [
       "Custom app development",
       "API integrations",
@@ -188,159 +211,34 @@ export const serviceDetails: ServiceDetail[] = [
       "Data synchronization",
       "Ongoing maintenance",
     ],
+    examples: ["forchics", "sez-group"],
   },
   {
     slug: "shopify-store-migration",
     name: "Shopify Store Migration",
     heading: "Shopify Store Migration Services",
     intro:
-      "Moving your store from another platform doesn't have to be stressful. We handle complete migrations to Shopify while preserving your products, customer data, SEO value, and store functionality — minimizing downtime and ensuring a smooth transition.",
+      "Moving your store from another platform doesn't have to be stressful. We handle complete migrations to Shopify while preserving your products, customer data, SEO value, and store functionality — keeping downtime to a minimum.",
+    whoFor:
+      "Brands moving off WooCommerce, Magento, BigCommerce, Wix, or Squarespace — especially ones worried about losing SEO rankings or customer history in the switch.",
+    whyMatters:
+      "A rushed migration can quietly cost you years of SEO rankings and customer history. We map every product, redirect, and page before touching anything live, so nothing gets lost in the move and your search rankings carry over instead of resetting.",
+    process: [
+      "Full audit of the current site",
+      "Mapped migration plan with redirects",
+      "Staged move with post-launch testing",
+    ],
     bullets: [
       "WooCommerce migration",
       "Magento migration",
       "BigCommerce migration",
-      "Wix & Squarespace migration",
-      "Product & customer migration",
+      "Wix and Squarespace migration",
+      "Product and customer migration",
       "SEO preservation",
       "Redirect implementation",
       "Post-migration testing",
     ],
-  },
-  {
-    slug: "shopify-store-redesign",
-    name: "Shopify Store Redesign",
-    heading: "Shopify Store Redesign Services",
-    intro:
-      "If your store feels outdated or isn't converting the way it should, a redesign can make all the difference. We modernize Shopify stores with better user experiences, stronger branding, and improved conversion-focused layouts.",
-    bullets: [
-      "Store redesign strategy",
-      "User experience improvements",
-      "Modern visual design",
-      "Navigation optimization",
-      "Mobile optimization",
-      "Theme upgrades",
-      "Conversion-focused layouts",
-      "Performance improvements",
-    ],
-  },
-  {
-    slug: "shopify-speed-optimization",
-    name: "Shopify Speed Optimization",
-    heading: "Shopify Speed Optimization Services",
-    intro:
-      "Every second counts. We optimize your Shopify store for faster load times, improved Core Web Vitals, and a smoother shopping experience that helps reduce bounce rates and increase conversions.",
-    bullets: [
-      "Core Web Vitals optimization",
-      "Code optimization",
-      "Image optimization",
-      "Script optimization",
-      "App performance audit",
-      "Lazy loading implementation",
-      "Theme optimization",
-      "Speed reporting",
-    ],
-  },
-  {
-    slug: "shopify-maintenance-support",
-    name: "Shopify Maintenance & Support",
-    heading: "Shopify Maintenance & Support",
-    intro:
-      "Your store needs continuous attention to stay secure, fast, and reliable. Our maintenance plans ensure everything stays updated while giving you access to experienced Shopify developers whenever you need them.",
-    bullets: [
-      "Monthly maintenance",
-      "Theme updates",
-      "Bug fixes",
-      "App updates",
-      "Security monitoring",
-      "Backup management",
-      "Technical support",
-      "Performance monitoring",
-    ],
-  },
-  {
-    slug: "shopify-conversion-audit",
-    name: "Shopify Conversion Audit",
-    heading: "Shopify Conversion Audit",
-    intro:
-      "Sometimes small changes create the biggest impact. We perform comprehensive audits of your Shopify store to uncover usability issues, friction points, and missed conversion opportunities before recommending a clear optimization roadmap.",
-    bullets: [
-      "UX audit",
-      "Checkout analysis",
-      "Funnel analysis",
-      "Heatmap review",
-      "Analytics review",
-      "Mobile experience audit",
-      "Prioritized recommendations",
-      "Conversion roadmap",
-    ],
-  },
-  {
-    slug: "ui-ux-design",
-    name: "UI/UX Design",
-    heading: "UI/UX Design Services",
-    intro:
-      "Your Shopify store is only as strong as its design. We handle both the interface and the experience side — from research and wireframes to polished visual design — creating stores that feel intuitive, strengthen your brand, and encourage customers to complete their purchase.",
-    bullets: [
-      "User experience research",
-      "Conversion rate optimization",
-      "Brand identity design",
-      "Wireframing & prototyping",
-      "A/B testing design",
-      "Accessibility compliance",
-      "Visual design systems",
-      "Interactive animations",
-    ],
-  },
-  {
-    slug: "ecommerce-seo",
-    name: "Ecommerce SEO",
-    heading: "Ecommerce SEO Services",
-    intro:
-      "Generic SEO doesn't cut it for online stores. We build SEO strategies around how people actually shop — optimizing your website for the searches that lead to sales, not just traffic.",
-    bullets: [
-      "Technical SEO audit",
-      "Keyword research & strategy",
-      "On-page optimization",
-      "Site speed optimization",
-      "Schema markup",
-      "Content optimization",
-      "Local SEO setup",
-      "Monthly reporting",
-    ],
-  },
-  {
-    slug: "ecommerce-growth-cro",
-    name: "Ecommerce Growth & CRO",
-    heading: "Shopify Ecommerce Growth & CRO",
-    intro:
-      "Once your store is live, growth becomes an ongoing process. Through continuous testing, customer insights, and data-driven optimization, we help Shopify stores increase conversion rates and maximize every visitor's value.",
-    bullets: [
-      "Conversion audits",
-      "Growth roadmap",
-      "A/B & split testing",
-      "Landing page optimization",
-      "Customer journey optimization",
-      "Cart abandonment optimization",
-      "Revenue tracking",
-      "Monthly performance reporting",
-    ],
-  },
-  {
-    slug: "ecommerce-management",
-    name: "Ecommerce Management",
-    heading: "Ecommerce Management Services",
-    intro:
-      "Running an ecommerce business is a full-time job. We become an extension of your team, handling the day-to-day technical, marketing, and optimization work so you can focus on growing your business.",
-    bullets: [
-      "Dedicated project manager",
-      "Theme customization",
-      "Email marketing with Klaviyo",
-      "UI/UX support",
-      "Customer acquisition tracking",
-      "A/B testing",
-      "Store updates",
-      "Performance monitoring",
-    ],
+    examples: ["collection-akhavan", "die-schrothkur"],
   },
   {
     slug: "custom-business-websites",
@@ -348,6 +246,15 @@ export const serviceDetails: ServiceDetail[] = [
     heading: "Custom Business Websites",
     intro:
       "Some businesses need more than an online store. We design and build professional websites tailored to your business goals — from corporate websites to landing pages and service-based businesses.",
+    whoFor:
+      "Service businesses, agencies, and non-ecommerce brands that need a professional site built around leads and credibility rather than a shopping cart.",
+    whyMatters:
+      "Not every business runs on Shopify, and that's fine — the same principles that make a store convert also make a business website earn trust and generate leads. We build every site around what your visitors need to do next, whether that's booking a call, filling out a form, or learning who you are.",
+    process: [
+      "Discovery on your goals and audience",
+      "Design and build",
+      "Launch with performance and SEO checks",
+    ],
     bullets: [
       "Custom website development",
       "CMS implementation",
@@ -358,6 +265,7 @@ export const serviceDetails: ServiceDetail[] = [
       "Integrations",
       "Ongoing support",
     ],
+    examples: ["sez-group", "orbes"],
   },
   {
     slug: "web-application-development",
@@ -365,6 +273,15 @@ export const serviceDetails: ServiceDetail[] = [
     heading: "Web Application Development",
     intro:
       "When your business needs custom software, we build scalable web applications that improve operations, automate workflows, and deliver better experiences for your customers and team.",
+    whoFor:
+      "Businesses whose process has outgrown spreadsheets and off-the-shelf tools, and need something custom to manage bookings, clients, or internal operations.",
+    whyMatters:
+      "Off-the-shelf software eventually hits a wall — either it does too little or forces your team to work around it. A custom web application is built around your actual process, so it saves time instead of adding another tool to manage.",
+    process: [
+      "Map your workflow end to end",
+      "Design the system architecture",
+      "Build and test in stages before rollout",
+    ],
     bullets: [
       "Custom web applications",
       "Client portals",
@@ -375,23 +292,169 @@ export const serviceDetails: ServiceDetail[] = [
       "Database architecture",
       "Ongoing maintenance",
     ],
+    examples: ["sez-group"],
   },
   {
-    slug: "branding-visual-identity",
-    name: "Branding & Visual Identity",
-    heading: "Branding & Visual Identity",
+    slug: "shopify-store-redesign",
+    name: "Shopify Store Redesign",
+    heading: "Shopify Store Redesign Services",
     intro:
-      "A memorable brand builds trust long before someone becomes a customer. We create visual identities that communicate professionalism, consistency, and personality across every digital and physical touchpoint.",
-    bullets: [
-      "Logo design",
-      "Brand identity systems",
-      "Brand guidelines",
-      "Typography & color systems",
-      "Marketing collateral",
-      "Social media branding",
-      "Packaging design",
-      "Brand refresh",
+      "If your store feels outdated or isn't converting the way it should, a redesign can make all the difference. We modernize Shopify stores with better user experiences, stronger branding, and layouts built around conversion.",
+    whoFor:
+      "Stores with steady traffic but underwhelming conversion, or a brand that's outgrown its original design.",
+    whyMatters:
+      "Traffic without conversion usually points to a design problem, not a marketing one. We start by identifying exactly where visitors are dropping off, then rebuild around fixing that — not just giving the store a new look.",
+    process: [
+      "Audit the current store and funnel",
+      "Redesign around the drop-off points",
+      "Test before full rollout",
     ],
+    bullets: [
+      "Store redesign strategy",
+      "User experience improvements",
+      "Modern visual design",
+      "Navigation optimization",
+      "Mobile optimization",
+      "Theme upgrades",
+      "Conversion-focused layouts",
+      "Performance improvements",
+    ],
+    examples: ["orbes", "die-schrothkur"],
+  },
+  {
+    slug: "shopify-speed-optimization",
+    name: "Shopify Speed Optimization",
+    heading: "Shopify Speed Optimization Services",
+    intro:
+      "Every second counts. We optimize your Shopify store for faster load times, improved Core Web Vitals, and a smoother shopping experience that helps reduce bounce rates and increase conversions.",
+    whoFor:
+      "Stores with slow load times, high bounce rates, or a growing number of apps quietly weighing the site down.",
+    whyMatters:
+      "A one-second delay in load time is enough to lose a meaningful share of visitors before they see your products. We audit every app, script, and image dragging your store down, then fix what's actually slowing you down instead of guessing.",
+    process: [
+      "Full performance audit",
+      "Fix the biggest bottlenecks first",
+      "Retest and report on the improvement",
+    ],
+    bullets: [
+      "Core Web Vitals optimization",
+      "Code optimization",
+      "Image optimization",
+      "Script optimization",
+      "App performance audit",
+      "Lazy loading implementation",
+      "Theme optimization",
+      "Speed reporting",
+    ],
+    examples: ["seetrue-glasses"],
+  },
+  {
+    slug: "shopify-conversion-audit",
+    name: "Shopify Conversion Audit",
+    heading: "Shopify Conversion Audit",
+    intro:
+      "Sometimes small changes create the biggest impact. We perform comprehensive audits of your Shopify store to uncover usability issues, friction points, and missed conversion opportunities before recommending a clear roadmap.",
+    whoFor:
+      "Stores getting traffic but not enough sales, and unsure exactly where visitors are dropping off.",
+    whyMatters:
+      "Most stores lose customers at a handful of predictable points, not everywhere at once. We look at your funnel, checkout, and mobile experience together, then hand you a prioritized list instead of a vague report full of generic advice.",
+    process: [
+      "Review funnel, checkout, and mobile experience",
+      "Prioritize the fixes with the biggest impact",
+      "Hand over a clear roadmap",
+    ],
+    bullets: [
+      "UX audit",
+      "Checkout analysis",
+      "Funnel analysis",
+      "Heatmap review",
+      "Analytics review",
+      "Mobile experience audit",
+      "Prioritized recommendations",
+      "Conversion roadmap",
+    ],
+    examples: ["forchics", "the-conscious-bar"],
+  },
+  {
+    slug: "ui-ux-design",
+    name: "UI/UX Design",
+    heading: "UI/UX Design Services",
+    intro:
+      "Your Shopify store is only as strong as its design. As a UI/UX design services company, we combine user interface design and user experience design to craft intuitive, brand-aligned experiences that reduce drop-off and increase cart conversions.",
+    whoFor:
+      "Brands whose store looks dated, feels inconsistent, or simply wasn't designed around how customers actually shop.",
+    whyMatters:
+      "Good design isn't decoration — it's the difference between a visitor who buys and one who leaves confused. We start with how people actually shop your category, then build the visual system and layout around that behavior instead of a template.",
+    process: [
+      "Research how your customers shop",
+      "Design wireframes and visuals",
+      "Test key pages before final handoff",
+    ],
+    bullets: [
+      "User experience research",
+      "Conversion rate optimization",
+      "Brand identity design",
+      "Wireframing and prototyping",
+      "A/B testing design",
+      "Accessibility compliance",
+      "Visual design systems",
+      "Interactive animations",
+    ],
+    examples: ["seetrue-glasses", "collection-akhavan"],
+  },
+  {
+    slug: "ecommerce-seo",
+    name: "Ecommerce SEO",
+    heading: "Ecommerce SEO Services",
+    intro:
+      "Generic SEO doesn't cut it for online stores. Our ecommerce SEO service builds around how people actually shop, covering SEO for ecommerce website growth, affordable ecommerce SEO, and Shopify ecommerce SEO specifically.",
+    whoFor:
+      "Stores that aren't showing up for the searches that actually lead to sales, or have never had a proper SEO strategy.",
+    whyMatters:
+      "Ranking for the wrong keywords brings visitors who were never going to buy. We research and target the searches that lead to purchases, then structure your site so Google can actually understand what each page sells.",
+    process: [
+      "Technical and keyword audit",
+      "On-page and content fixes",
+      "Ongoing tracking and monthly reporting",
+    ],
+    bullets: [
+      "Technical SEO audit",
+      "Keyword research and strategy",
+      "On-page optimization",
+      "Site speed optimization",
+      "Schema markup",
+      "Content optimization",
+      "Local SEO setup",
+      "Monthly reporting",
+    ],
+    examples: ["the-conscious-bar", "forchics"],
+  },
+  {
+    slug: "ecommerce-growth-cro",
+    name: "Ecommerce Growth & CRO",
+    heading: "Ecommerce Growth and CRO",
+    intro:
+      "Once your store is live, growth becomes an ongoing process. Through continuous testing, customer insights, and data-driven optimization, we help Shopify stores increase conversion rates and get more value from every visitor.",
+    whoFor:
+      "Stores that are live and stable, but ready to treat growth as an ongoing process instead of a one-time launch.",
+    whyMatters:
+      "Most stores stop improving right after launch, which is exactly when the real gains are available. We treat every page as something to test rather than a finished product, so your store keeps getting better instead of staying static.",
+    process: [
+      "Audit current performance",
+      "Build a testing roadmap",
+      "Run and report on experiments monthly",
+    ],
+    bullets: [
+      "Conversion audits",
+      "Growth roadmap",
+      "A/B and split testing",
+      "Landing page optimization",
+      "Customer journey optimization",
+      "Cart abandonment optimization",
+      "Revenue tracking",
+      "Monthly performance reporting",
+    ],
+    examples: ["seetrue-glasses", "orbes"],
   },
   {
     slug: "digital-marketing",
@@ -399,23 +462,96 @@ export const serviceDetails: ServiceDetail[] = [
     heading: "Digital Marketing Services",
     intro:
       "Great websites deserve great marketing. We help businesses generate qualified traffic, increase brand visibility, and turn visitors into customers through strategic digital campaigns.",
+    whoFor:
+      "Brands with a store or site ready for traffic, but no consistent system for turning that traffic into customers.",
+    whyMatters:
+      "Traffic on its own doesn't pay the bills — the right traffic does. We build campaigns around the customers most likely to convert, then keep adjusting based on what the data actually shows instead of running the same ads for months unchanged.",
+    process: [
+      "Audience and channel research",
+      "Campaign build and launch",
+      "Ongoing optimization based on real performance data",
+    ],
     bullets: [
       "Google Ads",
       "Meta Ads",
       "Email marketing",
       "Marketing automation",
       "Content strategy",
-      "Analytics & reporting",
+      "Analytics and reporting",
       "Audience targeting",
       "Campaign optimization",
     ],
+    examples: ["forchics", "collection-akhavan"],
+  },
+  {
+    slug: "ecommerce-management",
+    name: "Ecommerce Management",
+    heading: "Ecommerce Management Services",
+    intro:
+      "Running an ecommerce business is a full-time job. Our ecommerce management service covers day-to-day ecommerce website management, ongoing maintenance, and complete store management — so you can focus on growing the business.",
+    whoFor:
+      "Founders and small teams who don't have the bandwidth to manage a store's day-to-day technical and marketing work themselves.",
+    whyMatters:
+      "Most store owners didn't start their business to become full-time Shopify admins. We become an extension of your team, handling the technical, marketing, and optimization work that keeps a store running smoothly — so nothing falls through the cracks while you focus on product.",
+    process: [
+      "Onboarding and audit",
+      "Assign a dedicated manager",
+      "Ongoing updates and monthly reporting",
+    ],
+    bullets: [
+      "Dedicated project manager",
+      "Theme customization",
+      "Email marketing with Klaviyo",
+      "UI/UX support",
+      "Customer acquisition tracking",
+      "A/B testing",
+      "Store updates",
+      "Performance monitoring",
+    ],
+    examples: ["the-conscious-bar", "sez-group"],
+  },
+  {
+    slug: "branding-visual-identity",
+    name: "Branding & Visual Identity",
+    heading: "Branding and Visual Identity",
+    intro:
+      "A memorable brand builds trust long before someone becomes a customer. We create visual identities that communicate professionalism, consistency, and personality across every digital and physical touchpoint.",
+    whoFor:
+      "New brands needing an identity from scratch, or established ones whose branding feels inconsistent across channels.",
+    whyMatters:
+      "Inconsistent branding quietly erodes trust, even when customers can't say exactly why a brand feels off. We build a system, not just a logo, so your brand looks and feels the same whether someone finds you on Instagram, in an email, or on your store.",
+    process: [
+      "Discovery on your brand and audience",
+      "Design the identity system",
+      "Deliver guidelines for consistent use",
+    ],
+    bullets: [
+      "Logo design",
+      "Brand identity systems",
+      "Brand guidelines",
+      "Typography and color systems",
+      "Marketing collateral",
+      "Social media branding",
+      "Packaging design",
+      "Brand refresh",
+    ],
+    examples: ["collection-akhavan", "orbes"],
   },
   {
     slug: "ai-business-automation",
     name: "AI & Business Automation",
-    heading: "AI & Business Automation",
+    heading: "AI and Business Automation",
     intro:
       "Reduce manual work and streamline your operations with intelligent automation. We build AI-powered solutions and workflow automations that help businesses save time, improve efficiency, and scale faster.",
+    whoFor:
+      "Teams spending real hours a week on repetitive tasks that could run in the background instead.",
+    whyMatters:
+      "The busywork that eats up your team's day is usually the easiest thing to automate, once someone maps it out properly. We start by identifying where your team spends repetitive hours, then build automations and AI tools that quietly handle that work in the background.",
+    process: [
+      "Map the repetitive workflows",
+      "Build and test the automation",
+      "Monitor and refine after rollout",
+    ],
     bullets: [
       "AI chatbots",
       "Workflow automation",
@@ -426,6 +562,7 @@ export const serviceDetails: ServiceDetail[] = [
       "Reporting dashboards",
       "Ongoing optimization",
     ],
+    examples: ["sez-group", "orbes"],
   },
 ];
 
@@ -520,38 +657,185 @@ export const generalFaq: Faq[] = [
 // ------------------------------------------------------------------
 //  Our Works
 // ------------------------------------------------------------------
-export type Work = { name: string; teaser: string; img: string };
+export type CaseStudy = {
+  slug: string;
+  name: string;
+  teaser: string; // one-liner for the Work grid
+  review: string;
+  reviewer: string;
+  liveUrl: string; // real URL, or "" if not available yet
+  brief: string;
+  whatWeBuilt: string;
+  features: string[];
+  focusResult: string;
+  img: string;
+  placeholder?: boolean;
+};
 
-export const works: Work[] = [
+export const caseStudies: CaseStudy[] = [
   {
+    slug: "seetrue-glasses",
+    name: "SeeTrue Glasses",
+    teaser: "Refined, international-ready eyewear store.",
+    review:
+      "Working with the team changed how customers experience our eyewear online. The site feels premium, loads fast, and our numbers show it.",
+    reviewer: "Founder, SeeTrue Glasses",
+    liveUrl: "https://seetrueglasses.com",
+    brief:
+      "SeeTrue came to us with a Shopify store that didn't match the quality of their eyewear. Product pages felt generic, browsing by style or material was clunky, and international customers had no clear way to shop in their own currency.",
+    whatWeBuilt:
+      "A refined Shopify Plus store with polished product photography, filtering by style, material, and price, and a multi-region, multi-currency setup for their growing international base. Checkout was shortened to match the premium, frictionless feel the brand needed.",
+    features: [
+      "Style, material, and price filtering",
+      "Multi-region, multi-currency checkout",
+      "Mobile-first responsive layout",
+      "Shortened, frictionless checkout flow",
+      "Trust badges and secure checkout messaging",
+    ],
+    focusResult:
+      "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. The results are reflected in the conversion, revenue, and page-speed numbers shown on this page.",
+    img: "/works/Seetrueglasses.jpg",
+  },
+  {
+    slug: "the-conscious-bar",
     name: "The Conscious Bar",
     teaser: "Clean-beauty Shopify Plus store built for eco-conscious shoppers.",
+    review:
+      "They understood our brand from the first call. The store looks exactly how we imagined it — clean, honest, and built for people who care about what they buy.",
+    reviewer: "Founder, The Conscious Bar",
+    liveUrl: "https://theconsciousbar.co/",
+    brief:
+      "The Conscious Bar needed a Shopify Plus store that reflected their clean-beauty values without slowing down for the sake of good looks — a common trade-off in beauty ecommerce.",
+    whatWeBuilt:
+      "A minimalist custom theme with ingredient and benefit-based filtering, wishlist support, and multi-currency checkout for shoppers outside the US. We tightened the purchase flow to reduce cart abandonment.",
+    features: [
+      "Ingredient and benefit-based filtering",
+      "Wishlist and save-for-later",
+      "Multi-currency checkout for international shoppers",
+      "Streamlined cart and checkout flow",
+      "Sustainability messaging built into product pages",
+    ],
+    focusResult:
+      "Sustainability and transparency needed to come through in the design itself, not just the product copy. Conversion and revenue have both climbed since launch, tracked in the stats shown on this page.",
     img: "/works/Theconsciousbar.png",
   },
   {
+    slug: "forchics",
     name: "ForChics",
     teaser: "Vegan beauty brand rebuilt around trust and verified reviews.",
+    review:
+      "Our old site didn't build trust fast enough. This one does. Customers can see the reviews, the guarantee, and the results before they even scroll.",
+    reviewer: "Founder, ForChics",
+    liveUrl: "",
+    brief:
+      "ForChics needed their vegan, cruelty-free beauty line to feel as credible as it is effective — trust was the real barrier to conversion, not product quality.",
+    whatWeBuilt:
+      "We restructured the catalog by customer concern instead of product type, added a visible money-back guarantee, and surfaced verified before-and-after reviews above the fold. Automated email flows now handle abandoned carts and post-purchase reviews without manual work.",
+    features: [
+      "Catalog organized by customer concern",
+      "Visible money-back guarantee",
+      "Verified before-and-after review gallery",
+      "Automated abandoned-cart and review-request flows",
+      "Above-the-fold trust signals",
+    ],
+    focusResult:
+      "Every design decision came back to one question — does this make a first-time visitor trust us faster. Conversion and revenue improvements are shown in the results section on this page.",
     img: "/works/ForChics.png",
   },
   {
-    name: "Femdisc",
-    teaser: "Educational, comparison-first store for a newer product category.",
-    img: "/works/Femdisc.png",
+    slug: "collection-akhavan",
+    name: "Collection Akhavan",
+    teaser: "A gallery-style store for handcrafted pieces.",
+    review:
+      "The new store finally does justice to the craftsmanship behind each piece. It feels like walking into the showroom.",
+    reviewer: "Collection Akhavan",
+    liveUrl: "",
+    brief:
+      "Collection Akhavan came to us with a catalog of handcrafted pieces that deserved more than a generic template — they needed a store that presented each item with the same care that goes into making it.",
+    whatWeBuilt:
+      "A Shopify store built around large-format imagery, short craftsmanship stories on every product page, and a simplified checkout that doesn't distract from browsing.",
+    features: [
+      "Large-format product photography",
+      "Short craftsmanship story on every product page",
+      "Simplified, distraction-free checkout",
+      "Mobile-first gallery-style browsing",
+      "Category structure built around collections",
+    ],
+    focusResult:
+      "We treated every product page like a small gallery entry rather than a listing. Full performance numbers will be added once available.",
+    img: pexels(1927259, 900, 1100),
+    placeholder: true,
   },
   {
-    name: "Lockeroom",
-    teaser: "Rehab and recovery store built around symptom-based shopping.",
-    img: "/works/Lockeroom.jpg",
+    slug: "die-schrothkur",
+    name: "Die Schrothkur",
+    teaser: "A calm, content-forward wellness store.",
+    review:
+      "The site finally feels as calming as what we offer. It was overdue.",
+    reviewer: "Die Schrothkur",
+    liveUrl: "",
+    brief:
+      "Die Schrothkur needed a Shopify store that communicated a wellness-first, trustworthy feel — one that could explain a less familiar treatment approach clearly to new visitors.",
+    whatWeBuilt:
+      "A calm, content-forward store with plain-language explanations built into the product and service pages, plus a straightforward booking or purchase flow.",
+    features: [
+      "Plain-language service explanations",
+      "Combined booking and purchase flow",
+      "Calm, content-forward visual design",
+      "Clear pricing and process breakdowns",
+      "Mobile-first layout for on-the-go visitors",
+    ],
+    focusResult:
+      "Clarity mattered more than flash here — visitors needed to understand what they were buying within seconds. Full performance numbers will be added once available.",
+    img: pexels(4041392, 900, 1100),
+    placeholder: true,
   },
   {
-    name: "Luxe Cosmetics",
-    teaser: "Premium Shopify Plus store for a luxury lash and brow line.",
-    img: "/works/Luxe-cosmetics.jpg",
+    slug: "sez-group",
+    name: "SEZ Group",
+    teaser: "A large, varied catalog made simple to shop.",
+    review:
+      "They took a complicated catalog and made it simple to shop. Exactly what we needed.",
+    reviewer: "SEZ Group",
+    liveUrl: "",
+    brief:
+      "SEZ Group needed a Shopify store that could handle a wide, varied product catalog without overwhelming new visitors.",
+    whatWeBuilt:
+      "A clean category structure with smart filtering, so visitors can narrow down a large catalog quickly, plus navigation built around how customers actually search.",
+    features: [
+      "Smart filtering across a large catalog",
+      "Simplified navigation built around search behavior",
+      "Category-first browsing structure",
+      "Fast search and product discovery",
+      "Mobile-optimized catalog browsing",
+    ],
+    focusResult:
+      "We focused on making a big catalog feel small and manageable from the customer's side. Full performance numbers will be added once available.",
+    img: pexels(4481259, 900, 1100),
+    placeholder: true,
   },
   {
-    name: "SeeTrue Glasses",
-    teaser: "Refined, international-ready eyewear store.",
-    img: "/works/Seetrueglasses.jpg",
+    slug: "orbes",
+    name: "Orbes",
+    teaser: "A minimal, considered store for a design-led brand.",
+    review: "Simple, fast, and it actually looks like our brand now.",
+    reviewer: "Orbes",
+    liveUrl: "",
+    brief:
+      "Orbes wanted a Shopify store as minimal and considered as their product design, without it feeling empty or generic.",
+    whatWeBuilt:
+      "A clean, spacious layout built around strong product photography, with subtle motion and a fast, distraction-free checkout.",
+    features: [
+      "Spacious, minimal layout",
+      "Strong, large-scale product photography",
+      "Subtle motion and micro-interactions",
+      "Fast, distraction-free checkout",
+      "Mobile-first responsive design",
+    ],
+    focusResult:
+      "Minimal doesn't mean boring, so we focused on small, deliberate design details that add personality without adding clutter. Full performance numbers will be added once available.",
+    img: pexels(3735641, 900, 1100),
+    placeholder: true,
   },
 ];
 
