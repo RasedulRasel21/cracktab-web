@@ -694,7 +694,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     focusResult:
       "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. The results are reflected in the conversion, revenue, and page-speed numbers shown on this page.",
-    img: "/works/Seetrueglasses.jpg",
+    img: "/works/seetrue.webp",
   },
   {
     slug: "the-conscious-bar",
@@ -763,8 +763,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     focusResult:
       "We treated every product page like a small gallery entry rather than a listing. Full performance numbers will be added once available.",
-    img: pexels(1927259, 900, 1100),
-    placeholder: true,
+    img: "/works/collection-avakan.webp",
   },
   {
     slug: "die-schrothkur",
@@ -787,9 +786,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     focusResult:
       "Clarity mattered more than flash here — visitors needed to understand what they were buying within seconds. Full performance numbers will be added once available.",
-    img: pexels(4041392, 900, 1100),
-    placeholder: true,
+    img: "/works/die-schrothkur.webp",
   },
+  /* SEZ Group — hidden for now (re-enable when ready)
   {
     slug: "sez-group",
     name: "SEZ Group",
@@ -814,6 +813,7 @@ export const caseStudies: CaseStudy[] = [
     img: pexels(4481259, 900, 1100),
     placeholder: true,
   },
+  */
   {
     slug: "orbes",
     name: "Orbes",
