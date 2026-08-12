@@ -5,12 +5,17 @@ import Link from "next/link";
 import { services } from "../lib/site";
 
 function PlusIcon({ open }: { open: boolean }) {
-  // Plus that collapses to a minus (vertical bar scales to 0) when open.
+  // Plus that spins a half-turn clockwise while the vertical bar collapses,
+  // so opening a row reads as the plus rotating into a minus.
   return (
-    <span className="relative flex h-5 w-5 shrink-0 items-center justify-center text-accent">
+    <span
+      className={`relative flex h-5 w-5 shrink-0 items-center justify-center text-accent transition-transform duration-300 ease-out ${
+        open ? "rotate-180" : "rotate-0"
+      }`}
+    >
       <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
       <span
-        className={`absolute h-3.5 w-0.5 rounded-full bg-current transition-transform duration-300 ${
+        className={`absolute h-3.5 w-0.5 rounded-full bg-current transition-transform duration-300 ease-out ${
           open ? "scale-y-0" : "scale-y-100"
         }`}
       />

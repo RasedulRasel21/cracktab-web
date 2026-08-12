@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import MenuPanel from "./MenuPanel";
-import { CALENDLY_URL } from "../lib/site";
+import BookCallButton from "./BookCallButton";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,14 +36,7 @@ export default function Header() {
 
         {/* Right — Book a Call */}
         <div className="flex flex-1 items-center justify-end">
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="neon-btn inline-flex h-10 items-center justify-center whitespace-nowrap rounded-full bg-accent px-4 font-display text-xs font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong sm:h-11 sm:px-6 sm:text-sm"
-          >
-            Book a Call
-          </a>
+          <BookCallButton className="neon-btn inline-flex h-10 items-center justify-center whitespace-nowrap rounded-full bg-accent px-4 font-display text-xs font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong sm:h-11 sm:px-6 sm:text-sm" />
         </div>
       </div>
     </header>

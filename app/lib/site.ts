@@ -1,14 +1,17 @@
 export const CALENDLY_URL = "https://calendly.com/cracktab2025/30min";
 
-export type NavLink = { label: string; href: string };
+/** `external: true` renders a plain anchor that opens in a new tab. */
+export type NavLink = { label: string; href: string; external?: boolean };
 
-// Primary menu group. Shopify Themes/Apps are outbound links to the external
-// theme/app stores (no page yet), so they stay parked on "#".
+export const SHOPIFY_APPS_URL = "https://aigrowthkits.app/";
+
+// Primary menu group. Shopify Apps points at our own app site, which lives on
+// its own domain, so it opens in a new tab rather than routing in-app.
 export const primaryNav: NavLink[] = [
   { label: "Our Works", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "Shopify Themes", href: "/themes" },
-  { label: "Shopify Apps", href: "#" },
+  { label: "Shopify Apps", href: SHOPIFY_APPS_URL, external: true },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -108,7 +111,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
       { label: "Our Works", href: "/work" },
       { label: "Services", href: "/services" },
       { label: "Shopify Themes", href: "/themes" },
-      { label: "Shopify Apps", href: "#" },
+      { label: "Shopify Apps", href: SHOPIFY_APPS_URL, external: true },
     ],
   },
   {

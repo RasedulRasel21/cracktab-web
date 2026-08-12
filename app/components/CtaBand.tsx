@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CALENDLY_URL } from "../lib/site";
+import BookCallButton from "./BookCallButton";
 
 export default function CtaBand({
   title = "Ready to scale your ecommerce?",
@@ -24,14 +24,9 @@ export default function CtaBand({
               {subtitle}
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
-              >
+              <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
                 Schedule a Call
-              </a>
+              </BookCallButton>
               <Link
                 href="/contact"
                 className="inline-flex h-13 items-center justify-center rounded-full border border-line px-8 font-display text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:border-accent hover:text-accent"

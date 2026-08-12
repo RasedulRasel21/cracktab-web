@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import PageHeader from "../../components/PageHeader";
 import CtaBand from "../../components/CtaBand";
+import CaseStudySlider from "../../components/CaseStudySlider";
 import { caseStudies } from "../../lib/site";
 
 export function generateStaticParams() {
@@ -28,11 +28,9 @@ export default async function CaseStudyPage({
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
 
-  const others = caseStudies.filter((c) => c.slug !== cs.slug).slice(0, 3);
-
   return (
     <>
-      <PageHeader eyebrow="Case Study" title={cs.name} subtitle={cs.teaser} />
+      <PageHeader eyebrow="Our Works" title={cs.name} subtitle={cs.teaser} />
 
       {/* Client review */}
       <section className="pb-14">
@@ -146,33 +144,14 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      {/* More work */}
+      {/* More work — same auto-scrolling slider as the homepage */}
       <section className="pb-20 sm:pb-28">
-        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-          <h2 className="mb-8 font-display text-xl font-medium tracking-tight text-white">
+        <div className="mx-auto mb-8 w-full max-w-360 px-5 sm:px-8">
+          <h2 className="font-display text-xl font-medium tracking-tight text-white">
             More work
           </h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {others.map((o) => (
-              <Link
-                key={o.slug}
-                href={`/work/${o.slug}`}
-                className="group relative block aspect-[4/3] overflow-hidden rounded-2xl border border-line"
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                  style={{ backgroundImage: `url(${o.img})` }}
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <h3 className="font-display text-lg font-medium tracking-tight text-white">
-                    {o.name}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
+        <CaseStudySlider exclude={cs.slug} />
       </section>
 
       <CtaBand title="Want results like these?" />

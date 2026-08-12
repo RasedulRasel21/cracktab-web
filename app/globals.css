@@ -144,15 +144,74 @@ body {
   opacity: 0.95;
 }
 
+/* Circular card wheel — cards ride the rim of a large circle whose bottom is
+   cropped away, so only the top arc shows. Negative rotation sends them
+   right-to-left across the top. */
+@keyframes wheel-spin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-wheel {
+  /* longhands so utilities can still override play-state */
+  animation-name: wheel-spin;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Card variant of the neon stroke — thinner line, slower sweep and a softer
+   glow, so a whole grid of them reads as ambient rather than six racing
+   buttons. Stagger them with --neon-delay so they don't travel in lockstep. */
+.neon-card {
+  position: relative;
+}
+.neon-card::before,
+.neon-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--nangle),
+    transparent 0turn 0.55turn,
+    var(--accent) 0.74turn,
+    var(--accent-strong) 0.87turn,
+    #ecffbe 0.94turn,
+    transparent 1turn
+  );
+  animation: neon-spin 6s linear infinite;
+  animation-delay: var(--neon-delay, 0s);
+  pointer-events: none;
+}
+/* the crisp travelling stroke (ring via mask) */
+.neon-card::before {
+  padding: 1.5px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+/* the soft neon glow, behind the card */
+.neon-card::after {
+  z-index: -1;
+  filter: blur(14px);
+  opacity: 0.55;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .animate-wheel {
     animation: none !important;
   }
   .neon-btn::before,
-  .neon-btn::after {
+  .neon-btn::after,
+  .neon-card::before,
+  .neon-card::after {
     animation: none !important;
   }
 }

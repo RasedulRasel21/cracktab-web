@@ -40,7 +40,7 @@ export default function About() {
                   {s.value}
                 </span>
                 <span
-                  className={`text-sm font-medium ${
+                  className={`text-lg font-medium sm:text-2xl lg:text-3xl ${
                     highlight ? "text-accent-ink/70" : "text-muted"
                   }`}
                 >

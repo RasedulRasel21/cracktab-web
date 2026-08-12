@@ -79,12 +79,24 @@ export default function Footer() {
                 <ul className="mt-4 flex flex-col gap-2.5">
                   {col.links.map((link) => (
                     <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm font-medium text-white/70 transition-colors hover:text-accent"
-                      >
-                        {link.label}
-                      </Link>
+                      {/* Off-domain links can't use next/link routing */}
+                      {link.external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-medium text-white/70 transition-colors hover:text-accent"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-sm font-medium text-white/70 transition-colors hover:text-accent"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

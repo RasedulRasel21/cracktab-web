@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import PageHeader from "../../components/PageHeader";
 import CtaBand from "../../components/CtaBand";
-import CaseStudySlider from "../../components/CaseStudySlider";
-import { serviceDetails, CALENDLY_URL } from "../../lib/site";
+import ProcessTimeline from "../../components/ProcessTimeline";
+import ServiceIcon from "../../components/ServiceIcon";
+import WorkMosaic from "../../components/WorkMosaic";
+import { serviceDetails } from "../../lib/site";
+import { bulletMeta } from "../../lib/serviceBullets";
 
 export function generateStaticParams() {
   return serviceDetails.map((s) => ({ slug: s.slug }));
@@ -20,11 +21,11 @@ export async function generateMetadata({
   return { title: service?.name ?? "Service", description: service?.intro };
 }
 
-function Check() {
+function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="mt-0.5 shrink-0 text-accent">
-      <path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <h2 className="font-display text-xl font-medium tracking-tight text-white sm:text-2xl">
+      {children}
+    </h2>
   );
 }
 
@@ -34,116 +35,90 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = serviceDetails.find((s) => s.slug === slug);
+  const index = serviceDetails.findIndex((s) => s.slug === slug);
+  const service = serviceDetails[index];
   if (!service) notFound();
 
   return (
     <>
-      <PageHeader eyebrow="Service" title={service.heading} subtitle={service.intro} />
+      {/* ---- Hero ---- */}
+      <section className="px-5 pb-14 pt-28 sm:px-8 sm:pb-20 sm:pt-36">
+        <div className="mx-auto w-full max-w-360">
+          <h1 className="max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+            {service.heading}
+            <span className="text-accent">.</span>
+          </h1>
+          <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+            {service.intro}
+          </p>
+        </div>
+      </section>
 
-      {/* Who this is for + Why it matters */}
-      <section className="pb-16 sm:pb-20">
-        <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      {/* ---- Who this is for / Why it matters ---- */}
+      <section className="px-5 sm:px-8">
+        <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-10 border-t border-line pt-12 sm:pt-14 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="font-display text-xl font-medium tracking-tight text-white">
-              Who this is for
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">
+            <SectionHeading>Who this is for</SectionHeading>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">
               {service.whoFor}
             </p>
           </div>
           <div>
-            <h2 className="font-display text-2xl font-medium tracking-tight text-white sm:text-[1.75rem]">
-              Why it matters &amp; how we help
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">
+            <SectionHeading>Why it matters &amp; how we help</SectionHeading>
+            <p className="mt-5 text-sm leading-relaxed text-muted">
               {service.whyMatters}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Our process + What's included */}
-      <section className="pb-16 sm:pb-20">
-        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <h2 className="font-display text-2xl font-medium tracking-tight text-white">
-                Our process
-              </h2>
-              <ol className="mt-8 flex flex-col gap-6">
-                {service.process.map((step, i) => (
-                  <li key={step} className="flex gap-4">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/40 font-display text-sm font-semibold text-accent">
-                      {i + 1}
-                    </span>
-                    <span className="pt-1 text-base leading-relaxed text-white/90">
-                      {step}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <div>
-              <h2 className="font-display text-2xl font-medium tracking-tight text-white">
-                What&apos;s included
-              </h2>
-              <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
-                {service.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-white/85 lg:text-base">
-                    <Check />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* ---- Our Process / What's included ---- */}
+      <section className="px-5 pt-14 sm:px-8 sm:pt-20">
+        <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-12 border-t border-line pt-12 sm:pt-14 lg:grid-cols-[0.8fr_2.2fr] lg:gap-16">
+          {/* Timeline */}
+          <div>
+            <SectionHeading>Our Process</SectionHeading>
+            <ProcessTimeline steps={service.process} />
           </div>
 
-          <div className="mt-12">
-            <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-13 items-center gap-2 rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
-            >
-              Get Started
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
+          {/* Included cards */}
+          <div>
+            <SectionHeading>What&apos;s included</SectionHeading>
+            <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {service.bullets.map((label) => {
+                const meta = bulletMeta[label];
+                return (
+                  <li
+                    key={label}
+                    className="group rounded-xl border border-line bg-surface p-5 transition-colors duration-300 hover:border-accent/50"
+                  >
+                    {meta && (
+                      <span className="inline-flex text-accent">
+                        <ServiceIcon name={meta.icon} />
+                      </span>
+                    )}
+                    <h3 className="mt-6 font-display text-sm font-semibold leading-snug tracking-tight text-white transition-colors group-hover:text-accent">
+                      {label}
+                    </h3>
+                    {meta && (
+                      <p className="mt-2 text-xs leading-relaxed text-muted">
+                        {meta.note}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* Example work — full case-study slider */}
-      <section className="pb-16 sm:pb-20">
-        <div className="mx-auto mb-8 w-full max-w-360 px-5 sm:px-8">
-          <h2 className="font-display text-2xl font-medium tracking-tight text-white">
-            Example work
-          </h2>
-        </div>
-        <CaseStudySlider />
-      </section>
-
-      {/* Explore other services */}
-      <section className="pb-20 sm:pb-28">
-        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-          <h2 className="mb-6 font-display text-xl font-medium tracking-tight text-white">
-            Explore other services
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {serviceDetails
-              .filter((s) => s.slug !== service.slug)
-              .map((s) => (
-                <Link
-                  key={s.slug}
-                  href={`/services/${s.slug}`}
-                  className="rounded-full border border-line px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:border-accent hover:text-accent"
-                >
-                  {s.name}
-                </Link>
-              ))}
+      {/* ---- Example Work ---- */}
+      <section className="px-5 pt-14 pb-20 sm:px-8 sm:pt-20 sm:pb-28">
+        <div className="mx-auto w-full max-w-360 border-t border-line pt-12 sm:pt-14">
+          <SectionHeading>Example Work</SectionHeading>
+          <div className="mt-8">
+            <WorkMosaic slugs={service.examples} seed={index} />
           </div>
         </div>
       </section>

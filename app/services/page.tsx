@@ -57,7 +57,7 @@ export default function ServicesPage() {
                   </span>
                 </div>
                 <div className="relative mt-10">
-                  <h3 className="font-display text-xl font-medium tracking-tight text-white">
+                  <h3 className="font-display text-xl font-semibold tracking-tight text-white transition-colors group-hover:text-accent">
                     {s.name}
                   </h3>
                   <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">

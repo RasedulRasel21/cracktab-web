@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import LivePreviewModal, { type Shots } from "./LivePreviewModal";
 
 type Card = {
   title: string;
@@ -9,35 +10,43 @@ type Card = {
   tags: string[];
   img: string;
   href: string;
+  /**
+   * Full-page screenshots. When set, clicking the card opens the device-mockup
+   * preview instead of navigating; without it the card just links to `href`.
+   * Drop the captures in /public/previews/ and point at them, e.g.
+   *   shots: { desktop: "/previews/seetrue-desktop.png",
+   *            mobile:  "/previews/seetrue-mobile.png" },
+   */
+  shots?: Shots;
+  /** Real store URL — shown as "Open live site" inside the preview. */
+  liveUrl?: string;
 };
 
-// Placeholder Pexels imagery — swap `img` for real case-study shots later.
-const px = (id: number) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&dpr=1`;
-
+// Four cards per row: one loop of a row has to be at least as wide as the
+// viewport, or the -50% marquee shift leaves a visible gap on large screens.
 const rowA: Card[] = [
   {
-    title: "Dropdead",
+    title: "Femdisc",
     description:
-      "A clean Shopify rebuild on a tight deadline, preserving the brand's bold, alternative identity.",
-    tags: ["Growth", "Development", "CRO"],
-    img: px(1435752),
+      "An education-led femcare storefront that explains the range clearly and makes the right product easy to find.",
+    tags: ["UI/UX", "Development"],
+    img: "/works/Femdisc.png",
     href: "/work",
   },
   {
-    title: "WatchHouse",
+    title: "Lockeroom",
     description:
-      "Award-winning navigation, enhanced subscriptions and an improved quiz for coffee lovers.",
-    tags: ["Shopify Plus", "CX Design", "CRO"],
-    img: px(996329),
-    href: "/work",
-  },
-  {
-    title: "Miss Me",
-    description:
-      "A modern, high-performing Shopify 2.0 site that enhances loyalty and drives long-term growth.",
+      "A bold, high-contrast storefront for a performance recovery brand, built around fast browsing and a short path to cart.",
     tags: ["Development", "Ecommerce"],
-    img: px(2529148),
+    img: "/works/Lockeroom.jpg",
+    href: "/work",
+  },
+  {
+    title: "Luxe Cosmetics",
+    description:
+      "A beauty storefront built around product education and a frictionless purchase flow.",
+    tags: ["UI/UX", "CRO"],
+    img: "/works/Luxe-cosmetics.jpg",
     href: "/work",
   },
   {
@@ -45,50 +54,39 @@ const rowA: Card[] = [
     description:
       "A premium storefront refresh built to convert, with a faster, cleaner shopping experience.",
     tags: ["Shopify Plus", "UI/UX"],
-    img: px(2983464),
-    href: "/work",
-  },
-  {
-    title: "SeeTrue",
-    description:
-      "Conversion-focused redesign and testing programme that lifted revenue per session.",
-    tags: ["Shopify Plus", "CRO"],
-    img: px(1183266),
+    img: "/works/ForChics.png",
     href: "/work",
   },
 ];
 
 const rowB: Card[] = [
   {
-    title: "Orbes",
+    title: "SeeTrue",
     description:
-      "End-to-end design and development for a scalable, brand-led ecommerce experience.",
-    tags: ["UI/UX", "Development"],
-    img: px(322207),
-    href: "/work",
-  },
-  {
-    title: "SEZ Group",
-    description:
-      "A Shopify Plus build engineered for speed, with a CRO roadmap for sustained growth.",
+      "Conversion-focused redesign and testing programme that lifted revenue per session.",
     tags: ["Shopify Plus", "CRO"],
-    img: px(934070),
+    img: "/works/seetrue.webp",
     href: "/work",
+    liveUrl: "https://seetrueglasses.com",
+    // Add `shots` once the captures exist to switch this card to the preview:
+    // shots: { desktop: "/previews/seetrue-desktop.png",
+    //          mobile:  "/previews/seetrue-mobile.png" },
   },
   {
     title: "The Conscious Bar",
     description:
       "A considered storefront with a refined product experience and streamlined checkout.",
     tags: ["Ecommerce", "CRO"],
-    img: px(1926769),
+    img: "/works/Theconsciousbar.png",
     href: "/work",
+    liveUrl: "https://theconsciousbar.co/",
   },
   {
     title: "Collection Akhavan",
     description:
       "A polished, editorial storefront that balances brand storytelling with commerce.",
     tags: ["UI/UX", "CX Design"],
-    img: px(1462637),
+    img: "/works/collection-avakan.webp",
     href: "/work",
   },
   {
@@ -96,7 +94,7 @@ const rowB: Card[] = [
     description:
       "A robust Shopify Plus platform with custom development tailored to the brand's needs.",
     tags: ["Shopify Plus", "Development"],
-    img: px(1152077),
+    img: "/works/die-schrothkur.webp",
     href: "/work",
   },
 ];
@@ -120,6 +118,10 @@ function CaseCard({ card }: { card: Card }) {
   const arrowRef = useRef<HTMLSpanElement>(null);
   const rafRef = useRef(0);
   const pos = useRef({ x: 0, y: 0 });
+  const [preview, setPreview] = useState(false);
+  // Stable identity so the modal's key/escape listeners aren't torn down and
+  // re-attached on every parent render.
+  const closePreview = useCallback(() => setPreview(false), []);
 
   // Write the arrow position at most once per frame, using GPU transform.
   const paint = () => {
@@ -146,16 +148,12 @@ function CaseCard({ card }: { card: Card }) {
     }
   };
 
-  return (
-    <li className="shrink-0">
-      <Link
-        ref={cardRef}
-        href={card.href}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        className="group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]"
-      >
-        {/* image */}
+  const shell =
+    "group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]";
+
+  const inner = (
+    <>
+      {/* image */}
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover/card:scale-105"
           style={{ backgroundImage: `url(${card.img})` }}
@@ -198,7 +196,51 @@ function CaseCard({ card }: { card: Card }) {
             ))}
           </div>
         </div>
-      </Link>
+    </>
+  );
+
+  return (
+    <li className="shrink-0">
+      {card.shots ? (
+        // Real href kept so cmd/middle-click still opens something useful;
+        // a plain click is intercepted for the in-page device preview.
+        <a
+          ref={cardRef}
+          href={card.liveUrl ?? card.href}
+          target={card.liveUrl ? "_blank" : undefined}
+          rel={card.liveUrl ? "noopener noreferrer" : undefined}
+          aria-haspopup="dialog"
+          onMouseMove={onMove}
+          onMouseLeave={onLeave}
+          onClick={(e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
+            setPreview(true);
+          }}
+          className={shell}
+        >
+          {inner}
+        </a>
+      ) : (
+        <Link
+          ref={cardRef}
+          href={card.href}
+          onMouseMove={onMove}
+          onMouseLeave={onLeave}
+          className={shell}
+        >
+          {inner}
+        </Link>
+      )}
+
+      {preview && card.shots && (
+        <LivePreviewModal
+          title={card.title}
+          shots={card.shots}
+          liveUrl={card.liveUrl}
+          onClose={closePreview}
+        />
+      )}
     </li>
   );
 }

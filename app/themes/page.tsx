@@ -3,7 +3,8 @@ import PageHeader from "../components/PageHeader";
 import Accordion from "../components/Accordion";
 import CtaBand from "../components/CtaBand";
 import ThemeCatalog from "./ThemeCatalog";
-import { CALENDLY_URL, type Faq } from "../lib/site";
+import BookCallButton from "../components/BookCallButton";
+import { type Faq } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Custom Shopify Themes",
@@ -195,14 +196,9 @@ export default function ThemesPage() {
                   Our Shopify development team can tailor any Cracktab theme to
                   your exact operational and design requirements.
                 </p>
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
-                >
+                <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
                   Book a Consultation
-                </a>
+                </BookCallButton>
               </div>
               <ul className="grid grid-cols-1 gap-4 self-center sm:grid-cols-2 lg:grid-cols-1">
                 {customization.map((c) => (

@@ -73,11 +73,18 @@ function Card({ cs }: { cs: CaseStudy }) {
 export default function CaseStudySlider({
   reverse = false,
   duration = "50s",
+  exclude,
 }: {
   reverse?: boolean;
   duration?: string;
+  /** Slug to leave out — e.g. the case study currently being read. */
+  exclude?: string;
 }) {
-  const loop = [...caseStudies, ...caseStudies];
+  const items = exclude
+    ? caseStudies.filter((c) => c.slug !== exclude)
+    : caseStudies;
+  // Duplicate the list so the -50% translate loops seamlessly.
+  const loop = [...items, ...items];
   return (
     <div className="group edge-fade overflow-hidden">
       <ul

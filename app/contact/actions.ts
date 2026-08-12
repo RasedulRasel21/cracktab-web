@@ -164,8 +164,12 @@ export async function submitContact(
   const email = get("email");
   const company = get("company");
   const projectType = get("projectType");
-  const budget = get("budget");
   const details = get("details");
+
+  // The country select carries "US +1"; keep just the dial code for the email.
+  const dial = get("phoneCountry").split(" ")[1] ?? "";
+  const phoneNumber = get("phone");
+  const phone = phoneNumber ? `${dial} ${phoneNumber}`.trim() : "";
 
   if (!firstName || !email || !details) {
     return {
@@ -231,9 +235,9 @@ export async function submitContact(
         flagged ? "" : "",
         `Name: ${firstName} ${lastName}`.trim(),
         `Email: ${email}`,
+        `Phone: ${phone || "—"}`,
         `Company: ${company || "—"}`,
         `Project type: ${projectType || "—"}`,
-        `Budget: ${budget || "—"}`,
         "",
         "Project details:",
         details,

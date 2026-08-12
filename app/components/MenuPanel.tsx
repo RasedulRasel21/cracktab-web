@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { primaryNav, secondaryNav, CALENDLY_URL } from "../lib/site";
+import BookCallButton from "./BookCallButton";
+import { primaryNav, secondaryNav } from "../lib/site";
 
 /**
  * Hamburger button (left side of the header) + the left slide-in panel.
@@ -79,19 +80,37 @@ export default function MenuPanel() {
         </div>
 
         <nav className="flex flex-col gap-1">
-          {primaryNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="font-display text-2xl font-semibold text-white transition-colors hover:text-accent"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {primaryNav.map((item) => {
+            const className =
+              "font-display text-2xl font-semibold text-white transition-colors hover:text-accent";
+
+            // Off-domain links can't use next/link routing — plain anchor, new tab.
+            return item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className={className}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={className}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="mt-8 flex flex-col gap-2 border-t border-line pt-6">
+        {/* Secondary links + CTA sit together at the bottom of the panel */}
+        <div className="mt-auto flex flex-col gap-2 border-t border-line pt-6">
           {secondaryNav.map((item) => (
             <Link
               key={item.href}
@@ -104,14 +123,12 @@ export default function MenuPanel() {
           ))}
         </div>
 
-        <a
-          href={CALENDLY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
-        >
-          Book a Call
-        </a>
+        {/* Closes the drawer as it opens — the modal is portaled to <body>,
+            so it isn't dragged off-screen with the panel. */}
+        <BookCallButton
+          onClick={() => setOpen(false)}
+          className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
+        />
       </aside>
     </>
   );
