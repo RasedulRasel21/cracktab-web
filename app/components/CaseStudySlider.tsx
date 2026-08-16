@@ -42,7 +42,9 @@ function Card({ cs }: { cs: CaseStudy }) {
         className="group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]"
       >
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover/card:scale-105"
+          // Top-anchored: these are site screenshots, so the header/hero is the
+          // recognisable part to keep when the square card crops.
+          className="absolute inset-0 bg-cover bg-top transition-transform duration-700 ease-out group-hover/card:scale-105"
           style={{ backgroundImage: `url(${cs.img})` }}
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100" />

@@ -1,4 +1,6 @@
-import { COLS, ROWS, DOT_R, LAND, project } from "../lib/worldMap";
+import { SUB_COLS, SUB_ROWS, DOT_R, landDots, project } from "../lib/worldMap";
+
+const DOTS = landDots();
 
 /**
  * Static dot-matrix world map with office pins — no image asset, no mapping
@@ -10,24 +12,20 @@ export type Pin = { label: string; address: string; lon: number; lat: number };
 function Dots() {
   return (
     <svg
-      viewBox={`0 0 ${COLS} ${ROWS}`}
+      viewBox={`0 0 ${SUB_COLS} ${SUB_ROWS}`}
       preserveAspectRatio="xMidYMid meet"
       className="absolute inset-0 h-full w-full"
       aria-hidden="true"
     >
-      {LAND.flatMap((ranges, row) =>
-        ranges.flatMap(([from, to]) =>
-          Array.from({ length: to - from + 1 }, (_, k) => (
-            <circle
-              key={`${row}-${from + k}`}
-              cx={from + k + 0.5}
-              cy={row + 0.5}
-              r={DOT_R}
-              fill="currentColor"
-            />
-          )),
-        ),
-      )}
+      {DOTS.map(([col, row]) => (
+        <circle
+          key={`${row}-${col}`}
+          cx={col + 0.5}
+          cy={row + 0.5}
+          r={DOT_R}
+          fill="currentColor"
+        />
+      ))}
     </svg>
   );
 }

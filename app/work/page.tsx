@@ -31,10 +31,12 @@ export default function WorkPage() {
               <Link
                 key={w.slug}
                 href={`/work/${w.slug}`}
-                className="group relative block aspect-[4/5] overflow-hidden rounded-2xl border border-line"
+                // Landscape box + top anchor: the images are site screenshots,
+                // so a portrait crop threw most of the design away.
+                className="group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-line"
               >
                 <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="absolute inset-0 bg-cover bg-top transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ backgroundImage: `url(${w.img})` }}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />

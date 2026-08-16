@@ -10,7 +10,16 @@
 export const COLS = 60;
 export const ROWS = 28;
 
-/** Dot radius in grid units — 0.5 would make adjacent dots touch. */
+/**
+ * Dots are drawn on a subdivided grid: each mask cell becomes SUB x SUB dots.
+ * That makes the texture finer and denser without re-authoring the mask — the
+ * continent outlines keep their original resolution.
+ */
+export const SUB = 2;
+export const SUB_COLS = COLS * SUB;
+export const SUB_ROWS = ROWS * SUB;
+
+/** Dot radius in *sub-cell* units — 0.5 would make adjacent dots touch. */
 export const DOT_R = 0.22;
 
 export const LAND: [number, number][][] = [
@@ -44,15 +53,38 @@ export const LAND: [number, number][][] = [
   [[17, 18]],
 ];
 
-/** Flat COLS*ROWS lookup — 1 where the cell is land. */
+/** Flat SUB_COLS*SUB_ROWS lookup — 1 where the sub-cell is land. */
 export function landMask(): Uint8Array {
-  const mask = new Uint8Array(COLS * ROWS);
+  const mask = new Uint8Array(SUB_COLS * SUB_ROWS);
   LAND.forEach((ranges, row) => {
     for (const [from, to] of ranges) {
-      for (let col = from; col <= to; col++) mask[row * COLS + col] = 1;
+      for (let col = from; col <= to; col++) {
+        for (let sy = 0; sy < SUB; sy++) {
+          for (let sx = 0; sx < SUB; sx++) {
+            mask[(row * SUB + sy) * SUB_COLS + col * SUB + sx] = 1;
+          }
+        }
+      }
     }
   });
   return mask;
+}
+
+/** Land dot positions as [col, row] pairs on the subdivided grid. */
+export function landDots(): [number, number][] {
+  const dots: [number, number][] = [];
+  LAND.forEach((ranges, row) => {
+    for (const [from, to] of ranges) {
+      for (let col = from; col <= to; col++) {
+        for (let sy = 0; sy < SUB; sy++) {
+          for (let sx = 0; sx < SUB; sx++) {
+            dots.push([col * SUB + sx, row * SUB + sy]);
+          }
+        }
+      }
+    }
+  });
+  return dots;
 }
 
 /** Lat/lon to a 0-100 percentage position, matching the dot grid exactly. */

@@ -79,10 +79,12 @@ export default function MenuPanel() {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1">
+        {/* Each row is a full-width band with a rule under it, so the links
+            read as a list rather than a stack of text. */}
+        <nav className="flex flex-col border-t border-line">
           {primaryNav.map((item) => {
             const className =
-              "font-display text-2xl font-semibold text-white transition-colors hover:text-accent";
+              "block border-b border-line py-4 font-display text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:text-accent";
 
             // Off-domain links can't use next/link routing — plain anchor, new tab.
             return item.external ? (
@@ -110,13 +112,13 @@ export default function MenuPanel() {
         </nav>
 
         {/* Secondary links + CTA sit together at the bottom of the panel */}
-        <div className="mt-auto flex flex-col gap-2 border-t border-line pt-6">
+        <div className="mt-auto flex flex-col">
           {secondaryNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="text-sm text-muted transition-colors hover:text-white"
+              className="block border-b border-line py-3 text-[0.7rem] font-medium uppercase tracking-[0.15em] text-muted transition-colors hover:text-white"
             >
               {item.label}
             </Link>

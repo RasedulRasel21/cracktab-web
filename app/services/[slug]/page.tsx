@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CtaBand from "../../components/CtaBand";
-import ProcessTimeline from "../../components/ProcessTimeline";
-import ServiceIcon from "../../components/ServiceIcon";
+import ProcessPanel from "../../components/ProcessPanel";
 import WorkMosaic from "../../components/WorkMosaic";
-import { serviceDetails } from "../../lib/site";
-import { bulletMeta } from "../../lib/serviceBullets";
+import { caseStudies, serviceDetails } from "../../lib/site";
 
 export function generateStaticParams() {
   return serviceDetails.map((s) => ({ slug: s.slug }));
@@ -38,6 +36,18 @@ export default async function ServiceDetailPage({
   const index = serviceDetails.findIndex((s) => s.slug === slug);
   const service = serviceDetails[index];
   if (!service) notFound();
+
+  // Imagery for process steps 02 onward. Uses this service's own case studies
+  // first, then any other real ones — swap in stage-specific shots when they
+  // exist by replacing this list.
+  const preferred = service.examples
+    .map((s) => caseStudies.find((c) => c.slug === s))
+    .filter((c) => c !== undefined)
+    .filter((c) => !c.placeholder);
+  const rest = caseStudies
+    .filter((c) => !c.placeholder)
+    .filter((c) => !preferred.some((p) => p.slug === c.slug));
+  const stepImages = [...preferred, ...rest].map((c) => c.img);
 
   return (
     <>
@@ -74,42 +84,12 @@ export default async function ServiceDetailPage({
 
       {/* ---- Our Process / What's included ---- */}
       <section className="px-5 pt-14 sm:px-8 sm:pt-20">
-        <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-12 border-t border-line pt-12 sm:pt-14 lg:grid-cols-[0.8fr_2.2fr] lg:gap-16">
-          {/* Timeline */}
-          <div>
-            <SectionHeading>Our Process</SectionHeading>
-            <ProcessTimeline steps={service.process} />
-          </div>
-
-          {/* Included cards */}
-          <div>
-            <SectionHeading>What&apos;s included</SectionHeading>
-            <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {service.bullets.map((label) => {
-                const meta = bulletMeta[label];
-                return (
-                  <li
-                    key={label}
-                    className="group rounded-xl border border-line bg-surface p-5 transition-colors duration-300 hover:border-accent/50"
-                  >
-                    {meta && (
-                      <span className="inline-flex text-accent">
-                        <ServiceIcon name={meta.icon} />
-                      </span>
-                    )}
-                    <h3 className="mt-6 font-display text-sm font-semibold leading-snug tracking-tight text-white transition-colors group-hover:text-accent">
-                      {label}
-                    </h3>
-                    {meta && (
-                      <p className="mt-2 text-xs leading-relaxed text-muted">
-                        {meta.note}
-                      </p>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        <div className="mx-auto w-full max-w-360 border-t border-line pt-12 sm:pt-14">
+          <ProcessPanel
+            steps={service.process}
+            bullets={service.bullets}
+            images={stepImages}
+          />
         </div>
       </section>
 

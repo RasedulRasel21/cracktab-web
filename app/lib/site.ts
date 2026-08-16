@@ -789,7 +789,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     focusResult:
       "Clarity mattered more than flash here — visitors needed to understand what they were buying within seconds. Full performance numbers will be added once available.",
-    img: "/works/die-schrothkur.webp",
+    img: "/works/die-schrothkur.jpeg",
   },
   /* SEZ Group — hidden for now (re-enable when ready)
   {

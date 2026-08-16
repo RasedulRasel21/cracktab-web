@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CtaBand from "../components/CtaBand";
 import WorldMap, { type Pin } from "../components/WorldMap";
 import WorldDotField from "../components/WorldDotField";
-import SupportWheel from "../components/SupportWheel";
+import SupportCoverflow from "../components/SupportCoverflow";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -118,14 +118,6 @@ export default function AboutPage() {
               platforms when the project, technology, or growth strategy
               requires a different solution.
             </p>
-            <p>
-              Over the past three years, we have helped launch, redesign,
-              migrate, optimize, and manage more than 50 ecommerce stores. Our
-              work combines thoughtful UI/UX design, reliable development,
-              technical problem-solving, SEO, and ongoing support — all focused
-              on building websites that are easy to use, easy to manage, and
-              designed to convert.
-            </p>
           </Prose>
 
           <Prose heading="Built for Ecommerce Growth">
@@ -135,24 +127,12 @@ export default function AboutPage() {
               guide customers toward the right products, and make purchasing
               feel effortless.
             </p>
-            <p>
-              That is why we approach every project with both design and
-              business performance in mind — considering the complete customer
-              journey, from the first landing-page visit to product discovery,
-              checkout, and post-purchase interaction.
-            </p>
           </Prose>
 
           <Prose heading="Who We Work With">
             <p>
               We work with startups, growing ecommerce brands, established
               retailers, and businesses that need a stronger digital presence.
-            </p>
-            <p>
-              Some clients come to us with an idea and need support launching
-              their first store. Others already have an active ecommerce
-              business but are struggling with poor usability, slow performance,
-              or a website that no longer represents the quality of their brand.
             </p>
           </Prose>
 
@@ -161,13 +141,6 @@ export default function AboutPage() {
               Shopify sits at the center of most of our ecommerce work because
               it gives growing brands a strong combination of usability,
               flexibility, security, and scalability.
-            </p>
-            <p>
-              At the same time, Shopify is not the only solution. When another
-              platform better suits the project, our team can work within that
-              environment or recommend the most practical path forward. Our goal
-              isn&apos;t to sell a platform — it&apos;s to create the right
-              digital solution for the business.
             </p>
           </Prose>
         </div>
@@ -222,7 +195,7 @@ export default function AboutPage() {
         </div>
 
         <div className="mx-auto mt-10 w-full max-w-360 px-5 sm:px-8">
-          <SupportWheel items={support} />
+          <SupportCoverflow items={support} />
         </div>
       </section>
 

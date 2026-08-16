@@ -94,7 +94,7 @@ const rowB: Card[] = [
     description:
       "A robust Shopify Plus platform with custom development tailored to the brand's needs.",
     tags: ["Shopify Plus", "Development"],
-    img: "/works/die-schrothkur.webp",
+    img: "/works/die-schrothkur.jpeg",
     href: "/work",
   },
 ];

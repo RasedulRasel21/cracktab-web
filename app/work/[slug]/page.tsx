@@ -58,9 +58,13 @@ export default async function CaseStudyPage({
                 className="group relative block"
                 aria-label={`Visit ${cs.name} live site`}
               >
-                <div
-                  className="aspect-[16/10] bg-cover bg-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  style={{ backgroundImage: `url(${cs.img})` }}
+                {/* Natural aspect, not a fixed crop box — these are full site
+                    screenshots, so any crop cuts the design off. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={cs.img}
+                  alt={`${cs.name} website`}
+                  className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/45">
                   <span className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -72,10 +76,11 @@ export default async function CaseStudyPage({
                 </div>
               </a>
             ) : (
-              <div
-                className="aspect-[16/10] bg-cover bg-top"
-                style={{ backgroundImage: `url(${cs.img})` }}
-                aria-hidden="true"
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={cs.img}
+                alt={`${cs.name} website`}
+                className="block w-full"
               />
             )}
           </div>

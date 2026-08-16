@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { COLS, ROWS, DOT_R, landMask } from "../lib/worldMap";
+import { SUB, SUB_COLS, SUB_ROWS, DOT_R, landMask } from "../lib/worldMap";
 
 /**
  * Cursor-reactive world map built from dots (canvas, no library).
@@ -15,7 +15,10 @@ import { COLS, ROWS, DOT_R, landMask } from "../lib/worldMap";
  *  once, the ambient pass is a tight loop, and the trail is *scattered* only
  *  over the cells it touches, so cost scales with the trail, not the grid.
  */
-const TRAIL_R = 78; // snake trail radius (px) — thinner = snakier
+// Trail radius in *cells*, not pixels — the dot grid rescales with the
+// viewport, and a fixed pixel radius would fatten the snake as dots shrink.
+// ~2.5 cells matches the home hero's AsciiField (46px over a 19px cell).
+const TRAIL_CELLS = 2.5;
 const TRAIL_MAX = 240; // max points retained in the trail (long tail)
 const TRAIL_DECAY = 0.016; // life lost per frame — lower = longer tail
 const TRAIL_SWELL = 0.6; // how much a lit dot grows at the trail head
@@ -23,8 +26,8 @@ const TRAIL_SWELL = 0.6; // how much a lit dot grows at the trail head
 // The mask covers 28 rows of latitude, but rows 0-1 and 26-27 are near-empty
 // polar water — including them leaves blank strips top and bottom. Fitting the
 // *land* band to the section height instead is what keeps the field full.
-const FOCUS_TOP = 2;
-const FOCUS_ROWS = 24; // rows 2-25
+const FOCUS_TOP = 2 * SUB;
+const FOCUS_ROWS = 24 * SUB; // mask rows 2-25, in sub-cells
 
 function hash(x: number, y: number): number {
   let h = (x * 374761393 + y * 668265263) | 0;
@@ -56,6 +59,7 @@ export default function WorldDotField({
     let cellX = 0;
     let cellY = 0;
     let cellMin = 0;
+    let trailR = 0;
     let offY = 0;
     let raf = 0;
     let running = false;
@@ -75,9 +79,10 @@ export default function WorldDotField({
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       // Full map width always shows — cropping columns would cut continents
       // off a *world* map. Height stretches the land band to fill instead.
-      cellX = width / COLS;
+      cellX = width / SUB_COLS;
       cellY = height / FOCUS_ROWS;
       cellMin = Math.min(cellX, cellY);
+      trailR = cellMin * TRAIL_CELLS;
       offY = -FOCUS_TOP * cellY;
     }
 
@@ -92,13 +97,14 @@ export default function WorldDotField({
       const r0 = DOT_R * cellMin;
 
       // ---- Ambient pass (continents, subtle twinkle) ----
-      for (let row = 0; row < ROWS; row++) {
+      for (let row = 0; row < SUB_ROWS; row++) {
         const py = offY + (row + 0.5) * cellY;
-        const rowOff = row * COLS;
-        for (let col = 0; col < COLS; col++) {
+        const rowOff = row * SUB_COLS;
+        for (let col = 0; col < SUB_COLS; col++) {
           if (mask[rowOff + col] === 0) continue;
           const px = (col + 0.5) * cellX;
-          const a = 0.1 * (0.75 + 0.25 * Math.sin(t * 1.1 + hash(col, row) * 6.2831));
+          const a =
+            0.14 * (0.75 + 0.25 * Math.sin(t * 1.1 + hash(col, row) * 6.2831));
           c.fillStyle = `rgba(214,220,228,${a})`;
           c.beginPath();
           c.arc(px, py, r0, 0, Math.PI * 2);
@@ -132,19 +138,19 @@ export default function WorldDotField({
           continue;
         }
         // Scatter over the land cells this point covers.
-        const c0 = Math.max(0, (((p.x - TRAIL_R) / cellX) | 0));
-        const c1 = Math.min(COLS - 1, (((p.x + TRAIL_R) / cellX) | 0));
-        const r1 = Math.max(0, (((p.y - TRAIL_R - offY) / cellY) | 0));
-        const r2 = Math.min(ROWS - 1, (((p.y + TRAIL_R - offY) / cellY) | 0));
+        const c0 = Math.max(0, (((p.x - trailR) / cellX) | 0));
+        const c1 = Math.min(SUB_COLS - 1, (((p.x + trailR) / cellX) | 0));
+        const r1 = Math.max(0, (((p.y - trailR - offY) / cellY) | 0));
+        const r2 = Math.min(SUB_ROWS - 1, (((p.y + trailR - offY) / cellY) | 0));
         for (let row = r1; row <= r2; row++) {
           const py = offY + (row + 0.5) * cellY;
-          const rowOff = row * COLS;
+          const rowOff = row * SUB_COLS;
           for (let col = c0; col <= c1; col++) {
             if (mask[rowOff + col] === 0) continue;
             const px = (col + 0.5) * cellX;
             const dist = Math.hypot(px - p.x, py - p.y);
-            if (dist > TRAIL_R) continue;
-            const f = (1 - dist / TRAIL_R) * p.life;
+            if (dist > trailR) continue;
+            const f = (1 - dist / trailR) * p.life;
             if (f < 0.06) continue;
             const a = Math.min(1, 0.15 + f * 0.85);
             // hot white core at the freshest, brightest touch; lime otherwise
