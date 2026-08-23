@@ -39,38 +39,38 @@ export const services: Service[] = [
   {
     title: "Shopify Development",
     description:
-      "Custom Shopify and Shopify Plus stores, built from scratch and tuned for speed.",
+      "Custom Shopify and Shopify Plus stores, built from scratch and tuned for speed. We handle everything from theme development and migrations to third-party integrations, so your store is fast, scalable, and easy to manage as you grow.",
     href: "/services/shopify-development",
     tag: "Shopify Plus Partner",
   },
   {
     title: "Shopify App Development",
     description:
-      "Custom Shopify apps and integrations when off-the-shelf isn't enough.",
+      "Custom Shopify apps built to solve problems the App Store can't. Whether it's automating a manual workflow, connecting Shopify to your internal systems, or building a feature unique to your business, we design and develop apps that fit into your store without slowing it down.",
     href: "/services/shopify-app-development",
   },
   {
     title: "UI/UX Design",
     description:
-      "Design that turns visitors into customers, from wireframe to final pixel.",
+      "Store design that's built to convert, not just look good. We map out user flows, wireframe key pages, and design interfaces that reduce friction at checkout — so visitors have a clear path from landing page to purchase.",
     href: "/services/ui-ux-design",
   },
   {
     title: "Ecommerce SEO",
     description:
-      "SEO strategy built around how people shop — the searches that lead to a purchase, not just traffic.",
+      "Technical and on-page SEO built specifically for Shopify stores. From site structure and page speed to product page optimization and content strategy, we help your store rank for the searches that actually drive buyers, not just traffic.",
     href: "/services/ecommerce-seo",
   },
   {
     title: "Ecommerce Growth & CRO",
     description:
-      "Continuous testing, customer insights, and data-driven optimization to increase conversion and grow revenue.",
+      "Data-driven conversion rate optimization to turn more visitors into customers. We run A/B tests, analyze funnel drop-off, and refine everything from product pages to checkout flow — so growth comes from your existing traffic, not just ad spend.",
     href: "/services/ecommerce-growth-cro",
   },
   {
     title: "Custom Business Websites",
     description:
-      "Professional websites tailored to your goals — from corporate sites to landing pages and web apps.",
+      "Professional websites tailored to your goals — from corporate sites to landing pages and web apps. Built with clean code and a design that reflects your brand, these are made to load fast, scale easily, and support whatever comes next.",
     href: "/services/custom-business-websites",
     featured: true,
   },
@@ -915,5 +915,102 @@ export const socials: Social[] = [
     label: "YouTube",
     href: "https://youtube.com/channel/UCNb4MhdV2wfhYcR6yvqU4wQ",
     icon: "youtube",
+  },
+];
+
+// ------------------------------------------------------------------
+//  Homepage — services overview, testimonials, process, FAQ
+// ------------------------------------------------------------------
+
+/** Short lead-in above the homepage service list. */
+export const servicesIntro =
+  "As a full-service Shopify design and development agency, we handle everything from custom store builds to ongoing growth support. Explore our services below, or view all to see the full picture.";
+
+export type Testimonial = { quote: string; name: string; title: string; brand: string };
+
+/**
+ * PLACEHOLDER testimonials — swap `name` / `title` / `brand` for real client
+ * details before launch. The quotes show the format to collect.
+ */
+export const testimonials: Testimonial[] = [
+  {
+    quote:
+      "Cracktab rebuilt our Shopify store from the ground up and our page speed alone made a noticeable difference in conversions. They understood our brand without us having to over-explain it.",
+    name: "[Name]",
+    title: "[Title]",
+    brand: "[Brand]",
+  },
+  {
+    quote:
+      "We'd worked with three other agencies before Cracktab. This was the first team that actually shipped on time and the store still holds up months later.",
+    name: "[Name]",
+    title: "[Title]",
+    brand: "[Brand]",
+  },
+  {
+    quote:
+      "What stood out was how much they cared about the details — not just building the store, but making sure it actually converted.",
+    name: "[Name]",
+    title: "[Title]",
+    brand: "[Brand]",
+  },
+];
+
+/**
+ * Homepage process. Deliberately separate from `processSteps` (used on
+ * /services) — this version is written for a first-time visitor.
+ */
+export const homeProcess: { no: string; title: string; description: string }[] = [
+  {
+    no: "01",
+    title: "Discovery",
+    description:
+      "We start by understanding your brand, your current store (if you have one), and where things are breaking down. No generic templates — every recommendation is based on your actual goals and traffic.",
+  },
+  {
+    no: "02",
+    title: "Design",
+    description:
+      "We wireframe key pages and design a store that's built to convert, not just look good — mapping the user journey from landing page to checkout before a single line of code is written.",
+  },
+  {
+    no: "03",
+    title: "Development",
+    description:
+      "Our team builds your Shopify or Shopify Plus store from scratch, tuned for speed and scalability, with clean code that's easy to maintain and extend as you grow.",
+  },
+  {
+    no: "04",
+    title: "Launch & Growth",
+    description:
+      "We don't disappear after launch. From SEO to CRO to ongoing support, we stay involved to help your store keep performing as your traffic and catalog grow.",
+  },
+];
+
+/** Homepage FAQ — buyer-intent questions, distinct from the fuller /faq list. */
+export const homeFaq: Faq[] = [
+  {
+    q: "How long does a Shopify build take?",
+    a: "Timelines vary by scope, but most custom Shopify stores take 4–8 weeks from kickoff to launch. Larger Shopify Plus builds or migrations can take longer — we'll give you a clear timeline after discovery.",
+  },
+  {
+    q: "Do you work with Shopify Plus?",
+    a: "Yes — we're a Shopify Plus Partner and regularly build and migrate stores on Plus for growing and enterprise brands.",
+  },
+  {
+    q: "Can you migrate our existing store to Shopify?",
+    a: "Yes, we handle migrations from platforms like WooCommerce, Magento, and BigCommerce, as well as Shopify-to-Shopify Plus upgrades, without losing SEO rankings or historical data.",
+  },
+  {
+    q: "Do you offer ongoing support after launch?",
+    a: "Yes — we offer ongoing support and growth services including SEO, CRO, and maintenance, so your store keeps improving after it goes live.",
+  },
+  {
+    q: "What industries do you work with?",
+    a: "We've built stores across beauty, wellness, fashion, food and beverage, and home goods, among others. Our approach is tailored to your brand rather than a one-size-fits-all template.",
+  },
+  {
+    q: "Do you build custom Shopify apps too?",
+    a: "Yes — if there's a workflow or feature the Shopify App Store can't handle, we design and develop custom apps that integrate directly with your store.",
   },
 ];

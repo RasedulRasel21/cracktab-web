@@ -8,11 +8,14 @@ export default function PageHeader({
   eyebrow,
   title,
   subtitle,
+  action,
   center = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
   subtitle?: ReactNode;
+  /** Optional CTA rendered under the subtitle, above the fold. */
+  action?: ReactNode;
   center?: boolean;
 }) {
   return (
@@ -45,6 +48,7 @@ export default function PageHeader({
             {subtitle}
           </p>
         )}
+        {action && <div className="mt-8">{action}</div>}
       </div>
     </section>
   );

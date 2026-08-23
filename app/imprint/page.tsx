@@ -14,18 +14,12 @@ export default function ImprintPage() {
       <section className="pb-24">
         <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
           <div className="max-w-3xl">
-          <p className="mb-10 rounded-xl border border-accent/30 bg-accent/5 p-4 text-sm leading-relaxed text-muted">
-            <strong className="text-accent">Placeholder draft — not legal advice.</strong>{" "}
-            An &ldquo;Imprint&rdquo; is an EU/Germany requirement, included
-            voluntarily as Cracktab serves EU clients. Review with a licensed
-            attorney before publishing.
-          </p>
-
           <div className="space-y-10 text-base leading-relaxed text-muted">
             <div>
               <h2 className="mb-3 font-display text-xl font-medium text-white">Company Information</h2>
               <p>
-                Cracktab [LLC / Inc. — confirm legal entity type]
+                {/* TODO(legal): append the registered entity type, e.g. "Cracktab LLC". */}
+                Cracktab
                 <br />
                 6545 Market Ave N, Ste 100, Canton, OH 44721, United States
               </p>

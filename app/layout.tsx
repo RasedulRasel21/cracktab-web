@@ -21,7 +21,7 @@ const SITE_URL = "https://cracktab.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Cracktab — Shopify Website Design Agency",
+    default: "Cracktab — Shopify Website Design and Development Agency",
     template: "%s · Cracktab",
   },
   description:
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Cracktab",
-    title: "Cracktab — Shopify Website Design Agency",
+    title: "Cracktab — Shopify Website Design and Development Agency",
     description:
       "Shopify stores built to perform. Built to last. From launch to scale.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cracktab — Shopify Website Design Agency",
+    title: "Cracktab — Shopify Website Design and Development Agency",
     description:
       "Shopify stores built to perform. Built to last. From launch to scale.",
   },

@@ -34,13 +34,10 @@ export default function PrivacyPage() {
       <section className="pb-24">
         <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
           <div className="max-w-3xl text-base leading-relaxed text-muted">
-          <p className="mb-8 rounded-xl border border-accent/30 bg-accent/5 p-4 text-sm">
-            <strong className="text-accent">Placeholder draft — not legal advice.</strong>{" "}
-            Drafted around US/Ohio norms with CCPA and GDPR nods. Review with a
-            licensed attorney before publishing.
+          {/* TODO(legal): replace with the real publication date. */}
+          <p className="mb-2 text-sm text-white/70">
+            Effective Date: August 23, 2026
           </p>
-
-          <p className="mb-2 text-sm text-white/70">Effective Date: [Insert Date]</p>
           <p className="mb-10">
             Cracktab (&ldquo;Cracktab,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo;
             or &ldquo;our&rdquo;) respects your privacy. This Privacy Policy

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CtaBand from "../../components/CtaBand";
+import BookCallButton from "../../components/BookCallButton";
 import ProcessPanel from "../../components/ProcessPanel";
 import WorkMosaic from "../../components/WorkMosaic";
 import { caseStudies, serviceDetails } from "../../lib/site";
@@ -61,6 +62,11 @@ export default async function ServiceDetailPage({
           <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {service.intro}
           </p>
+
+          {/* Above-the-fold CTA — every service page needs one entry point */}
+          <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+            Get a Free Store Audit
+          </BookCallButton>
         </div>
       </section>
 
@@ -88,6 +94,7 @@ export default async function ServiceDetailPage({
           <ProcessPanel
             steps={service.process}
             bullets={service.bullets}
+            slug={service.slug}
             images={stepImages}
           />
         </div>

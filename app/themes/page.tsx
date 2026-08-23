@@ -7,9 +7,9 @@ import BookCallButton from "../components/BookCallButton";
 import { type Faq } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Custom Shopify Themes",
+  title: "Custom Shopify Themes Built for Speed and Conversion",
   description:
-    "High-converting custom Shopify themes built for speed, UX and scale — designed by Cracktab's senior UI/UX engineers and optimized for Core Web Vitals.",
+    "Premium, high-converting Shopify themes engineered by an active Shopify Plus agency. Fast, SEO-ready, and built to boost conversions. Browse themes now.",
 };
 
 const agencyFeatures = [

@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { services } from "../lib/site";
+import { services, servicesIntro } from "../lib/site";
 
 function PlusIcon({ open }: { open: boolean }) {
   // Plus that spins a half-turn clockwise while the vertical bar collapses,
   // so opening a row reads as the plus rotating into a minus.
   return (
     <span
+      aria-hidden="true"
       className={`relative flex h-5 w-5 shrink-0 items-center justify-center text-accent transition-transform duration-300 ease-out ${
         open ? "rotate-180" : "rotate-0"
       }`}
@@ -39,8 +40,7 @@ export default function Services() {
             Our <span className="text-accent">service</span> offering
           </h2>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
-            A quick look at what we do — each one links out to its own page with
-            the full detail.
+            {servicesIntro}
           </p>
           <Link
             href="/services"
@@ -59,17 +59,19 @@ export default function Services() {
             const isOpen = open === i;
             return (
               <div key={s.href} className="border-t border-line last:border-b">
-                <button
-                  type="button"
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-4 py-6 text-left"
-                >
-                  <PlusIcon open={isOpen} />
-                  <span className="flex-1 font-display text-xl font-medium tracking-tight text-white transition-colors group-hover:text-accent sm:text-2xl">
-                    {s.title}
-                  </span>
-                </button>
+                <h3>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="group flex w-full items-center gap-4 py-6 text-left"
+                  >
+                    <PlusIcon open={isOpen} />
+                    <span className="flex-1 font-display text-xl font-medium tracking-tight text-white transition-colors group-hover:text-accent sm:text-2xl">
+                      {s.title}
+                    </span>
+                  </button>
+                </h3>
 
                 {/* Expandable panel (grid-rows trick — smooth, no JS height calc) */}
                 <div

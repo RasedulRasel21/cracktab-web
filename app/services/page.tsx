@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BookCallButton from "../components/BookCallButton";
+import Clients from "../components/Clients";
+import Stats from "../components/Stats";
 import PageHeader from "../components/PageHeader";
 import Accordion from "../components/Accordion";
 import CtaBand from "../components/CtaBand";
@@ -11,9 +14,10 @@ import {
 } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Services",
+  // absolute — the doc title already carries the brand, so skip the template
+  title: { absolute: "Shopify Development and Ecommerce Services | Cracktab" },
   description:
-    "Shopify services that drive results — development, apps, UI/UX, SEO, management, custom websites, and growth + CRO.",
+    "Full-service Shopify agency offering development, migration, redesign, UI/UX, SEO, CRO, and marketing. Book a free consultation and scale your store today.",
 };
 
 function ArrowUpRight() {
@@ -36,6 +40,11 @@ export default function ServicesPage() {
           </>
         }
         subtitle="Your Shopify agency for every stage of growth. From building a store from scratch to complex Shopify Plus implementations, we specialize exclusively in ecommerce stores that convert — whether you're a first-time founder or an established brand ready to scale."
+        action={
+          <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+            Get a Free Store Audit
+          </BookCallButton>
+        }
       />
 
       {/* 7-service grid */}
@@ -126,6 +135,15 @@ export default function ServicesPage() {
           </ul>
         </div>
       </section>
+
+      {/* Credibility block: the homepage numbers, then the client logos */}
+      <section className="pt-16 sm:pt-20">
+        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
+          <Stats />
+        </div>
+      </section>
+
+      <Clients />
 
       {/* Services FAQ */}
       <section className="py-20 sm:py-28">

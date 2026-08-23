@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ServiceIcon from "./ServiceIcon";
-import { bulletMeta } from "../lib/serviceBullets";
+import { bulletCopy } from "../lib/serviceBulletNotes";
 
 /**
  * "Our Process" timeline paired with the panel it drives.
@@ -14,10 +14,13 @@ import { bulletMeta } from "../lib/serviceBullets";
 export default function ProcessPanel({
   steps,
   bullets,
+  slug,
   images,
 }: {
   steps: string[];
   bullets: string[];
+  /** Service slug — selects that page's own card copy. */
+  slug: string;
   images: string[];
 }) {
   const [active, setActive] = useState(0);
@@ -100,7 +103,7 @@ export default function ProcessPanel({
         {showCards ? (
           <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {bullets.map((label) => {
-              const meta = bulletMeta[label];
+              const meta = bulletCopy(slug, label);
               return (
                 <li
                   key={label}
