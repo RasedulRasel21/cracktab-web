@@ -926,33 +926,47 @@ export const socials: Social[] = [
 export const servicesIntro =
   "As a full-service Shopify design and development agency, we handle everything from custom store builds to ongoing growth support. Explore our services below, or view all to see the full picture.";
 
-export type Testimonial = { quote: string; name: string; title: string; brand: string };
+export type Testimonial = {
+  quote: string;
+  name: string;
+  title: string;
+  brand: string;
+  /** Headline results, shown as chips under the quote. */
+  metrics: string[];
+};
 
-/**
- * PLACEHOLDER testimonials — swap `name` / `title` / `brand` for real client
- * details before launch. The quotes show the format to collect.
- */
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Cracktab rebuilt our Shopify store from the ground up and our page speed alone made a noticeable difference in conversions. They understood our brand without us having to over-explain it.",
-    name: "[Name]",
-    title: "[Title]",
-    brand: "[Brand]",
+      "Cracktab understood our values as a vegan, cruelty-free beauty brand and built a store that tells our story beautifully. Higher sales, happier customers, seamless shopping.",
+    name: "Lena Roberts",
+    title: "Head of Brand",
+    brand: "ForChics",
+    metrics: ["+200% conversion rate", "+240% revenue"],
   },
   {
     quote:
-      "We'd worked with three other agencies before Cracktab. This was the first team that actually shipped on time and the store still holds up months later.",
-    name: "[Name]",
-    title: "[Title]",
-    brand: "[Brand]",
+      "Cracktab turned our needs into a beautifully-optimized store that truly represents our mission. Stronger customer trust, a smoother experience, and a big jump in conversions. Couldn't have asked for a better partner.",
+    name: "Lena Müller",
+    title: "Founder",
+    brand: "Femdisc",
+    metrics: ["+200% conversion rate", "+240% revenue"],
   },
   {
     quote:
-      "What stood out was how much they cared about the details — not just building the store, but making sure it actually converted.",
-    name: "[Name]",
-    title: "[Title]",
-    brand: "[Brand]",
+      "Cracktab completely understood what Lockeroom stands for — performance, recovery, simplicity — and built a store that delivers exactly that. Our conversion rate has doubled.",
+    name: "James Carter",
+    title: "Founder",
+    brand: "Lockeroom",
+    metrics: ["+180% conversion rate", "+220% revenue"],
+  },
+  {
+    quote:
+      "Cracktab built a stunning, high-performing store that truly represents our brand. Since launch, our conversion rate has doubled, and customer feedback has been fantastic.",
+    name: "Emma Lawson",
+    title: "Brand Director",
+    brand: "The Conscious Bar",
+    metrics: ["+150% conversion rate", "+280% revenue"],
   },
 ];
 

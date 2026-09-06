@@ -7,7 +7,9 @@ import BookCallButton from "../components/BookCallButton";
 import { type Faq } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Custom Shopify Themes Built for Speed and Conversion",
+  // `absolute` opts out of the root "%s · Cracktab" template — this title is
+  // already at the SEO-recommended length without the brand suffix.
+  title: { absolute: "Custom Shopify Themes Built for Speed and Conversion" },
   description:
     "Premium, high-converting Shopify themes engineered by an active Shopify Plus agency. Fast, SEO-ready, and built to boost conversions. Browse themes now.",
 };

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s · Cracktab",
   },
   description:
-    "Cracktab designs and develops Shopify stores that look premium, move fast, and turn browsers into buyers — built for brands ready to grow.",
+    "Scale your Shopify store with Cracktab. Expert custom web development, store redesigns, and data-driven CRO strategies to boost conversions and sales.",
   keywords: [
     "Shopify agency",
     "Shopify Plus partner",
