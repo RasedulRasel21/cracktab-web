@@ -125,20 +125,31 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
   },
 ];
 
-export const contact = {
-  phone: "+1 (234) 901-2506",
-  phoneHref: "tel:+12349012506",
-  offices: [
-    {
-      label: "Bangladesh office",
-      address: "24/A, Road 1, Mirpur DOHS, Dhaka - 1216",
-    },
-    {
-      label: "US office",
-      address: "6545 Market Ave N, Ste 100 Canton, OH 44721",
-    },
-  ],
+const PHONE = "+1 (234) 901-2506";
+const PHONE_HREF = "tel:+12349012506";
+
+/** `phone` is set on the office the number actually reaches. */
+export type Office = {
+  label: string;
+  address: string;
+  phone?: string;
+  phoneHref?: string;
 };
+
+const offices: Office[] = [
+  {
+    label: "Bangladesh office",
+    address: "24/A, Road 1, Mirpur DOHS, Dhaka - 1216",
+  },
+  {
+    label: "US office",
+    address: "6545 Market Ave N, Ste 100 Canton, OH 44721",
+    phone: PHONE,
+    phoneHref: PHONE_HREF,
+  },
+];
+
+export const contact = { phone: PHONE, phoneHref: PHONE_HREF, offices };
 
 export const EMAIL = "hello@cracktab.com";
 
@@ -843,7 +854,23 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 // ------------------------------------------------------------------
-//  Blog (index only for now)
+//  Canonical origin
+// ------------------------------------------------------------------
+
+/**
+ * One source of truth for absolute URLs — canonical tags, OG images, the
+ * sitemap and the RSS feed all build off this. Overridable per environment so
+ * preview deploys don't advertise the production origin as their canonical.
+ */
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://cracktab.com";
+
+/** Absolute URL for a site-relative path. */
+export const absoluteUrl = (path: string) =>
+  `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+
+// ------------------------------------------------------------------
+//  Blog (seed content — the live posts come from the database)
 // ------------------------------------------------------------------
 export type BlogPost = {
   title: string;

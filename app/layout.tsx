@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ChromeGate from "./components/ChromeGate";
+import { SITE_URL } from "./lib/site";
 
 // Self-hosted Urbanist (files in /public/fonts) — used site-wide.
 const urbanist = localFont({
@@ -16,10 +18,11 @@ const urbanist = localFont({
   display: "swap",
 });
 
-const SITE_URL = "https://cracktab.com";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  // Every page sets its own; this is the default for anything that doesn't.
+  // The site had no canonical tag at all before — an SEO audit flagged it.
+  alternates: { canonical: "/" },
   title: {
     default: "Cracktab — Shopify Website Design and Development Agency",
     template: "%s · Cracktab",
@@ -59,9 +62,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${urbanist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white font-sans">
-        <Header />
+        <ChromeGate>
+          <Header />
+        </ChromeGate>
         <main className="flex flex-1 flex-col">{children}</main>
-        <Footer />
+        <ChromeGate>
+          <Footer />
+        </ChromeGate>
       </body>
     </html>
   );

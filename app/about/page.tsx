@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import CtaBand from "../components/CtaBand";
 import WorldMap, { type Pin } from "../components/WorldMap";
 import WorldDotField from "../components/WorldDotField";
-import SupportCoverflow from "../components/SupportCoverflow";
+import SupportSlider from "../components/SupportSlider";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
     "Cracktab is a website design, development, and growth agency helping ambitious brands build better digital experiences and scale with confidence.",
+  alternates: { canonical: "/about" },
 };
 
 const howWeWork = [
@@ -88,7 +89,7 @@ export default function AboutPage() {
       {/* ---- Hero ---- */}
       {/* The header is fixed (h-14 / sm:h-16) and so takes no flow space —
           the matching top margin starts the hero below it instead of under it. */}
-      <section className="relative mt-14 flex min-h-[85vh] flex-col justify-center overflow-hidden px-5 pb-20 pt-16 sm:mt-16 sm:px-8 sm:pb-24 sm:pt-20">
+      <section className="relative mt-14 flex min-h-[70vh] flex-col justify-center overflow-hidden px-5 pb-16 pt-16 sm:mt-16 sm:min-h-[85vh] sm:px-8 sm:pb-24 sm:pt-20">
         <WorldDotField />
         <div
           aria-hidden="true"
@@ -181,7 +182,7 @@ export default function AboutPage() {
       {/* ---- Support after launch ---- */}
       <section className="py-16 sm:py-20">
         {/* Heading and intro share their own row, so neither is squeezed into
-            a narrow column and the wheel below gets the full width. */}
+            a narrow column and the strip below gets the full width. */}
         <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:items-end lg:gap-16">
             <h2 className="font-display text-2xl font-semibold leading-tight tracking-tight text-white sm:text-[1.75rem]">
@@ -195,14 +196,23 @@ export default function AboutPage() {
         </div>
 
         <div className="mx-auto mt-10 w-full max-w-360 px-5 sm:px-8">
-          <SupportCoverflow items={support} />
+          <SupportSlider items={support} />
         </div>
       </section>
 
       {/* ---- Where we work ---- */}
       <section className="px-5 pb-8 pt-6 sm:px-8 sm:pb-12">
         <div className="mx-auto w-full max-w-360">
-          <WorldMap pins={offices} />
+          {/* The map alone reads as decoration on a phone, where the pins are
+              small and the office cards sit well below it — the heading says
+              what the section is before it scrolls into view. */}
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-[1.75rem]">
+            Our Locations
+          </h2>
+
+          <div className="mt-8">
+            <WorldMap pins={offices} />
+          </div>
         </div>
       </section>
 

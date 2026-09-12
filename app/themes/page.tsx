@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: { absolute: "Custom Shopify Themes Built for Speed and Conversion" },
   description:
     "Premium, high-converting Shopify themes engineered by an active Shopify Plus agency. Fast, SEO-ready, and built to boost conversions. Browse themes now.",
+  alternates: { canonical: "/themes" },
 };
 
 const agencyFeatures = [

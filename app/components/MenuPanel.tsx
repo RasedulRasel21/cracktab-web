@@ -34,7 +34,8 @@ export default function MenuPanel() {
         aria-label="Open menu"
         aria-expanded={open}
         aria-controls="site-menu"
-        className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-white transition-colors hover:border-accent hover:text-accent"
+        // No ring around the bars — the 44px box is kept for the tap target.
+        className="group inline-flex h-11 w-11 items-center justify-center text-white transition-colors hover:text-accent"
       >
         <span className="sr-only">Menu</span>
         <span aria-hidden="true" className="flex flex-col items-center gap-[5px]">
@@ -59,7 +60,10 @@ export default function MenuPanel() {
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
-        className={`fixed left-0 top-0 z-50 flex h-dvh w-[min(88vw,22rem)] flex-col border-r border-line bg-surface px-7 pb-8 pt-6 transition-transform duration-300 ease-out ${
+        // Full-bleed on a phone — a sliver of page showing down one side reads
+        // as a mistake at that width. From `sm` up it goes back to a panel,
+        // where the edge (and its border) is the point.
+        className={`fixed left-0 top-0 z-50 flex h-dvh w-full flex-col border-line border-r-0 bg-surface px-7 pb-8 pt-6 transition-transform duration-300 ease-out sm:w-[min(88vw,22rem)] sm:border-r ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

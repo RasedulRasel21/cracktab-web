@@ -29,6 +29,24 @@ const TRAIL_SWELL = 0.6; // how much a lit dot grows at the trail head
 const FOCUS_TOP = 2 * SUB;
 const FOCUS_ROWS = 24 * SUB; // mask rows 2-25, in sub-cells
 
+// A phone hero is tall and narrow, so `width / SUB_COLS` lands near 3px. Left
+// alone, stretching the 48-row land band over the full height smeared the
+// continents ~4x vertically *and* left every dot sub-pixel — the field simply
+// disappeared. Capping row height against column width holds the map in
+// proportion; the band is then centred in the section instead of filling it.
+// Desktop cells already sit near 1:1, so the cap never bites there.
+const MAX_STRETCH = 1.6;
+// Floors in CSS px. A 0.7px dot at 14% alpha antialiases into nothing, and a
+// trail radius of a few px is smaller than a fingertip.
+const MIN_DOT_R = 1;
+const MIN_TRAIL_R = 24;
+// Ambient alpha, and how far it may be scaled up once cells fall below the
+// reference size — smaller dots read fainter, so they need more alpha to keep
+// the same presence.
+const AMBIENT_A = 0.14;
+const AMBIENT_REF_CELL = 7;
+const AMBIENT_MAX = 1.8;
+
 function hash(x: number, y: number): number {
   let h = (x * 374761393 + y * 668265263) | 0;
   h = (h ^ (h >> 13)) * 1274126177;
@@ -59,6 +77,8 @@ export default function WorldDotField({
     let cellX = 0;
     let cellY = 0;
     let cellMin = 0;
+    let dotR = 0;
+    let ambient = AMBIENT_A;
     let trailR = 0;
     let offY = 0;
     let raf = 0;
@@ -78,12 +98,19 @@ export default function WorldDotField({
       cv.height = Math.floor(height * dpr);
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       // Full map width always shows — cropping columns would cut continents
-      // off a *world* map. Height stretches the land band to fill instead.
+      // off a *world* map. Height stretches the land band to fill instead,
+      // up to MAX_STRETCH; past that the band is centred rather than smeared.
       cellX = width / SUB_COLS;
-      cellY = height / FOCUS_ROWS;
+      cellY = Math.min(height / FOCUS_ROWS, cellX * MAX_STRETCH);
       cellMin = Math.min(cellX, cellY);
-      trailR = cellMin * TRAIL_CELLS;
-      offY = -FOCUS_TOP * cellY;
+      dotR = Math.max(DOT_R * cellMin, MIN_DOT_R);
+      ambient =
+        AMBIENT_A *
+        Math.min(AMBIENT_MAX, Math.max(1, AMBIENT_REF_CELL / cellMin));
+      trailR = Math.max(cellMin * TRAIL_CELLS, MIN_TRAIL_R);
+      // With the cap idle this is exactly the old `-FOCUS_TOP * cellY`, since
+      // the band then fills the height on its own.
+      offY = (height - FOCUS_ROWS * cellY) / 2 - FOCUS_TOP * cellY;
     }
 
     function pushTrail(x: number, y: number) {
@@ -94,7 +121,7 @@ export default function WorldDotField({
     function render(time: number) {
       c.clearRect(0, 0, width, height);
       const t = time * 0.001;
-      const r0 = DOT_R * cellMin;
+      const r0 = dotR;
 
       // ---- Ambient pass (continents, subtle twinkle) ----
       for (let row = 0; row < SUB_ROWS; row++) {
@@ -104,7 +131,8 @@ export default function WorldDotField({
           if (mask[rowOff + col] === 0) continue;
           const px = (col + 0.5) * cellX;
           const a =
-            0.14 * (0.75 + 0.25 * Math.sin(t * 1.1 + hash(col, row) * 6.2831));
+            ambient *
+            (0.75 + 0.25 * Math.sin(t * 1.1 + hash(col, row) * 6.2831));
           c.fillStyle = `rgba(214,220,228,${a})`;
           c.beginPath();
           c.arc(px, py, r0, 0, Math.PI * 2);

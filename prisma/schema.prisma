@@ -1,0 +1,149 @@
+// Cracktab website database — cracktab_web on the shared cracktab-db droplet.
+//
+// Prisma 7 no longer accepts connection URLs here. Migrations read theirs from
+// prisma.config.ts (DIRECT_URL, port 5432 — PgBouncer's transaction mode can't
+// serve the session-level connections Migrate needs), and the runtime client
+// gets its own through a driver adapter in app/lib/db.ts (DATABASE_URL, 6432).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------- accounts
+
+enum Role {
+  ADMIN // can manage users and edit anyone's posts
+  AUTHOR // can write and manage their own posts
+}
+
+model User {
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
+  passwordHash String
+  role         Role    @default(AUTHOR)
+  /// Shown on the post byline when set.
+  bio          String?
+  avatarUrl    String?
+
+  posts    Post[]
+  uploads  Media[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------- content
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+/// Categories nest. A post attaches to exactly one — parent or child — and a
+/// parent's archive shows everything beneath it, so "Shopify" lists posts filed
+/// under "Shopify / Migrations" too.
+model Category {
+  id          String  @id @default(cuid())
+  /// Not globally unique: "Guides" is a reasonable child of two different
+  /// parents. Uniqueness is scoped to the level it sits on, below.
+  name        String
+  /// Globally unique — every category, at any depth, is one flat URL
+  /// (/blog/category/<slug>). Nesting is navigational, not a path.
+  slug        String  @unique
+  description String?
+
+  /// Null for a top-level category. Deleting a parent promotes its children
+  /// rather than destroying them.
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  parentId String?
+  children Category[] @relation("CategoryTree")
+
+  posts Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([parentId, name])
+  @@index([parentId])
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  posts Post[]
+
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id      String @id @default(cuid())
+  slug    String @unique
+  title   String
+  /// Card copy and the fallback meta description.
+  excerpt String
+
+  /// Sanitised HTML from the editor. HTML rather than Markdown because the
+  /// editor offers underline, which Markdown has no syntax for.
+  bodyHtml String
+
+  coverUrl String?
+  /// Cover alt text is a separate field so it is never derived from the title.
+  coverAlt String?
+
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+  /// Cached at save time so listings don't recompute it per render.
+  readingMins Int        @default(1)
+
+  // ---- SEO. Each falls back to its content equivalent when left empty, so a
+  // post is fully indexable without the author touching this section.
+  metaTitle       String?
+  metaDescription String?
+  /// Overrides the cover for social cards when the crop doesn't suit 1200x630.
+  ogImageUrl      String?
+  /// Set when the piece was published elsewhere first.
+  canonicalUrl    String?
+  noindex         Boolean @default(false)
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  authorId String
+
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId String?
+
+  tags Tag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // The public listing query is always status + publishedAt ordering.
+  @@index([status, publishedAt])
+  @@index([categoryId])
+}
+
+// ---------------------------------------------------------------- uploads
+
+/// Every uploaded file, so the editor can offer a picker instead of
+/// re-uploading the same image and so orphans are findable later.
+model Media {
+  id        String  @id @default(cuid())
+  url       String  @unique
+  alt       String?
+  mimeType  String
+  sizeBytes Int
+  width     Int?
+  height    Int?
+
+  uploadedBy   User?   @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  uploadedById String?
+
+  createdAt DateTime @default(now())
+}

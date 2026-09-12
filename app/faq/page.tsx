@@ -7,6 +7,7 @@ import { generalFaq } from "../lib/site";
 export const metadata: Metadata = {
   title: "FAQ",
   description: "General questions about working with Cracktab.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {

@@ -1,35 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { pexels } from "../lib/site";
+import Image from "next/image";
+import LivePreviewModal, { type Shots } from "../components/LivePreviewModal";
 
 const INDUSTRIES = [
   "All",
   "Fashion & Apparel",
-  "Electronics",
-  "Single-Product",
-  "High-Volume Catalog",
+  "Beauty & Skincare",
+  "Health & Wellness",
+  "Pet Supplies",
 ] as const;
 
 type Theme = {
   name: string;
-  industry: (typeof INDUSTRIES)[number];
-  price: string;
-  rating: number;
-  img: string;
+  /**
+   * Screenshot filename prefix in /public/themes — the three captures are
+   * `<slug>-cover.png` (card), `<slug>-desktop.png` and `<slug>-mobile.png`
+   * (preview modal). Note `blome` is the prefix on disk for Bloom.
+   */
+  slug: string;
+  industry: Exclude<(typeof INDUSTRIES)[number], "All">;
+  /** Both render only once set — no placeholder figures on a card that sells. */
+  price?: string;
+  rating?: number;
 };
 
-// Placeholder catalog — swap for real theme previews when available.
 const themes: Theme[] = [
-  { name: "Aurora", industry: "Fashion & Apparel", price: "$180", rating: 5, img: pexels(996329, 800, 600) },
-  { name: "Vertex", industry: "Electronics", price: "$200", rating: 5, img: pexels(1029757, 800, 600) },
-  { name: "Mono", industry: "Single-Product", price: "$160", rating: 4, img: pexels(2649403, 800, 600) },
-  { name: "Bazaar", industry: "High-Volume Catalog", price: "$220", rating: 5, img: pexels(264636, 800, 600) },
-  { name: "Silk", industry: "Fashion & Apparel", price: "$180", rating: 5, img: pexels(1488463, 800, 600) },
-  { name: "Circuit", industry: "Electronics", price: "$200", rating: 4, img: pexels(356056, 800, 600) },
-  { name: "Solo", industry: "Single-Product", price: "$160", rating: 5, img: pexels(1204464, 800, 600) },
-  { name: "Emporium", industry: "High-Volume Catalog", price: "$220", rating: 5, img: pexels(230544, 800, 600) },
+  { name: "Verve", slug: "verve", industry: "Fashion & Apparel" },
+  { name: "Skinova", slug: "skinova", industry: "Beauty & Skincare" },
+  { name: "Bloom", slug: "blome", industry: "Health & Wellness" },
+  { name: "Dune", slug: "dune", industry: "Pet Supplies" },
 ];
+
+const shotsFor = (slug: string): Shots => ({
+  desktop: `/themes/${slug}-desktop.png`,
+  mobile: `/themes/${slug}-mobile.png`,
+});
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -45,6 +52,7 @@ function Stars({ rating }: { rating: number }) {
 
 export default function ThemeCatalog() {
   const [active, setActive] = useState<(typeof INDUSTRIES)[number]>("All");
+  const [preview, setPreview] = useState<Theme | null>(null);
   const filtered = active === "All" ? themes : themes.filter((t) => t.industry === active);
 
   return (
@@ -71,38 +79,59 @@ export default function ThemeCatalog() {
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((t) => (
           <div
-            key={t.name}
+            key={t.slug}
             className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors hover:border-accent/50"
           >
-            <div
-              className="aspect-[4/3] bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-              style={{ backgroundImage: `url(${t.img})` }}
-            />
+            {/* The captures are ~2.26:1 store hero shots, so the crop is
+                anchored to the top — that keeps the header and headline, which
+                is what identifies the theme at card size. */}
+            <div className="relative aspect-16/10 overflow-hidden">
+              <Image
+                src={`/themes/${t.slug}-cover.png`}
+                alt={`${t.name} theme homepage`}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
             <div className="flex flex-1 flex-col p-5">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-display text-lg font-medium tracking-tight text-white">
                   {t.name}
                 </h3>
-                <span className="font-display text-sm font-semibold text-accent">
-                  {t.price}
-                </span>
+                {t.price && (
+                  <span className="font-display text-sm font-semibold text-accent">
+                    {t.price}
+                  </span>
+                )}
               </div>
               <div className="mt-2 flex items-center justify-between gap-3">
                 <span className="text-xs font-medium uppercase tracking-wide text-muted">
                   {t.industry}
                 </span>
-                <Stars rating={t.rating} />
+                {t.rating && <Stars rating={t.rating} />}
               </div>
-              <a
-                href="#"
+              <button
+                type="button"
+                onClick={() => setPreview(t)}
                 className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-line font-display text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-accent hover:bg-accent hover:text-accent-ink"
               >
                 Live Preview
-              </a>
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Shopify storefronts refuse to be framed, so the preview is the pair of
+          full-page captures in a device mockup — same modal as the work cards. */}
+      {preview && (
+        <LivePreviewModal
+          title={preview.name}
+          shots={shotsFor(preview.slug)}
+          onClose={() => setPreview(null)}
+        />
+      )}
     </div>
   );
 }

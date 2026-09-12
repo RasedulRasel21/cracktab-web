@@ -4,6 +4,7 @@ import PageHeader from "../components/PageHeader";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How Cracktab collects, uses, and safeguards your information.",
+  alternates: { canonical: "/privacy" },
 };
 
 function Section({

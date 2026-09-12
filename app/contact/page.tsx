@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Call us, message us, or book a free audit — let's talk about your website.",
+  alternates: { canonical: "/contact" },
 };
 
 const details = [

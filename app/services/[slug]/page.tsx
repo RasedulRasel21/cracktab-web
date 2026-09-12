@@ -17,7 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = serviceDetails.find((s) => s.slug === slug);
-  return { title: service?.name ?? "Service", description: service?.intro };
+  return {
+    title: service?.name ?? "Service",
+    description: service?.intro,
+    alternates: { canonical: `/services/${slug}` },
+  };
 }
 
 function SectionHeading({ children }: { children: React.ReactNode }) {

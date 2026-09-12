@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: { absolute: "Shopify Development and Ecommerce Services | Cracktab" },
   description:
     "Full-service Shopify agency offering development, migration, redesign, UI/UX, SEO, CRO, and marketing. Book a free consultation and scale your store today.",
+  alternates: { canonical: "/services" },
 };
 
 function ArrowUpRight() {

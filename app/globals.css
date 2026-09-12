@@ -152,6 +152,17 @@ body {
 /* the soft neon glow */
 .neon-btn::after {
   z-index: -1;
+  /* blur(10px) spreads roughly 30px past the shape it blurs. Mobile Chrome
+     composites the fixed header's subtree and clips a blurred layer to the
+     element's own *box*, so a glow painted edge-to-edge got cut into a hard
+     rectangle. Painting the pill inside a box 30px larger on every side lets
+     the falloff finish before that edge, leaving nothing to clip. Origin and
+     clip both sit on the content box, so the gradient geometry — and the
+     glow itself — is unchanged. */
+  inset: -30px;
+  padding: 30px;
+  background-origin: content-box;
+  background-clip: content-box;
   filter: blur(10px);
   opacity: 0.95;
 }
@@ -194,6 +205,403 @@ body {
   z-index: -1;
   filter: blur(10px);
   opacity: 0.45;
+}
+
+/* ------------------------------------------------------------------
+   Studio (admin) theme.
+
+   The dashboard is a workspace people stare at for an hour while writing —
+   the site's near-black palette is the wrong tool for that. Rather than
+   rewrite every admin component, the utility classes those components already
+   use are remapped inside `.admin-shell`. Two class selectors beat Tailwind's
+   single-class specificity, and the public site is untouched because nothing
+   outside the studio carries this wrapper.
+   ------------------------------------------------------------------ */
+.admin-shell {
+  /* Slate neutrals carry the structure — every background, border, divider and
+     body colour. Roughly 90% of the page is this one ramp, which is what makes
+     the interface calm and what makes any saturated colour read as meaningful
+     the moment it appears. */
+  --studio-bg: #f8fafc; /* slate-50 */
+  --studio-panel: #ffffff;
+  --studio-ink: #0f172a; /* slate-900 */
+  --studio-ink-soft: #334155; /* slate-700 */
+  --studio-muted: #64748b; /* slate-500 */
+  --studio-line: #e2e8f0; /* slate-200 */
+
+  /* Indigo is the primary action, and only that. Its luminance is 0.117 —
+     dark enough to work as a solid fill AND as text on white (6.29:1 either
+     way). The brand lime sits at 0.723, which is why it could never do this
+     job on a light ground. The lime still owns the public site. */
+  --studio-accent: #4f46e5; /* indigo-600 */
+  --studio-accent-hover: #4338ca; /* indigo-700 */
+  --studio-accent-tint: #eef2ff; /* indigo-50 */
+  --studio-accent-border: #c7d2fe; /* indigo-200 */
+  --studio-accent-ring: rgba(99, 102, 241, 0.12);
+
+  background: var(--studio-bg);
+  color: var(--studio-ink);
+}
+
+.admin-shell .bg-surface,
+.admin-shell .bg-black {
+  background-color: var(--studio-panel);
+}
+.admin-shell .text-white {
+  color: var(--studio-ink);
+}
+.admin-shell .text-muted,
+.admin-shell .text-white\/70,
+.admin-shell .text-white\/80 {
+  color: var(--studio-muted);
+}
+.admin-shell .border-line {
+  border-color: var(--studio-line);
+}
+.admin-shell .bg-white\/10,
+.admin-shell .hover\:bg-white\/10:hover {
+  background-color: #f1f5f9;
+}
+
+/* ---- Accent, remapped to indigo --------------------------------------- */
+.admin-shell .bg-accent {
+  background-color: var(--studio-accent);
+}
+.admin-shell .text-accent-ink {
+  color: #ffffff;
+}
+.admin-shell .hover\:bg-accent-strong:hover {
+  background-color: var(--studio-accent-hover);
+}
+.admin-shell .text-accent,
+.admin-shell .hover\:text-accent:hover,
+.admin-shell .group-hover\:text-accent:hover,
+.admin-shell .text-accent\/80 {
+  color: var(--studio-accent);
+}
+.admin-shell .border-accent,
+.admin-shell .hover\:border-accent:hover,
+.admin-shell .focus\:border-accent:focus {
+  border-color: var(--studio-accent);
+}
+.admin-shell .border-accent\/30,
+.admin-shell .border-accent\/40,
+.admin-shell .border-accent\/50 {
+  border-color: var(--studio-accent-border);
+}
+.admin-shell .bg-accent\/10,
+.admin-shell .bg-accent\/15 {
+  background-color: var(--studio-accent-tint);
+}
+
+/* ---- Fields ----------------------------------------------------------- */
+.admin-shell input,
+.admin-shell textarea,
+.admin-shell select {
+  background-color: var(--studio-panel);
+  color: var(--studio-ink);
+  border-color: #cbd5e1; /* slate-300 — a field needs a firmer edge than a panel */
+}
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #94a3b8;
+}
+/* A soft wide ring reads better than swapping the border colour: the field
+   keeps its shape and the focus is unmistakable at a glance. */
+.admin-shell input:focus,
+.admin-shell textarea:focus,
+.admin-shell select:focus {
+  outline: none;
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 4px var(--studio-accent-ring);
+}
+
+/* ---- Status badges ----------------------------------------------------
+   One hue, one meaning. Indigo is spoken for by the primary action, so status
+   uses its own hues: emerald for elevated/live, sky for the default role,
+   slate for inert. All three use the same recipe — 50-level ground, 700-level
+   text, 200-level border — so they read as one family. */
+.studio-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.studio-badge-emerald {
+  background-color: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+.studio-badge-sky {
+  background-color: #f0f9ff;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+.studio-badge-slate {
+  background-color: #f8fafc;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+/* Destructive actions. rose-600 rather than the mockup's rose-500, which
+   measures 3.67:1 on white and fails AA for text at this size. */
+.admin-shell .studio-danger {
+  color: #e11d48;
+}
+.admin-shell .studio-danger:hover {
+  color: #be123c;
+}
+
+/* ---- Error and warning surfaces ---------------------------------------
+   The admin components were written against the dark site, where red-200 text
+   on a red-500/10 wash is correct. On white that inverts: the ground needs to
+   be the tint and the text the deep value. */
+.admin-shell .text-red-200,
+.admin-shell .text-red-300,
+.admin-shell .hover\:text-red-400:hover {
+  color: #be123c; /* rose-700 */
+}
+.admin-shell .bg-red-500\/10 {
+  background-color: #fff1f2; /* rose-50 */
+}
+.admin-shell .border-red-500\/40 {
+  border-color: #fecdd3; /* rose-200 */
+}
+.admin-shell .bg-red-500 {
+  background-color: #e11d48; /* rose-600 */
+}
+.admin-shell .hover\:bg-red-400:hover {
+  background-color: #be123c;
+}
+.admin-shell .text-amber-400 {
+  color: #b45309; /* amber-700 — the over-length SEO counter */
+}
+
+/* Avatar initials — a neutral disc, indigo for the signed-in user. */
+.studio-avatar {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background-color: #f1f5f9;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+}
+.studio-avatar-self {
+  background-color: #eef2ff;
+  border-color: #e0e7ff;
+  color: #4338ca;
+}
+
+/* Editor body, light. The public .prose block below stays dark. */
+.admin-shell .prose {
+  color: #2a3440;
+}
+.admin-shell .prose h1,
+.admin-shell .prose h2,
+.admin-shell .prose h3,
+.admin-shell .prose h4,
+.admin-shell .prose h5,
+.admin-shell .prose h6,
+.admin-shell .prose strong {
+  color: var(--studio-ink);
+}
+.admin-shell .prose blockquote {
+  color: var(--studio-ink);
+}
+.admin-shell .prose code,
+.admin-shell .prose pre {
+  background: #f1f4f7;
+  border-color: var(--studio-line);
+  color: var(--studio-ink);
+}
+.admin-shell .prose th {
+  background: #f1f5f9;
+  color: var(--studio-ink);
+}
+.admin-shell .prose th,
+.admin-shell .prose td {
+  border-color: var(--studio-line);
+}
+.admin-shell .prose .selectedCell {
+  background: var(--studio-accent-tint);
+}
+.admin-shell .prose .column-resize-handle {
+  background-color: var(--studio-accent);
+}
+.admin-shell .prose img {
+  border-color: var(--studio-line);
+}
+
+/* ------------------------------------------------------------------
+   Post body.
+
+   The editor emits a small, fixed set of tags (headings, paragraphs, lists,
+   quotes, links, images, code, bold/italic/underline), so this is written by
+   hand rather than pulling in a typography plugin for eight selectors.
+   ------------------------------------------------------------------ */
+.prose {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.prose > * + * {
+  margin-top: 1.25em;
+}
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #fff;
+  font-family: var(--font-display, inherit);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+/* h1 is available in the editor but the post title already holds that level,
+   so a body h1 is sized just under it rather than competing with it. */
+.prose h1 {
+  font-size: 2.1rem;
+  margin-top: 2.4em;
+}
+.prose h2 {
+  font-size: 1.75rem;
+  margin-top: 2.25em;
+}
+.prose h3 {
+  font-size: 1.3rem;
+  margin-top: 1.9em;
+}
+.prose h4 {
+  font-size: 1.1rem;
+  margin-top: 1.7em;
+}
+.prose h5 {
+  font-size: 1rem;
+  margin-top: 1.6em;
+}
+/* Smallest level: differentiated by weight and case rather than size, which
+   has run out of room by this depth. */
+.prose h6 {
+  font-size: 0.85rem;
+  margin-top: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.prose strong {
+  color: #fff;
+  font-weight: 600;
+}
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover {
+  color: #fff;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.5em;
+}
+.prose li::marker {
+  color: var(--accent);
+}
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.25em;
+  color: #fff;
+  font-style: italic;
+}
+.prose img {
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  width: 100%;
+  height: auto;
+}
+.prose figcaption {
+  margin-top: 0.6em;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+.prose code {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.35em;
+  font-size: 0.88em;
+  color: #fff;
+}
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.85em;
+}
+/* Tables. Wide ones scroll inside their own container rather than forcing the
+   whole article to scroll sideways on a phone. */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--line);
+  padding: 0.6em 0.85em;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  background: var(--surface);
+  color: #fff;
+  font-weight: 600;
+}
+/* The resize handle the editor adds; harmless on the public page. */
+.prose .column-resize-handle {
+  background-color: var(--accent);
+  width: 2px;
+}
+.prose .selectedCell {
+  background: rgba(180, 240, 58, 0.08);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin-block: 2.5em;
 }
 
 @media (prefers-reduced-motion: reduce) {

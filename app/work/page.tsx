@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Our Works",
   description:
     "A look at Shopify stores we've designed, built, and grown. Real brands, real results.",
+  alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {

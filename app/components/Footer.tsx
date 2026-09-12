@@ -104,20 +104,23 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Address — right side, left-aligned text, two lines per office */}
+          {/* Address — right side, left-aligned text. The phone sits with the
+              office it reaches rather than floating above both. */}
           <div className="flex flex-col gap-5 text-sm text-white/70 sm:items-start sm:text-left">
-            <a
-              href={contact.phoneHref}
-              className="font-semibold text-white transition-colors hover:text-accent"
-            >
-              {contact.phone}
-            </a>
             {contact.offices.map((office) => (
               <p key={office.label} className="leading-relaxed">
                 <span className="block font-semibold text-white">
                   {office.label}
                 </span>
                 <span className="block">{office.address}</span>
+                {office.phoneHref && (
+                  <a
+                    href={office.phoneHref}
+                    className="mt-1 inline-block font-semibold text-white transition-colors hover:text-accent"
+                  >
+                    {office.phone}
+                  </a>
+                )}
               </p>
             ))}
           </div>

@@ -16,7 +16,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
-  return { title: cs ? `${cs.name} — Case Study` : "Case Study", description: cs?.teaser };
+  return {
+    title: cs ? `${cs.name} — Case Study` : "Case Study",
+    description: cs?.teaser,
+    alternates: { canonical: `/work/${slug}` },
+  };
 }
 
 export default async function CaseStudyPage({

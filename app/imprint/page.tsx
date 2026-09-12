@@ -4,6 +4,7 @@ import PageHeader from "../components/PageHeader";
 export const metadata: Metadata = {
   title: "Imprint",
   description: "Company information and legal notice for Cracktab.",
+  alternates: { canonical: "/imprint" },
 };
 
 export default function ImprintPage() {
