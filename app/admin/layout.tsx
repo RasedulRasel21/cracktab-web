@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminNav from "./AdminNav";
+import { studio } from "../lib/paths";
 import { requireUser } from "../lib/auth";
 import { signOut } from "./actions";
 
@@ -26,21 +27,22 @@ export default async function AdminLayout({
     // `admin-shell` swaps the site's dark palette for a light workspace —
     // see the scoped block in globals.css. The marketing header and footer are
     // hidden on these routes by ChromeGate, so no top padding is needed.
-    <div className="admin-shell min-h-dvh">
+    <div className="admin-shell studio-page min-h-dvh">
       <header className="sticky top-0 z-40 border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-360 flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-8">
           <div className="flex items-center gap-7">
             <Link
-              href="/admin"
+              href={studio()}
               className="font-display text-sm font-bold uppercase tracking-widest text-white transition-colors hover:text-accent"
             >
               Studio
             </Link>
-            <AdminNav href="/admin" exact match={["/admin/posts"]}>
+            <AdminNav href={studio()} exact match={[studio("/posts")]}>
               Posts
             </AdminNav>
-            <AdminNav href="/admin/categories">Categories</AdminNav>
-            {user.role === "ADMIN" && <AdminNav href="/admin/users">People</AdminNav>}
+            <AdminNav href={studio("/categories")}>Categories</AdminNav>
+            <AdminNav href={studio("/media")}>Media</AdminNav>
+            {user.role === "ADMIN" && <AdminNav href={studio("/users")}>People</AdminNav>}
             <Link
               href="/blog"
               target="_blank"
@@ -51,12 +53,16 @@ export default async function AdminLayout({
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="text-xs text-muted">
+            <Link
+              href={studio("/account")}
+              title="Your account"
+              className="text-xs text-muted transition-colors hover:text-white"
+            >
               {user.name}
               {user.role === "ADMIN" && (
                 <span className="studio-badge studio-badge-emerald ml-2">Admin</span>
               )}
-            </span>
+            </Link>
             <form action={signOut}>
               <button
                 type="submit"

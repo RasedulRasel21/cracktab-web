@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormSubmit } from "../components/useFormSubmit";
 import { submitContact, type ContactState } from "./actions";
 import { countries } from "../lib/countries";
 
@@ -38,7 +38,10 @@ function Chevron() {
 }
 
 export default function ContactForm() {
-  const [state, formAction, pending] = useActionState(submitContact, initial);
+  // Not <form action>: React clears every uncontrolled field once an action
+  // runs, so a visitor who hit a validation or spam check would lose their
+  // whole message. Success needs no clearing: it swaps the form for a panel.
+  const [state, onSubmit, pending] = useFormSubmit(submitContact, initial);
 
   if (state.status === "success") {
     return (
@@ -66,7 +69,7 @@ export default function ContactForm() {
 
   return (
     <form
-      action={formAction}
+      onSubmit={onSubmit}
       className="rounded-2xl border border-line bg-surface/40 p-5 sm:p-6"
     >
       {/* Honeypot (hidden from users) */}

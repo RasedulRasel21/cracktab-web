@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSession } from "../../lib/auth";
+import { getVerifiedUser } from "../../lib/auth";
 import { prisma } from "../../lib/db";
 import { upload, UploadError } from "../../lib/storage";
 
@@ -10,7 +10,9 @@ import { upload, UploadError } from "../../lib/storage";
  * the resulting URL back synchronously to insert the node at the cursor.
  */
 export async function POST(request: Request) {
-  const user = await getSession();
+  // The full check, not just the cookie signature: a deleted or disabled
+  // account must not keep upload rights for the rest of its token's life.
+  const user = await getVerifiedUser();
   if (!user) {
     return NextResponse.json({ error: "Not signed in." }, { status: 401 });
   }

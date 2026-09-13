@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { studio } from "../../../../lib/paths";
 import { notFound } from "next/navigation";
 import { requireUser } from "../../../../lib/auth";
 import { prisma } from "../../../../lib/db";
@@ -41,7 +42,7 @@ export default async function EditCategoryPage({
     <>
       <div className="mb-10">
         <Link
-          href="/admin/categories"
+          href={studio("/categories")}
           className="text-xs font-medium uppercase tracking-[0.15em] text-muted transition-colors hover:text-accent"
         >
           ← Categories

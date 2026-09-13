@@ -207,6 +207,13 @@ body {
   opacity: 0.45;
 }
 
+/* Marketing header and footer are hidden on studio pages by CSS rather than a
+   client component reading the URL — which would have to ship the studio's
+   hidden path to every visitor of the public site. */
+body:has(.studio-page) .site-chrome {
+  display: none;
+}
+
 /* ------------------------------------------------------------------
    Studio (admin) theme.
 

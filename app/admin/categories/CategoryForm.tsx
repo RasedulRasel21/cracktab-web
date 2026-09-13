@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormSubmit } from "../../components/useFormSubmit";
 import type { CategoryFormState } from "./actions";
 
 const field =
@@ -27,10 +27,11 @@ export default function CategoryForm({
   defaults?: CategoryDefaults;
   submitLabel: string;
 }) {
-  const [state, formAction, pending] = useActionState(action, { error: null });
+  // Not <form action>: React would clear the fields after an error.
+  const [state, onSubmit, pending] = useFormSubmit<CategoryFormState>(action, { error: null });
 
   return (
-    <form action={formAction} className="flex flex-col gap-5">
+    <form onSubmit={onSubmit} className="flex flex-col gap-5">
       <label className="flex flex-col gap-2">
         <span className={labelText}>Name</span>
         <input

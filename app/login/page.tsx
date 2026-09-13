@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
+import { getVerifiedUser } from "../lib/auth";
+import { STUDIO_BASE } from "../lib/paths";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -14,8 +17,19 @@ export default async function LoginPage({
 }) {
   const { next } = await searchParams;
 
+  // Already signed in with a live session: skip the form. Checked against the
+  // database rather than the cookie, so a revoked session still sees the form.
+  // Kept outside the try — redirect() works by throwing.
+  let signedIn = false;
+  try {
+    signedIn = Boolean(await getVerifiedUser());
+  } catch {
+    // Database unreachable: showing the form is the right fallback.
+  }
+  if (signedIn) redirect(STUDIO_BASE);
+
   return (
-    <section className="flex min-h-dvh items-center justify-center px-5 py-16 sm:px-8">
+    <section className="studio-page flex min-h-dvh items-center justify-center px-5 py-16 sm:px-8">
       <div className="w-full max-w-sm">
         <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -29,7 +43,7 @@ export default async function LoginPage({
         </p>
 
         <div className="mt-8">
-          <LoginForm next={next ?? "/admin"} />
+          <LoginForm next={next ?? STUDIO_BASE} />
         </div>
       </div>
     </section>

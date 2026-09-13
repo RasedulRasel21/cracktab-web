@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ChromeGate from "./components/ChromeGate";
 import { SITE_URL } from "./lib/site";
 
 // Self-hosted Urbanist (files in /public/fonts) — used site-wide.
@@ -62,13 +61,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${urbanist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white font-sans">
-        <ChromeGate>
+        {/* `site-chrome` is hidden on studio pages by CSS (see globals.css).
+            A client-side URL check would need the studio path in the
+            JavaScript served to every public visitor. */}
+        <div className="site-chrome contents">
           <Header />
-        </ChromeGate>
+        </div>
         <main className="flex flex-1 flex-col">{children}</main>
-        <ChromeGate>
+        <div className="site-chrome contents">
           <Footer />
-        </ChromeGate>
+        </div>
       </body>
     </html>
   );

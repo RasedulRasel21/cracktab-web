@@ -76,14 +76,17 @@ const published = () =>
 /**
  * @param categoryIds When given, matches posts in any of them — a parent
  *   archive passes its whole subtree so nothing filed in a child is hidden.
+ * @param tagId When given, only posts carrying that tag.
  */
 export async function getPosts({
   page = 1,
   categoryIds,
-}: { page?: number; categoryIds?: string[] } = {}) {
+  tagId,
+}: { page?: number; categoryIds?: string[]; tagId?: string } = {}) {
   const where: Prisma.PostWhereInput = {
     ...published(),
     ...(categoryIds ? { categoryId: { in: categoryIds } } : {}),
+    ...(tagId ? { tags: { some: { id: tagId } } } : {}),
   };
 
   return safe(
@@ -132,6 +135,15 @@ export async function getRelatedPosts(postId: string, categoryId: string | null,
         take,
       }),
     [] as PostCard[],
+  );
+}
+
+// ---------------------------------------------------------------- tags
+
+export async function getTagBySlug(slug: string) {
+  return safe(
+    () => prisma.tag.findUnique({ where: { slug }, select: { id: true, name: true, slug: true } }),
+    null,
   );
 }
 

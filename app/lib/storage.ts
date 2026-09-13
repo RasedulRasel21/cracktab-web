@@ -44,6 +44,24 @@ export type StoredFile = {
 export class UploadError extends Error {}
 
 /**
+ * Identifies an image by its magic bytes. Deliberately covers only the formats
+ * in ALLOWED — SVG is absent on purpose, since it is XML that can carry script.
+ */
+export function sniffImageType(bytes: Uint8Array): string | null {
+  const at = (offset: number, ...values: number[]) =>
+    values.every((value, i) => bytes[offset + i] === value);
+  const ascii = (offset: number, text: string) =>
+    [...text].every((char, i) => bytes[offset + i] === char.charCodeAt(0));
+
+  if (at(0, 0xff, 0xd8, 0xff)) return "image/jpeg";
+  if (at(0, 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)) return "image/png";
+  if (ascii(0, "GIF87a") || ascii(0, "GIF89a")) return "image/gif";
+  if (ascii(0, "RIFF") && ascii(8, "WEBP")) return "image/webp";
+  if (ascii(4, "ftypavif") || ascii(4, "ftypavis")) return "image/avif";
+  return null;
+}
+
+/**
  * @param folder Groups files in the store — "covers" or "body".
  */
 export async function upload(file: File, folder: string): Promise<StoredFile> {
@@ -63,6 +81,17 @@ export async function upload(file: File, folder: string): Promise<StoredFile> {
     throw new UploadError(
       "BLOB_READ_WRITE_TOKEN is not set — create a Blob store in the Vercel dashboard and add the token to .env.",
     );
+  }
+
+  // The browser's `file.type` is whatever the client says it is — a renamed
+  // HTML or SVG file arrives labelled image/png just as easily. Check the
+  // file's actual leading bytes, and trust the sniffed type from here on.
+  const sniffed = sniffImageType(new Uint8Array(await file.slice(0, 16).arrayBuffer()));
+  if (!sniffed) {
+    throw new UploadError("That file isn't a valid image, whatever its extension says.");
+  }
+  if (sniffed !== file.type && !(sniffed === "image/jpeg" && file.type === "image/jpg")) {
+    throw new UploadError("The file's contents don't match its type. Re-export it and try again.");
   }
 
   // Keep the original name legible in the URL, but strip anything that could

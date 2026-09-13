@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CtaBand from "../components/CtaBand";
 import WorldMap, { type Pin } from "../components/WorldMap";
 import WorldDotField from "../components/WorldDotField";
-import SupportSlider from "../components/SupportSlider";
+import SupportSlider, { type SupportItem } from "../components/SupportSlider";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -38,15 +38,15 @@ const howWeWork = [
   },
 ];
 
-const support = [
-  "Website maintenance",
-  "Technical troubleshooting",
-  "Store updates",
-  "New landing pages and sections",
-  "Design refinements",
-  "Performance improvements",
-  "SEO support",
-  "New features and integrations",
+const support: SupportItem[] = [
+  { label: "Website maintenance", icon: "/cracktab-icons/website-maintenance.svg" },
+  { label: "Technical troubleshooting", icon: "/cracktab-icons/technical-troubleshooting.svg" },
+  { label: "Store updates", icon: "/cracktab-icons/store-updates.svg" },
+  { label: "New landing pages and sections", icon: "/cracktab-icons/new-landing-pages-and-sections.svg" },
+  { label: "Design refinements", icon: "/cracktab-icons/design-refinements.svg" },
+  { label: "Performance improvements", icon: "/cracktab-icons/performance-improvements.svg" },
+  { label: "SEO support", icon: "/cracktab-icons/seo-support.svg" },
+  { label: "New features and integrations", icon: "/cracktab-icons/new-features-and-integrations.svg" },
 ];
 
 const offices: Pin[] = [

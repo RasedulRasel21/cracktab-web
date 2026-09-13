@@ -1,15 +1,16 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormSubmit } from "../components/useFormSubmit";
 import { login, type LoginState } from "./actions";
 
 const initial: LoginState = { error: null };
 
 export default function LoginForm({ next }: { next: string }) {
-  const [state, action, pending] = useActionState(login, initial);
+  // Not <form action>: React would clear the email after a failed attempt.
+  const [state, onSubmit, pending] = useFormSubmit(login, initial);
 
   return (
-    <form action={action} className="flex flex-col gap-5">
+    <form onSubmit={onSubmit} className="flex flex-col gap-5">
       <input type="hidden" name="next" value={next} />
 
       <label className="flex flex-col gap-2">

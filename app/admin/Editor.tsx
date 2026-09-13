@@ -6,7 +6,9 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { TableKit } from "@tiptap/extension-table";
 import { TextAlign } from "@tiptap/extension-text-align";
+import MediaPicker from "./MediaPicker";
 import Modal from "./Modal";
+import { uploadImage } from "./upload";
 
 /**
  * Post body editor.
@@ -14,59 +16,12 @@ import Modal from "./Modal";
  * Tiptap (ProseMirror) rather than a contentEditable div: paste from Google
  * Docs or Word gets normalised against a schema instead of dumping foreign
  * markup into the page, and undo, nested lists and IME input work without us
- * writing any of it. The bundle only ever loads inside /admin, which is behind
- * a login and excluded in robots.txt, so none of it reaches a reader.
+ * writing any of it. The bundle only ever loads inside the studio, behind a
+ * login, so none of it reaches a reader.
  *
  * The HTML is mirrored into a hidden input so the surrounding <form> posts it
  * through a plain Server Action — no client-side fetch on save.
  */
-
-const MAX_DIMENSION = 1800;
-const COMPRESS_QUALITY = 0.82;
-
-/**
- * Phone cameras produce 4–8 MB images that no blog needs. Downscaling in the
- * browser keeps uploads fast on the slow connections these get written on, and
- * keeps the Blob store small.
- */
-async function compress(file: File): Promise<File> {
-  // GIFs are usually animated; re-encoding through a canvas kills the motion.
-  if (file.type === "image/gif") return file;
-
-  const bitmap = await createImageBitmap(file);
-  const scale = Math.min(1, MAX_DIMENSION / Math.max(bitmap.width, bitmap.height));
-
-  if (scale === 1 && file.size < 600_000) return file;
-
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
-
-  const context = canvas.getContext("2d");
-  if (!context) return file;
-  context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-
-  const blob = await new Promise<Blob | null>((resolve) =>
-    canvas.toBlob(resolve, "image/webp", COMPRESS_QUALITY),
-  );
-
-  if (!blob || blob.size >= file.size) return file;
-
-  const stem = file.name.replace(/\.[^.]+$/, "");
-  return new File([blob], `${stem}.webp`, { type: "image/webp" });
-}
-
-export async function uploadImage(file: File, folder: string): Promise<string> {
-  const body = new FormData();
-  body.append("file", await compress(file));
-  body.append("folder", folder);
-
-  const response = await fetch("/api/upload", { method: "POST", body });
-  const data = await response.json();
-
-  if (!response.ok) throw new Error(data.error ?? "Upload failed.");
-  return data.url as string;
-}
 
 function ToolbarButton({
   onClick,
@@ -143,6 +98,8 @@ function TableIcon() {
   );
 }
 
+const Divider = () => <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />;
+
 const BLOCK_TYPES = [
   { level: 0 as const, label: "Paragraph" },
   { level: 1 as const, label: "Heading 1" },
@@ -155,8 +112,7 @@ const BLOCK_TYPES = [
 
 /**
  * Block-type picker, in the shape WordPress uses: one control showing what the
- * cursor is currently in, opening a list of everything it could become. Six
- * separate heading buttons would be a wall of near-identical toggles.
+ * cursor is currently in, opening a list of everything it could become.
  */
 function BlockTypeMenu({ editor }: { editor: TiptapEditor }) {
   const [open, setOpen] = useState(false);
@@ -247,30 +203,15 @@ function BlockTypeMenu({ editor }: { editor: TiptapEditor }) {
 }
 
 function Toolbar({ editor }: { editor: TiptapEditor }) {
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
-  // The uploaded image waits here until its alt text is written, so a picture
-  // can't be inserted with no description by dismissing the dialog.
+  // The image waits here until its alt text is written, so a picture can't be
+  // inserted with no description by dismissing the dialog.
   const [pendingImage, setPendingImage] = useState<string | null>(null);
   const [altText, setAltText] = useState("");
 
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
-
-  const insertImage = useCallback(async (file: File) => {
-    setBusy(true);
-    setError(null);
-    try {
-      setPendingImage(await uploadImage(file, "body"));
-      setAltText("");
-    } catch (uploadError) {
-      setError(uploadError instanceof Error ? uploadError.message : "Upload failed.");
-    } finally {
-      setBusy(false);
-    }
-  }, []);
 
   const commitImage = useCallback(() => {
     if (!pendingImage) return;
@@ -298,7 +239,7 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
           which is where the muscle memory comes from. */}
       <BlockTypeMenu editor={editor} />
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       <ToolbarButton
         label="Bold"
@@ -329,10 +270,7 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
         <span className="line-through">S</span>
       </ToolbarButton>
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
-
-
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       <ToolbarButton
         label="Bullet list"
@@ -369,7 +307,7 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
         —
       </ToolbarButton>
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       {(["left", "center", "right"] as const).map((align) => (
         <ToolbarButton
@@ -382,64 +320,40 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
         </ToolbarButton>
       ))}
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       <ToolbarButton
         label="Insert table"
         onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-            .run()
+          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
         }
       >
         <TableIcon />
       </ToolbarButton>
       {editor.isActive("table") && (
         <>
-          <ToolbarButton
-            label="Add row"
-            onClick={() => editor.chain().focus().addRowAfter().run()}
-          >
+          <ToolbarButton label="Add row" onClick={() => editor.chain().focus().addRowAfter().run()}>
             +Row
           </ToolbarButton>
-          <ToolbarButton
-            label="Add column"
-            onClick={() => editor.chain().focus().addColumnAfter().run()}
-          >
+          <ToolbarButton label="Add column" onClick={() => editor.chain().focus().addColumnAfter().run()}>
             +Col
           </ToolbarButton>
-          <ToolbarButton
-            label="Delete table"
-            onClick={() => editor.chain().focus().deleteTable().run()}
-          >
+          <ToolbarButton label="Delete table" onClick={() => editor.chain().focus().deleteTable().run()}>
             ✕Table
           </ToolbarButton>
         </>
       )}
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       <ToolbarButton label="Link" active={editor.isActive("link")} onClick={openLink}>
         Link
       </ToolbarButton>
-      <ToolbarButton label="Insert image" onClick={() => fileRef.current?.click()}>
-        {busy ? "…" : "Image"}
+      <ToolbarButton label="Add image" onClick={() => setPickerOpen(true)}>
+        Image
       </ToolbarButton>
-      <input
-        ref={fileRef}
-        type="file"
-        accept="image/*"
-        hidden
-        onChange={(event) => {
-          const file = event.target.files?.[0];
-          if (file) void insertImage(file);
-          event.target.value = "";
-        }}
-      />
 
-      <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
+      <Divider />
 
       <ToolbarButton label="Undo" onClick={() => editor.chain().focus().undo().run()}>
         ↶
@@ -448,11 +362,29 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
         ↷
       </ToolbarButton>
 
-      {error && (
-        <p role="alert" className="w-full px-1 pt-2 text-xs text-red-300">
-          {error}
-        </p>
-      )}
+      <MediaPicker
+        open={pickerOpen}
+        title="Add images"
+        multiple
+        onClose={() => setPickerOpen(false)}
+        onSelect={(items) => {
+          // A single undescribed image goes through the describe step. Several
+          // go in together, carrying whatever description the library has —
+          // the SEO checklist flags any still missing one.
+          if (items.length === 1 && !items[0].alt) {
+            setPendingImage(items[0].url);
+            setAltText("");
+            return;
+          }
+          editor
+            .chain()
+            .focus()
+            .insertContent(
+              items.map((item) => ({ type: "image", attrs: { src: item.url, alt: item.alt } })),
+            )
+            .run();
+        }}
+      />
 
       <Modal
         open={pendingImage !== null}
@@ -464,7 +396,12 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
           <input
             value={altText}
             onChange={(event) => setAltText(event.target.value)}
-            onKeyDown={(event) => event.key === "Enter" && commitImage()}
+            onKeyDown={(event) => {
+              if (event.key !== "Enter") return;
+              // Enter would otherwise submit the post form this sits inside.
+              event.preventDefault();
+              commitImage();
+            }}
             placeholder="A developer reviewing Shopify theme code"
             className="h-11 w-full rounded-xl border border-line bg-black px-4 text-sm text-white outline-none transition-colors focus:border-accent"
           />
@@ -497,7 +434,11 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
           <input
             value={linkUrl}
             onChange={(event) => setLinkUrl(event.target.value)}
-            onKeyDown={(event) => event.key === "Enter" && commitLink()}
+            onKeyDown={(event) => {
+              if (event.key !== "Enter") return;
+              event.preventDefault();
+              commitLink();
+            }}
             placeholder="https://example.com"
             className="h-11 w-full rounded-xl border border-line bg-black px-4 text-sm text-white outline-none transition-colors focus:border-accent"
           />
@@ -523,9 +464,12 @@ function Toolbar({ editor }: { editor: TiptapEditor }) {
   );
 }
 
+const countWords = (text: string) => text.split(/\s+/).filter(Boolean).length;
+
 export default function Editor({ name, defaultValue }: { name: string; defaultValue: string }) {
   const [html, setHtml] = useState(defaultValue);
   const [pasteError, setPasteError] = useState<string | null>(null);
+  const [stats, setStats] = useState({ words: 0, characters: 0 });
 
   // editorProps is built before `useEditor` returns, so the handlers reach the
   // instance through a ref rather than closing over it.
@@ -545,6 +489,11 @@ export default function Editor({ name, defaultValue }: { name: string; defaultVa
     }
   }, []);
 
+  const measure = (instance: TiptapEditor) => {
+    const text = instance.getText();
+    setStats({ words: countWords(text), characters: text.length });
+  };
+
   const editor = useEditor({
     // Required under the App Router: rendering on the server and again on the
     // client produces a hydration mismatch otherwise.
@@ -561,7 +510,11 @@ export default function Editor({ name, defaultValue }: { name: string; defaultVa
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: defaultValue,
-    onUpdate: ({ editor: instance }) => setHtml(instance.getHTML()),
+    onCreate: ({ editor: instance }) => measure(instance),
+    onUpdate: ({ editor: instance }) => {
+      setHtml(instance.getHTML());
+      measure(instance);
+    },
     editorProps: {
       attributes: {
         class: "prose min-h-[24rem] max-w-none px-5 py-4 focus:outline-none",
@@ -586,9 +539,9 @@ export default function Editor({ name, defaultValue }: { name: string; defaultVa
         return true;
       },
       handleDrop: (_view, event) => {
-        const images = Array.from(
-          (event as DragEvent).dataTransfer?.files ?? [],
-        ).filter((file) => file.type.startsWith("image/"));
+        const images = Array.from((event as DragEvent).dataTransfer?.files ?? []).filter(
+          (file) => file.type.startsWith("image/"),
+        );
         if (images.length === 0) return false;
         event.preventDefault();
         void uploadAndInsert(images);
@@ -610,6 +563,16 @@ export default function Editor({ name, defaultValue }: { name: string; defaultVa
           {pasteError}
         </p>
       )}
+      <div
+        aria-live="polite"
+        className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-2 text-xs text-muted"
+      >
+        <span>
+          {stats.words.toLocaleString()} word{stats.words === 1 ? "" : "s"}
+          {stats.words > 0 && ` · ${Math.max(1, Math.ceil(stats.words / 200))} min read`}
+        </span>
+        <span>{stats.characters.toLocaleString()} characters</span>
+      </div>
       <input type="hidden" name={name} value={html} />
     </div>
   );

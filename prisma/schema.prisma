@@ -31,8 +31,15 @@ model User {
   bio          String?
   avatarUrl    String?
 
-  posts    Post[]
-  uploads  Media[]
+  /// Bumped whenever this account's existing sessions must end — a password
+  /// change, a role change. Every session records the version it was issued
+  /// under, and a mismatch is rejected. Without this, a signed cookie stays
+  /// valid until it expires no matter what happens to the account.
+  sessionVersion Int @default(1)
+
+  posts     Post[]
+  uploads   Media[]
+  revisions PostRevision[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -119,7 +126,8 @@ model Post {
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   categoryId String?
 
-  tags Tag[]
+  tags      Tag[]
+  revisions PostRevision[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -146,4 +154,58 @@ model Media {
   uploadedById String?
 
   createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------- security
+
+/// Failed sign-in tracking, in Postgres rather than memory: on serverless each
+/// instance has its own memory, so an in-process counter resets per instance
+/// and an attacker simply spreads attempts across them.
+///
+/// Two kinds of key share the table:
+///   acct:<email>|<ip>  — brute force against one account from one source
+///   ip:<ip>            — password spraying across many accounts
+/// Deliberately NOT keyed by email alone: that would let anyone lock the real
+/// admin out just by failing logins against their address from elsewhere.
+model LoginThrottle {
+  key         String    @id
+  failures    Int       @default(0)
+  lockedUntil DateTime?
+  updatedAt   DateTime  @updatedAt
+}
+
+// ---------------------------------------------------------------- history
+
+/// Every save of a post, kept as a full snapshot so any version can be viewed
+/// or restored. A row is written for each save, including the current one, so
+/// the history reads as "who saved what, when" rather than as diffs to rebuild.
+/// Pruned to the most recent 50 per post.
+model PostRevision {
+  id     String @id @default(cuid())
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
+  title           String
+  slug            String
+  excerpt         String
+  bodyHtml        String
+  coverUrl        String?
+  coverAlt        String?
+  /// Plain ids and names, not relations: a category or tag deleted later must
+  /// not take the history of every post that once used it along with it.
+  categoryId      String?
+  tagNames        String   @default("")
+  metaTitle       String?
+  metaDescription String?
+  canonicalUrl    String?
+  noindex         Boolean  @default(false)
+
+  editor     User?   @relation(fields: [editorId], references: [id], onDelete: SetNull)
+  editorId   String?
+  /// Kept as text so the history still says who saved it after an account goes.
+  editorName String
+
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt])
 }

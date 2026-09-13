@@ -44,7 +44,7 @@ export default function PageHeader({
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          <p className="mt-6 max-w-4xl text-base leading-relaxed text-muted sm:text-lg">
             {subtitle}
           </p>
         )}

@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { studio } from "../../lib/paths";
 import { requireAdmin } from "../../lib/auth";
 import { prisma } from "../../lib/db";
-import { DeleteUserButton, NewUserForm, ResetPasswordButton } from "./UserForms";
+import { DeleteUserButton, NewUserForm, SetPasswordButton } from "./UserForms";
 
 /** Admin-only: requireAdmin redirects an author back to /admin. */
 export const dynamic = "force-dynamic";
@@ -56,7 +57,7 @@ export default async function UsersPage({
     <>
       <div className="mb-10">
         <Link
-          href="/admin"
+          href={studio()}
           className="text-xs font-medium uppercase tracking-[0.15em] text-muted transition-colors hover:text-accent"
         >
           ← Posts
@@ -127,7 +128,12 @@ export default async function UsersPage({
                 </span>
 
                 <div className="flex shrink-0 items-center gap-4">
-                  <ResetPasswordButton userId={person.id} name={person.name} />
+                  <SetPasswordButton
+                    userId={person.id}
+                    name={person.name}
+                    email={person.email}
+                    isSelf={person.id === admin.id}
+                  />
                   {person.id !== admin.id && person._count.posts === 0 && (
                     <DeleteUserButton userId={person.id} name={person.name} />
                   )}

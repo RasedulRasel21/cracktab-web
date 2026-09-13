@@ -3,23 +3,25 @@ import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
 import { prisma } from "./db";
+import { LOGIN_PATH, STUDIO_BASE } from "./paths";
 
 /**
- * Session auth for /admin.
+ * Session auth for the studio.
  *
- * Email + password with a signed cookie, deliberately small: there is no
- * public signup, accounts are created by an admin, and the whole audience is
- * a handful of internal writers. That narrowness is what makes hand-rolling
- * defensible — no OAuth providers, no reset-token flow, no adapter to keep in
- * sync with the schema.
+ * Email + password with a signed cookie. No public signup, accounts created by
+ * an admin, a handful of internal writers — narrow enough that hand-rolling is
+ * defensible, with no OAuth or adapter to keep in sync.
  *
- * The session is a JWT rather than a database row so that /admin doesn't cost
- * a round trip to New York on every request. The trade is revocation: a stolen
- * cookie stays valid until it expires, which is why the window is a week and
- * not a year. Changing a password does not retire existing sessions.
+ * The cookie is a JWT, but it is NOT trusted on its own. An earlier version
+ * checked only the signature, which meant a deleted account, a demoted admin
+ * or a changed password all left existing sessions working for up to a week.
+ * The token now carries only an account id and a session version; every
+ * studio request re-reads the account and rejects the token if the account is
+ * gone or the version has moved on. Role, name and email come from the
+ * database, never from the cookie.
  */
 
-const COOKIE = "cracktab_session";
+export const SESSION_COOKIE = "cracktab_session";
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
 export type SessionUser = {
@@ -27,6 +29,7 @@ export type SessionUser = {
   name: string;
   email: string;
   role: "ADMIN" | "AUTHOR";
+  sessionVersion: number;
 };
 
 function secret(): Uint8Array {
@@ -50,14 +53,20 @@ export function verifyPassword(password: string, hash: string): Promise<boolean>
   return bcrypt.compare(password, hash);
 }
 
+/**
+ * A real hash, generated once per instance, to compare against when an email
+ * doesn't exist. It must be a valid bcrypt hash: a malformed placeholder makes
+ * `compare` throw instead of returning false, which turns "no such account"
+ * into a different error than "wrong password" — the exact leak it prevents.
+ */
+let dummyHash: Promise<string> | null = null;
+const getDummyHash = () =>
+  (dummyHash ??= bcrypt.hash("timing-equaliser-not-a-real-credential", 12));
+
 // ---------------------------------------------------------------- session
 
 export async function createSession(user: SessionUser): Promise<void> {
-  const token = await new SignJWT({
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  })
+  const token = await new SignJWT({ sv: user.sessionVersion })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(user.id)
     .setIssuedAt()
@@ -65,7 +74,7 @@ export async function createSession(user: SessionUser): Promise<void> {
     .sign(secret());
 
   const store = await cookies();
-  store.set(COOKIE, token, {
+  store.set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -76,51 +85,81 @@ export async function createSession(user: SessionUser): Promise<void> {
 
 export async function destroySession(): Promise<void> {
   const store = await cookies();
-  store.delete(COOKIE);
+  store.delete(SESSION_COOKIE);
 }
 
-/** The signed session, or null. Does not touch the database. */
-export async function getSession(): Promise<SessionUser | null> {
-  const token = (await cookies()).get(COOKIE)?.value;
+/** Signature and expiry only. Never use this alone to grant access. */
+async function readToken(): Promise<{ id: string; sv: number } | null> {
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
 
   try {
-    const { payload } = await jwtVerify(token, secret());
-    if (!payload.sub) return null;
-    return {
-      id: payload.sub,
-      name: String(payload.name ?? ""),
-      email: String(payload.email ?? ""),
-      role: payload.role === "ADMIN" ? "ADMIN" : "AUTHOR",
-    };
+    // Pinning the algorithm stops a token signed some other way — including
+    // "none" — from being accepted.
+    const { payload } = await jwtVerify(token, secret(), { algorithms: ["HS256"] });
+    if (!payload.sub || typeof payload.sv !== "number") return null;
+    return { id: payload.sub, sv: payload.sv };
   } catch {
-    // Expired, tampered with, or signed under a rotated secret.
     return null;
   }
 }
 
 /**
- * For admin pages and actions. Redirects rather than throwing so an expired
- * session lands on the login form instead of an error page.
+ * The one function that decides whether someone is signed in: a valid
+ * signature AND a live account whose session version still matches.
+ */
+export async function getVerifiedUser(): Promise<SessionUser | null> {
+  const token = await readToken();
+  if (!token) return null;
+
+  const user = await prisma.user.findUnique({
+    where: { id: token.id },
+    select: { id: true, name: true, email: true, role: true, sessionVersion: true },
+  });
+
+  if (!user || user.sessionVersion !== token.sv) return null;
+  return user;
+}
+
+/**
+ * For studio pages and actions. Redirects rather than throwing so an ended
+ * session lands on the sign-in form instead of an error page.
+ *
+ * It deliberately doesn't clear the stale cookie: cookies can't be written
+ * during a render. The cookie is harmless — it fails this check every time —
+ * and the next sign-in overwrites it.
  */
 export async function requireUser(): Promise<SessionUser> {
-  const user = await getSession();
-  if (!user) redirect("/login");
+  const user = await getVerifiedUser();
+  if (!user) redirect(LOGIN_PATH);
   return user;
 }
 
 export async function requireAdmin(): Promise<SessionUser> {
   const user = await requireUser();
-  if (user.role !== "ADMIN") redirect("/admin");
+  if (user.role !== "ADMIN") redirect(STUDIO_BASE);
   return user;
+}
+
+/**
+ * Ends every session for an account — call after a password or role change.
+ * The current request's own cookie is re-issued by the caller if needed.
+ */
+export async function revokeSessions(userId: string): Promise<number> {
+  const updated = await prisma.user.update({
+    where: { id: userId },
+    data: { sessionVersion: { increment: 1 } },
+    select: { sessionVersion: true },
+  });
+  return updated.sessionVersion;
 }
 
 // ---------------------------------------------------------------- login
 
 /**
- * Verifies credentials against the database. Returns null for both "no such
- * user" and "wrong password", and runs a hash comparison either way so the
- * response time doesn't reveal which accounts exist.
+ * Verifies credentials. Returns null for both "no such user" and "wrong
+ * password", and runs a hash comparison either way so response time doesn't
+ * reveal which accounts exist.
  */
 export async function authenticate(
   email: string,
@@ -128,17 +167,24 @@ export async function authenticate(
 ): Promise<SessionUser | null> {
   const user = await prisma.user.findUnique({
     where: { email: email.toLowerCase().trim() },
-    select: { id: true, name: true, email: true, role: true, passwordHash: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      sessionVersion: true,
+      passwordHash: true,
+    },
   });
 
-  // A bcrypt hash of a throwaway value, compared against when the account
-  // doesn't exist so both paths cost the same.
-  const hash =
-    user?.passwordHash ??
-    "$2b$12$C6UzMDM.H6dfI/f/IKcEeO3Q8Z2Hn0kYBLpUAyQPxvL0J4kqQZ9Wy";
-
-  const ok = await verifyPassword(password, hash);
+  const ok = await verifyPassword(password, user?.passwordHash ?? (await getDummyHash()));
   if (!user || !ok) return null;
 
-  return { id: user.id, name: user.name, email: user.email, role: user.role };
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    sessionVersion: user.sessionVersion,
+  };
 }

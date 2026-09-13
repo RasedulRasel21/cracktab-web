@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import CtaBand from "../../components/CtaBand";
+import PostArticle from "../../components/PostArticle";
 import PostCard from "../../components/PostCard";
 import { getAllPublished, getPostBySlug, getRelatedPosts } from "../../lib/blog";
 import { absoluteUrl, SITE_URL } from "../../lib/site";
@@ -21,12 +20,6 @@ export async function generateStaticParams() {
   const posts = await getAllPublished();
   return posts.map((post) => ({ slug: post.slug }));
 }
-
-const dateFormat = new Intl.DateTimeFormat("en-US", {
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-});
 
 export async function generateMetadata({
   params,
@@ -61,6 +54,7 @@ export async function generateMetadata({
       publishedTime: post.publishedAt?.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
       authors: [post.author.name],
+      tags: post.tags.map((tag) => tag.name),
       images: image ? [{ url: image, alt: post.coverAlt ?? post.title }] : undefined,
     },
     twitter: {
@@ -132,95 +126,7 @@ export default async function PostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="pt-32 sm:pt-40">
-        <header className="mx-auto w-full max-w-3xl px-5 sm:px-8">
-          <nav aria-label="Breadcrumb" className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
-            <Link href="/blog" className="transition-colors hover:text-accent">
-              Blog
-            </Link>
-            {post.category && (
-              <>
-                <span aria-hidden="true"> / </span>
-                <Link
-                  href={`/blog/category/${post.category.slug}`}
-                  className="transition-colors hover:text-accent"
-                >
-                  {post.category.name}
-                </Link>
-              </>
-            )}
-          </nav>
-
-          <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-white">
-            {post.title}
-          </h1>
-
-          <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-            {post.excerpt}
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-line pt-6 text-sm text-muted">
-            <span className="font-semibold text-white">{post.author.name}</span>
-            {post.publishedAt && (
-              <>
-                <span aria-hidden="true">·</span>
-                <time dateTime={post.publishedAt.toISOString()}>
-                  {dateFormat.format(post.publishedAt)}
-                </time>
-              </>
-            )}
-            <span aria-hidden="true">·</span>
-            <span>{post.readingMins} min read</span>
-          </div>
-        </header>
-
-        {post.coverUrl && (
-          <div className="mx-auto mt-12 w-full max-w-5xl px-5 sm:px-8">
-            <div className="relative aspect-16/9 overflow-hidden rounded-2xl border border-line bg-black">
-              <Image
-                src={post.coverUrl}
-                alt={post.coverAlt ?? ""}
-                fill
-                priority
-                sizes="(min-width: 1024px) 64rem, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Sanitised on write, in the admin action — never at render time. */}
-        <div
-          className="prose mx-auto mt-14 w-full max-w-3xl px-5 sm:px-8"
-          dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
-        />
-
-        {post.tags.length > 0 && (
-          <div className="mx-auto mt-14 w-full max-w-3xl px-5 sm:px-8">
-            <ul className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <li
-                  key={tag.slug}
-                  className="rounded-full border border-line px-3 py-1 text-xs font-medium text-muted"
-                >
-                  {tag.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {post.author.bio && (
-          <aside className="mx-auto mt-14 w-full max-w-3xl px-5 sm:px-8">
-            <div className="rounded-2xl border border-line bg-surface p-6">
-              <span className="font-display text-sm font-semibold tracking-tight text-white">
-                {post.author.name}
-              </span>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{post.author.bio}</p>
-            </div>
-          </aside>
-        )}
-      </article>
+      <PostArticle post={post} />
 
       {related.length > 0 && (
         <section className="py-20 sm:py-28">

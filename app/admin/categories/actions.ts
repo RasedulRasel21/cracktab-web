@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { studio } from "../../lib/paths";
 import { requireUser } from "../../lib/auth";
 import { prisma } from "../../lib/db";
 import { wouldCycle } from "../../lib/categories";
@@ -80,7 +81,9 @@ export async function createCategory(
   }
 
   revalidateBlog();
-  redirect("/admin/categories?saved=1");
+  // A fresh value per save: the page keys the form on it so it clears after
+  // each new category, rather than showing the last name still typed in.
+  redirect(studio(`/categories?saved=${Date.now()}`));
 }
 
 export async function updateCategory(
@@ -133,7 +136,7 @@ export async function updateCategory(
   }
 
   revalidateBlog();
-  redirect("/admin/categories?saved=1");
+  redirect(studio("/categories?saved=1"));
 }
 
 /**
@@ -149,9 +152,9 @@ export async function deleteCategory(formData: FormData): Promise<void> {
     await prisma.category.delete({ where: { id: categoryId } });
   } catch (error) {
     console.error("[categories] delete failed", error);
-    redirect("/admin/categories?error=1");
+    redirect(studio("/categories?error=1"));
   }
 
   revalidateBlog();
-  redirect("/admin/categories?deleted=1");
+  redirect(studio("/categories?deleted=1"));
 }
