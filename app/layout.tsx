@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     description:
       "Shopify stores built to perform. Built to last. From launch to scale.",
   },
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: { url: "/favicon.svg", type: "image/svg+xml" } },
 };
 
 export default function RootLayout({
