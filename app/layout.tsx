@@ -50,7 +50,16 @@ export const metadata: Metadata = {
     description:
       "Shopify stores built to perform. Built to last. From launch to scale.",
   },
-  icons: { icon: { url: "/favicon.svg", type: "image/svg+xml" } },
+  // The .ico and PNGs are for Google Search and browsers that don't take SVG
+  // icons — Google requests /favicon.ico and wants a square of 48px or more.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+  },
 };
 
 export default function RootLayout({
