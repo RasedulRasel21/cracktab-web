@@ -19,14 +19,17 @@ const isDev = process.env.NODE_ENV === "development";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com",
+  // news.google.com serves Google's "Preferred Sources" button script, which
+  // draws itself in the footer and talks back to the same origin.
+  `script-src 'self' 'unsafe-inline' https://news.google.com${isDev ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline' https://www.gstatic.com",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com",
   "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://news.google.com${isDev ? " ws:" : ""}`,
   "media-src 'self'",
-  // The site's only embeds: the Calendly booking calendar and the office map.
-  "frame-src https://calendly.com https://www.google.com https://maps.google.com",
+  // Embeds: the Calendly booking calendar, the office map, and the frame the
+  // Preferred Sources button opens.
+  "frame-src https://calendly.com https://www.google.com https://maps.google.com https://news.google.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

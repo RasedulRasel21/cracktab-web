@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { footerColumns, contact, socials } from "../lib/site";
+import PreferredSourceButton from "./PreferredSourceButton";
 
 function SocialIcon({ name }: { name: string }) {
   const common = { width: 18, height: 18, viewBox: "0 0 24 24", "aria-hidden": true };
@@ -138,21 +139,25 @@ export default function Footer() {
             </Link>
           </div>
 
-          <ul className="flex items-center gap-3">
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-white/70 transition-colors hover:border-accent hover:text-accent"
-                >
-                  <SocialIcon name={s.icon} />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+            <PreferredSourceButton />
+
+            <ul className="flex items-center gap-3">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-white/70 transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <SocialIcon name={s.icon} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
