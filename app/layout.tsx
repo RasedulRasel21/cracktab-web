@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import TagManager from "./components/TagManager";
+
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID?.trim();
 import { SITE_URL } from "./lib/site";
 
 // Self-hosted Urbanist (files in /public/fonts) — used site-wide.
@@ -80,6 +83,10 @@ export default function RootLayout({
         <div className="site-chrome contents">
           <Footer />
         </div>
+        {/* From the environment, never hard-coded, so marketing can swap
+            containers without a code change. Unset → no GTM at all, which
+            keeps local development out of the analytics. */}
+        {GTM_ID && <TagManager gtmId={GTM_ID} />}
       </body>
     </html>
   );

@@ -21,15 +21,20 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   // news.google.com serves Google's "Preferred Sources" button script, which
   // draws itself in the footer and talks back to the same origin.
-  `script-src 'self' 'unsafe-inline' https://news.google.com${isDev ? " 'unsafe-eval'" : ""}`,
-  "style-src 'self' 'unsafe-inline' https://www.gstatic.com",
-  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com",
+  //
+  // The googletagmanager / google-analytics / doubleclick / googleadservices
+  // origins are Google Tag Manager and the tags marketing runs inside it (GA4
+  // now, Google Ads conversions later), per marketing's GTM setup guide.
+  // 'unsafe-inline' must stay in script-src: GTM's custom HTML tags need it.
+  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net${isDev ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.googletagmanager.com",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com",
   "font-src 'self'",
-  `connect-src 'self' https://news.google.com${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com${isDev ? " ws:" : ""}`,
   "media-src 'self'",
-  // Embeds: the Calendly booking calendar, the office map, and the frame the
-  // Preferred Sources button opens.
-  "frame-src https://calendly.com https://www.google.com https://maps.google.com https://news.google.com",
+  // Embeds: the Calendly booking calendar, the office map, the frame the
+  // Preferred Sources button opens, and GTM Preview / Tag Assistant.
+  "frame-src https://calendly.com https://www.google.com https://maps.google.com https://news.google.com https://www.googletagmanager.com https://tagassistant.google.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

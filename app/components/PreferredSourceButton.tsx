@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useSyncExternalStore } from "react";
+import { usePublicPage } from "./usePublicPage";
 
 /**
  * Google's "Preferred Sources" button. A reader who clicks it marks Cracktab
@@ -15,24 +15,8 @@ import { useSyncExternalStore } from "react";
  * `afterInteractive` keeps a third-party request out of the critical path: the
  * page paints first, then this loads.
  */
-
-const subscribe = () => () => {};
-
-/**
- * The studio hides the site footer with CSS, which would still leave Google's
- * script loading on every admin page. Reading the DOM for the studio's own
- * marker class keeps the check out of the JavaScript sent to visitors — a
- * pathname check would ship the hidden studio path to everyone.
- *
- * Nothing renders on the server ("server" below): the markup would otherwise
- * be in the HTML of studio pages too, and the browser would fetch Google's
- * script before hydration could remove it.
- */
-const where = () => (document.querySelector(".studio-page") ? "studio" : "site");
-
 export default function PreferredSourceButton() {
-  const place = useSyncExternalStore(subscribe, where, () => "server" as const);
-  if (place !== "site") return null;
+  if (!usePublicPage()) return null;
 
   return (
     <>

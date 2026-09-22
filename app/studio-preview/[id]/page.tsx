@@ -50,7 +50,10 @@ export default async function PreviewPage({
     <>
       <PostArticle post={post} />
 
-      <div className="h-32" aria-hidden="true" />
+      {/* Marks this page private, so GTM and other third-party scripts stay
+          off it — see usePublicPage. Not `.studio-page`, which would also
+          hide the site header and footer this preview is meant to show. */}
+      <div data-private-page className="h-32" aria-hidden="true" />
 
       <div
         role="status"
