@@ -26,11 +26,14 @@ const contentSecurityPolicy = [
   // origins are Google Tag Manager and the tags marketing runs inside it (GA4
   // now, Google Ads conversions later), per marketing's GTM setup guide.
   // 'unsafe-inline' must stay in script-src: GTM's custom HTML tags need it.
-  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net${isDev ? " 'unsafe-eval'" : ""}`,
+  // connect.facebook.net and *.clarity.ms are the Meta Pixel and Microsoft
+  // Clarity tags marketing publishes from inside GTM. Every tag they add
+  // needs its origins here, or the browser blocks it with no visible error.
+  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.googletagmanager.com",
-  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com",
   "font-src 'self'",
-  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com${isDev ? " ws:" : ""}`,
   "media-src 'self'",
   // Embeds: the Calendly booking calendar, the office map, the frame the
   // Preferred Sources button opens, and GTM Preview / Tag Assistant.

@@ -182,7 +182,9 @@ export async function createPost(
     return { error: "Couldn't save the post. Check the connection and try again." };
   }
 
-  if (input.publish) revalidateBlog(slug);
+  // Always, not only when publishing: a draft still changes what the sitemap
+  // and listings should show once it is saved from a published state.
+  revalidateBlog(slug);
   redirect(studio("?saved=1"));
 }
 

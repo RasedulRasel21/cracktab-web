@@ -12,6 +12,7 @@ export const primaryNav: NavLink[] = [
   { label: "Services", href: "/services" },
   { label: "Shopify Themes", href: "/themes" },
   { label: "Shopify Apps", href: SHOPIFY_APPS_URL, external: true },
+  { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -935,7 +936,7 @@ export type Social = { label: string; href: string; icon: string };
 
 export const socials: Social[] = [
   { label: "Facebook", href: "https://facebook.com/cracktabagency", icon: "facebook" },
-  { label: "Instagram", href: "#", icon: "instagram" },
+  { label: "Instagram", href: "https://www.instagram.com/cracktab/", icon: "instagram" },
   { label: "LinkedIn", href: "https://linkedin.com/company/cracktab", icon: "linkedin" },
   { label: "Pinterest", href: "https://pinterest.com/cracktabagency", icon: "pinterest" },
   {

@@ -1,16 +1,30 @@
 import type { MetadataRoute } from "next";
-import { getAllCategories, getAllPublished } from "./lib/blog";
+import { getAllPublished, getCategoryTree } from "./lib/blog";
+import type { CategoryNode } from "./lib/categories";
 import { SITE_URL, serviceDetails } from "./lib/site";
 import { caseStudies } from "./lib/site";
 
-/** Refreshed on the same cadence as the blog listings. */
-export const revalidate = 3600;
+/**
+ * Publishing refreshes this immediately (see revalidateBlog in the studio's
+ * actions). This window is only the backstop for changes made outside the
+ * studio — kept short so a category emptying out can't linger for an hour.
+ */
+export const revalidate = 600;
+
+/** Every category in the tree, flat. */
+function flatten(nodes: CategoryNode[]): CategoryNode[] {
+  return nodes.flatMap((node) => [node, ...flatten(node.children)]);
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, categories] = await Promise.all([
+  const [posts, categoryTree] = await Promise.all([
     getAllPublished(),
-    getAllCategories(),
+    // Already pruned to categories with published posts in them. An empty
+    // archive 404s by design, so listing every category advertised pages
+    // that were guaranteed to fail — nine of them, per the SEO audit.
+    getCategoryTree(),
   ]);
+  const categories = flatten(categoryTree);
 
   const staticRoutes = [
     { path: "/", priority: 1 },

@@ -129,8 +129,8 @@ export default function LivePreviewModal({
               ref={scrollRef}
               className={`relative overflow-y-auto overscroll-contain bg-white ${
                 isDesktop
-                  ? "aspect-16/10 h-[min(58dvh,32rem)] w-auto max-w-[88vw] rounded-lg"
-                  : "aspect-9/19 h-[min(62dvh,38rem)] w-auto max-w-[80vw] rounded-[2rem]"
+                  ? "aspect-16/10 h-[min(72dvh,44rem)] w-auto max-w-[92vw] rounded-lg"
+                  : "aspect-9/19 h-[min(76dvh,46rem)] w-auto max-w-[86vw] rounded-[2rem]"
               }`}
             >
               {/* Plain <img>: these are tall full-page captures whose height is
