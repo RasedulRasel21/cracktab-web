@@ -233,7 +233,7 @@ export const shopifyApps: ShopifyApp[] = [
         },
         {
           title: "Urgency you can stand behind",
-          body: "Countdown timers for real sale dates and stock indicators from real inventory.",
+          body: "Countdown timers and stock indicators to add urgency.",
         },
         {
           title: "Free shipping bar",
