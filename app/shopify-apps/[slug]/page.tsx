@@ -382,8 +382,8 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
         </Section>
       )}
 
-      {/* ---- FAQ ---- */}
-      <Section>
+      {/* ---- FAQ ---- (App Store listings link straight to #faq) */}
+      <Section id="faq">
         <div className="mx-auto max-w-3xl">
           <SectionHeading>FAQ</SectionHeading>
           <div className="mt-8">

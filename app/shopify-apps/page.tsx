@@ -227,7 +227,7 @@ export default function ShopifyAppsPage() {
       </section>
 
       {/* ---- F. FAQ ---- */}
-      <section className="px-5 pb-20 sm:px-8 sm:pb-28">
+      <section id="faq" className="px-5 pb-20 sm:px-8 sm:pb-28">
         <div className="mx-auto w-full max-w-3xl">
           <SectionHeading>FAQ</SectionHeading>
           <div className="mt-8">

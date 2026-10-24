@@ -80,6 +80,14 @@ const nextConfig: NextConfig = {
   // Stops advertising the framework in every response header.
   poweredByHeader: false,
 
+  async redirects() {
+    return [
+      // The App Store listings point their privacy link at /privacy-policy;
+      // the policy itself lives at /privacy.
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
