@@ -229,10 +229,7 @@ export const shopifyApps: ShopifyApp[] = [
         "Sell made-to-order diamond rings online. Shoppers pick each stone and see your price update live.",
       appStoreUrl: "https://apps.shopify.com/custom-ring-creator",
       demoLabel: "View demo store",
-      videoFile: {
-        src: "/apps/custom-diamond-ring-builder/video.mp4",
-        captions: "/apps/custom-diamond-ring-builder/video.vtt",
-      },
+      videoId: "GXBFqyEXrHs",
       videoHeading: "Shoppers build and price a diamond ring live",
       problems: [
         "Made-to-order diamond rings have a different price for every stone combination, which standard product variants can't handle.",
