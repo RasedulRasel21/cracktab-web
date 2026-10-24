@@ -13,6 +13,7 @@ export default function AppCard({
   vignette,
   wide = false,
   fallbackHref,
+  line,
   headingLevel = "h3",
 }: {
   app: ShopifyApp;
@@ -23,6 +24,8 @@ export default function AppCard({
    * "Other Cracktab apps" row. Without it the card isn't a link.
    */
   fallbackHref?: string;
+  /** Replaces the app's hub line, e.g. for a page-specific cross-sell. */
+  line?: string;
   /** Resolved public paths, or undefined to render nothing in that slot. */
   icon?: string;
   vignette?: string;
@@ -66,7 +69,7 @@ export default function AppCard({
       <Heading className="mt-6 font-display text-2xl font-medium tracking-tight text-white">
         {app.name}
       </Heading>
-      <p className="mt-3 text-sm leading-relaxed text-muted">{app.line}</p>
+      <p className="mt-3 text-sm leading-relaxed text-muted">{line ?? app.line}</p>
 
       {app.chips.length > 0 && (
         <ul className="mt-5 flex flex-wrap gap-2">

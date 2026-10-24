@@ -15,7 +15,8 @@ export const APPS_HUB_PATH = "/shopify-apps";
 
 export type AppFeature = { title: string; body: string };
 
-export type AppComparisonRow = { label: string; ours: string; theirs: string };
+/** One row of the comparison table: a value per column, ours first. */
+export type AppComparisonRow = { label: string; values: string[] };
 
 /** Everything the shared app page template needs. */
 export type AppPage = {
@@ -41,14 +42,26 @@ export type AppPage = {
   features: AppFeature[];
   steps: string[];
   whoFor?: string[];
-  /** Optional extra statement, e.g. AI SEO's "Why it's free". */
-  note?: { heading: string; quote: string };
-  comparison?: { oursLabel: string; theirsLabel: string; rows: AppComparisonRow[] };
+  /** Tiles in the block library grid (names match BlockIcon's keys). */
+  blocks?: { heading: string; items: string[] };
+  /**
+   * Optional extra statement, e.g. AI SEO's "Why it's free". With
+   * `bookCallLabel` it ends in a book-a-call button.
+   */
+  note?: { heading: string; quote: string; bookCallLabel?: string };
+  /** `columns[0]` is this app; the others are the alternatives. */
+  comparison?: { columns: string[]; rows: AppComparisonRow[] };
   faq: Faq[];
-  /** `supportLine` leads into a "Book a call with Cracktab." link. */
-  finalCta: { heading: string; supportLine?: string };
-  /** Slugs of the apps in the "Other Cracktab apps" row. */
-  otherApps: string[];
+  /**
+   * `supportLine` leads into a book-a-call link, labelled `bookCallLabel`
+   * (default "Book a call with Cracktab.").
+   */
+  finalCta: { heading: string; supportLine?: string; bookCallLabel?: string };
+  /**
+   * Apps in the "Other Cracktab apps" row, by slug. An object swaps in a
+   * page-specific line for that card.
+   */
+  otherApps: (string | { slug: string; line: string })[];
 };
 
 export type ShopifyApp = {
@@ -151,14 +164,13 @@ export const shopifyApps: ShopifyApp[] = [
           "We built Cracktab AI SEO from the checklists our agency runs on client stores. We keep it free so any merchant can cover the basics without a budget.",
       },
       comparison: {
-        oursLabel: "Cracktab AI SEO",
-        theirsLabel: "Typical freemium SEO apps",
+        columns: ["Cracktab AI SEO", "Typical freemium SEO apps"],
         rows: [
-          { label: "Price", ours: "Free", theirs: "Free plan, then monthly fee" },
-          { label: "Image limit", ours: "None", theirs: "Often capped per month" },
-          { label: "Bulk meta fixes", ours: "Yes", theirs: "Often paid" },
-          { label: "Alt text", ours: "Yes", theirs: "Varies" },
-          { label: "AI blog scheduling", ours: "Yes", theirs: "Rare or paid" },
+          { label: "Price", values: ["Free", "Free plan, then monthly fee"] },
+          { label: "Image limit", values: ["None", "Often capped per month"] },
+          { label: "Bulk meta fixes", values: ["Yes", "Often paid"] },
+          { label: "Alt text", values: ["Yes", "Varies"] },
+          { label: "AI blog scheduling", values: ["Yes", "Rare or paid"] },
         ],
       },
       faq: [
@@ -197,7 +209,124 @@ export const shopifyApps: ShopifyApp[] = [
     line: "20+ no-code conversion blocks with revenue tracked per block.",
     chips: ["Upsells", "Timers", "Trust badges", "Shipping bar"],
     free: true,
-    pageLive: false,
+    pageLive: true,
+    page: {
+      seoTitle: "Free Shopify CRO App: Upsells, Timers & Trust Badges",
+      metaDescription:
+        "Add 20+ no-code conversion blocks to your Shopify store: upsells, countdown timers, free shipping bar and trust badges, with revenue tracked per block.",
+      eyebrow: "Shopify app · Free",
+      heading: "Free Shopify CRO app with 20+ no-code blocks",
+      subhead:
+        "Add upsells, countdown timers, free shipping bars and trust badges from the theme editor, then see which blocks bring in revenue.",
+      appStoreUrl: "https://apps.shopify.com/conversion-rate-optimizer-1",
+      demoLabel: "See it on a demo store",
+      videoHeading: "Watch 5 CRO fixes on one product page",
+      problems: [
+        "Shoppers leave product pages with unanswered questions.",
+        "Carts stall just under your free shipping threshold.",
+        "You add widgets but never know which ones pay off.",
+      ],
+      features: [
+        {
+          title: "Upsells and cross-sells",
+          body: "Offer what pairs well on product and cart pages.",
+        },
+        {
+          title: "Urgency you can stand behind",
+          body: "Countdown timers for real sale dates and stock indicators from real inventory.",
+        },
+        {
+          title: "Free shipping bar",
+          body: "Shows how close a cart is to free shipping.",
+        },
+        {
+          title: "Trust blocks",
+          body: "Badges, testimonials, FAQ accordions, comparison tables and logo sliders.",
+        },
+        {
+          title: "No code",
+          body: "Every block is added, moved and styled in the Shopify theme editor.",
+        },
+        {
+          title: "Revenue per block",
+          body: "Impressions, clicks and attributed revenue in one dashboard.",
+        },
+      ],
+      // Only blocks the live App Store listing names. The page doc asks for
+      // the app's exact list, which the listing doesn't give in full.
+      blocks: {
+        heading: "Block library",
+        items: [
+          "Upsell",
+          "Cross-sell",
+          "Countdown timer",
+          "Stock indicator",
+          "Live visitors",
+          "Free shipping bar",
+          "Star ratings",
+          "Testimonials",
+          "FAQ accordion",
+          "Comparison table",
+          "Trust badges",
+          "Logo slider",
+        ],
+      },
+      steps: [
+        "Install",
+        "Open the theme editor and add blocks",
+        "Watch the analytics and keep what works",
+      ],
+      whoFor: [
+        "Stores with traffic but flat sales",
+        "Brands not ready for a full app stack",
+        "Merchants who want to start CRO small",
+        "Agencies building client stores",
+      ],
+      note: {
+        heading: "From the agency that does CRO for a living",
+        quote:
+          "Cracktab has worked on 170+ Shopify stores. These blocks are the fixes we add most often in our CRO audits.",
+        bookCallLabel: "Book a CRO call",
+      },
+      comparison: {
+        columns: ["Conversion Rate Optimizer", "Single-purpose apps", "Big all-in-one suites"],
+        rows: [
+          { label: "Price", values: ["Free", "Several subscriptions", "One larger subscription"] },
+          { label: "Blocks", values: ["20+ conversion blocks", "One each", "40+ mixed tools"] },
+          { label: "Revenue per block", values: ["Yes", "Rarely", "Varies"] },
+          { label: "Theme editor native", values: ["Yes", "Varies", "Varies"] },
+        ],
+      },
+      // The doc's "Are the timers real?" and "How is revenue attributed?"
+      // answers are left out until the app's behaviour is confirmed.
+      faq: [
+        {
+          q: "Will it slow my store?",
+          a: "Blocks are theme app extensions and only load where you place them.",
+        },
+        {
+          q: "Does it work on checkout?",
+          a: "Checkout upsells need Shopify Plus checkout extensibility. Product and cart blocks work on every plan.",
+        },
+        {
+          q: "Is it free?",
+          a: "Yes, currently free to install and use.",
+        },
+      ],
+      finalCta: {
+        heading: "Give shoppers more reasons to buy today",
+        supportLine: "Want a full CRO audit?",
+        bookCallLabel: "Book a call.",
+      },
+      otherApps: [
+        {
+          slug: "ai-growth-kits",
+          line: "Want upsells, bundles, reviews and forms together? See AI Growth Kits",
+        },
+        "ai-seo",
+        "widgetly-reviews",
+      ],
+    },
   },
   {
     slug: "widgetly-reviews",

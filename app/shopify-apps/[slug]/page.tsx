@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Accordion from "../../components/Accordion";
 import AppCard from "../../components/AppCard";
+import BlockIcon from "../../components/BlockIcon";
 import BookCallButton from "../../components/BookCallButton";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import JsonLd from "../../components/JsonLd";
@@ -100,9 +101,11 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   );
   const anyFeatureImage = featureImages.some(Boolean);
 
-  const otherApps = page.otherApps
-    .map((s) => shopifyApps.find((other) => other.slug === s))
-    .filter((other) => other !== undefined);
+  const otherApps = page.otherApps.flatMap((entry) => {
+    const { slug: otherSlug, line } = typeof entry === "string" ? { slug: entry, line: undefined } : entry;
+    const other = shopifyApps.find((candidate) => candidate.slug === otherSlug);
+    return other ? [{ app: other, line }] : [];
+  });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -256,6 +259,24 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
         )}
       </Section>
 
+      {/* ---- Block library ---- */}
+      {page.blocks && (
+        <Section>
+          <SectionHeading>{page.blocks.heading}</SectionHeading>
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {page.blocks.items.map((block) => (
+              <li
+                key={block}
+                className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-4 text-sm font-medium text-white sm:px-5"
+              >
+                <BlockIcon name={block} />
+                {block}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       {/* ---- How it works ---- */}
       <Section>
         <SectionHeading>How it works</SectionHeading>
@@ -310,6 +331,11 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           <blockquote className="mt-8 max-w-4xl font-display text-[clamp(1.25rem,2.5vw,1.75rem)] font-medium leading-[1.35] tracking-tight text-white">
             &ldquo;{page.note.quote}&rdquo;
           </blockquote>
+          {page.note.bookCallLabel && (
+            <BookCallButton className={`${primaryButton} mt-8`}>
+              {page.note.bookCallLabel}
+            </BookCallButton>
+          )}
         </Section>
       )}
 
@@ -323,12 +349,15 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
               <thead>
                 <tr className="border-b border-line text-xs font-semibold uppercase tracking-[0.12em] text-muted">
                   <td className="py-4 pr-4" />
-                  <th scope="col" className="py-4 pr-4 font-semibold text-accent">
-                    {comparison.oursLabel}
-                  </th>
-                  <th scope="col" className="py-4 font-semibold">
-                    {comparison.theirsLabel}
-                  </th>
+                  {comparison.columns.map((column, i) => (
+                    <th
+                      key={column}
+                      scope="col"
+                      className={`py-4 pr-4 font-semibold last:pr-0 ${i === 0 ? "text-accent" : ""}`}
+                    >
+                      {column}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -337,8 +366,14 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
                     <th scope="row" className="py-4 pr-4 font-medium text-white/80">
                       {row.label}
                     </th>
-                    <td className="py-4 pr-4 font-semibold text-white">{row.ours}</td>
-                    <td className="py-4 text-muted">{row.theirs}</td>
+                    {row.values.map((value, i) => (
+                      <td
+                        key={i}
+                        className={`py-4 pr-4 last:pr-0 ${i === 0 ? "font-semibold text-white" : "text-muted"}`}
+                      >
+                        {value}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -375,7 +410,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
               <p className="mt-6 text-sm text-muted">
                 {page.finalCta.supportLine}{" "}
                 <BookCallButton className="font-semibold text-white underline-offset-4 transition-colors hover:text-accent hover:underline">
-                  Book a call with Cracktab.
+                  {page.finalCta.bookCallLabel ?? "Book a call with Cracktab."}
                 </BookCallButton>
               </p>
             )}
@@ -388,10 +423,11 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
         <Section>
           <SectionHeading>Other Cracktab apps</SectionHeading>
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {otherApps.map((other) => (
+            {otherApps.map(({ app: other, line }) => (
               <AppCard
                 key={other.slug}
                 app={other}
+                line={line}
                 icon={findPublicAsset(appAsset(other.slug, "icon"))}
                 fallbackHref={`${APPS_HUB_PATH}#apps`}
               />
