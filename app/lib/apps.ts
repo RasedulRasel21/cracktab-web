@@ -30,18 +30,23 @@ export type AppPage = {
   /** Optional until the demo store exists. The button is hidden when empty. */
   demoUrl?: string;
   demoLabel: string;
-  /** YouTube video id. The video block is hidden when empty. */
+  /**
+   * The demo video: a YouTube id, or a self-hosted file (a public path, with
+   * optional WebVTT captions). The video block is hidden when both are empty.
+   */
   videoId?: string;
+  videoFile?: { src: string; captions?: string };
   videoHeading: string;
   problems: string[];
   features: AppFeature[];
   steps: string[];
-  whoFor: string[];
+  whoFor?: string[];
   /** Optional extra statement, e.g. AI SEO's "Why it's free". */
   note?: { heading: string; quote: string };
-  comparison: { oursLabel: string; theirsLabel: string; rows: AppComparisonRow[] };
+  comparison?: { oursLabel: string; theirsLabel: string; rows: AppComparisonRow[] };
   faq: Faq[];
-  finalCta: { heading: string; supportLine: string };
+  /** `supportLine` leads into a "Book a call with Cracktab." link. */
+  finalCta: { heading: string; supportLine?: string };
   /** Slugs of the apps in the "Other Cracktab apps" row. */
   otherApps: string[];
 };
@@ -210,7 +215,90 @@ export const shopifyApps: ShopifyApp[] = [
     line: "Let shoppers build their own ring: setting, diamond, metal and size, step by step.",
     chips: [],
     free: false,
-    pageLive: false,
+    pageLive: true,
+    // Copy comes from the live App Store listing, the listing instructions
+    // doc, and the FAQ and setup guide on aigrowthkits.app. There is no
+    // cracktab.com page doc for this app yet.
+    page: {
+      seoTitle: "Custom Diamond Ring Builder | Live Ring Pricing for Shopify",
+      metaDescription:
+        "Let shoppers build made-to-order diamond rings on your product page, priced live from your own rate sheet. Free plan for up to 5 ring products.",
+      eyebrow: "Shopify app · Free plan available",
+      heading: "Custom Diamond Ring Builder",
+      subhead:
+        "Sell made-to-order diamond rings online. Shoppers pick each stone and see your price update live.",
+      appStoreUrl: "https://apps.shopify.com/custom-ring-creator",
+      demoLabel: "View demo store",
+      videoFile: {
+        src: "/apps/custom-diamond-ring-builder/video.mp4",
+        captions: "/apps/custom-diamond-ring-builder/video.vtt",
+      },
+      videoHeading: "Shoppers build and price a diamond ring live",
+      problems: [
+        "Made-to-order diamond rings have a different price for every stone combination, which standard product variants can't handle.",
+        "Your shoppers want to design their ring and see the price now.",
+        "Price-on-request makes them wait, and some don't come back.",
+      ],
+      features: [
+        {
+          title: "Build and price a ring on the product page",
+          body: "Shoppers choose origin, shape, carat, color, clarity and ring size, and the total updates as they go.",
+        },
+        {
+          title: "Your rate sheet becomes live pricing",
+          body: "Upload your diamond rate sheet as a CSV, or add and edit stones by hand. The whole file is checked before anything is saved.",
+        },
+        {
+          title: "Only stones you have priced are shown",
+          body: "Only combinations you have priced are shown, so no one orders a stone you can't supply.",
+        },
+        {
+          title: "A ring photo for every carat weight",
+          body: "Assign a photo to each carat weight for a shape. A carat left blank falls back to the product photo.",
+        },
+        {
+          title: "Match the selector to your theme",
+          body: "Restyle the selector to match your theme: colors, layout, pills or dropdowns. A live preview shows the result before you save.",
+        },
+        {
+          title: "Every spec lands on the Shopify order",
+          body: "Every choice is saved on the cart and order, ready for your workshop.",
+        },
+      ],
+      steps: [
+        "Install Custom Diamond Ring Builder from the Shopify App Store and approve the permissions.",
+        "Load your diamond prices: upload your rate sheet as a CSV.",
+        "Add the selector to your theme and place a test order.",
+      ],
+      faq: [
+        {
+          q: "What format does the price sheet need?",
+          a: "A CSV file with a header row and these columns: shape, origin, carat, colour, clarity, price. An image_url column is optional.",
+        },
+        {
+          q: "How is the ring total calculated?",
+          a: "The total is the ring's base price plus the price of the selected stone. It is calculated on the app's server from your price data, and again when the ring is added to the cart.",
+        },
+        {
+          q: "Does the specification reach the order?",
+          a: "Yes. Shape, diamond origin, carat, color, clarity, ring size and the diamond price are saved as line item properties, so they appear in the cart and on the order in your Shopify admin.",
+        },
+        {
+          q: "Why is a carat, color or clarity missing from the selector?",
+          a: "The selector only offers combinations that have a price. If a stone is missing, add a row for that shape, origin, carat, color and clarity to your price data.",
+        },
+        {
+          q: "Does it work with my theme?",
+          a: "The selector is a theme app block, which you add to the product template in the theme editor, so no theme code changes are needed.",
+        },
+        {
+          q: "What does each plan include?",
+          a: "Free covers up to 5 ring products and 3 diamond shapes. Studio covers up to 25 ring products with unlimited shapes, custom diamond origins and ring size lists. Atelier adds unlimited ring products and custom CSS. Current prices and trial length are shown on the app's Shopify App Store listing.",
+        },
+      ],
+      finalCta: { heading: "Build it. Price it. Live." },
+      otherApps: ["ai-seo", "conversion-rate-optimizer", "ai-growth-kits"],
+    },
   },
 ];
 

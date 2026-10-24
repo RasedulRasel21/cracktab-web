@@ -90,6 +90,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   const app = findApp(slug);
   if (!app) notFound();
   const { page } = app;
+  const { comparison } = page;
 
   const icon = findPublicAsset(appAsset(app.slug, "icon"));
   const hero = findPublicAsset(appAsset(app.slug, "hero"));
@@ -189,7 +190,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           {hero && (
             <Image
               src={hero}
-              alt={`${app.name} dashboard`}
+              alt={`${app.name} feature image`}
               width={1600}
               height={900}
               priority
@@ -271,29 +272,36 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
       </Section>
 
       {/* ---- Demo video — only once the video exists ---- */}
-      {page.videoId && (
+      {(page.videoId || page.videoFile) && (
         <Section>
           <SectionHeading>{page.videoHeading}</SectionHeading>
           <div className="mt-8 max-w-5xl">
-            <VideoEmbed videoId={page.videoId} title={page.videoHeading} poster={videoPoster} />
+            <VideoEmbed
+              videoId={page.videoId}
+              file={page.videoFile}
+              title={page.videoHeading}
+              poster={videoPoster}
+            />
           </div>
         </Section>
       )}
 
       {/* ---- Who it's for ---- */}
-      <Section>
-        <SectionHeading>Who it&apos;s for</SectionHeading>
-        <ul className="mt-8 flex flex-wrap gap-3">
-          {page.whoFor.map((who) => (
-            <li
-              key={who}
-              className="rounded-full border border-line px-5 py-2.5 text-sm font-medium text-white/80"
-            >
-              {who}
-            </li>
-          ))}
-        </ul>
-      </Section>
+      {page.whoFor && (
+        <Section>
+          <SectionHeading>Who it&apos;s for</SectionHeading>
+          <ul className="mt-8 flex flex-wrap gap-3">
+            {page.whoFor.map((who) => (
+              <li
+                key={who}
+                className="rounded-full border border-line px-5 py-2.5 text-sm font-medium text-white/80"
+              >
+                {who}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       {/* ---- Optional statement (AI SEO: "Why it's free") ---- */}
       {page.note && (
@@ -306,36 +314,38 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
       )}
 
       {/* ---- Comparison ---- */}
-      <Section>
-        <SectionHeading>Comparison</SectionHeading>
-        {/* Scrolls inside its own box if a column ever gets too wide. */}
-        <div className="mt-8 max-w-4xl overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-line text-xs font-semibold uppercase tracking-[0.12em] text-muted">
-                <td className="py-4 pr-4" />
-                <th scope="col" className="py-4 pr-4 font-semibold text-accent">
-                  {page.comparison.oursLabel}
-                </th>
-                <th scope="col" className="py-4 font-semibold">
-                  {page.comparison.theirsLabel}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {page.comparison.rows.map((row) => (
-                <tr key={row.label} className="border-b border-line">
-                  <th scope="row" className="py-4 pr-4 font-medium text-white/80">
-                    {row.label}
+      {comparison && (
+        <Section>
+          <SectionHeading>Comparison</SectionHeading>
+          {/* Scrolls inside its own box if a column ever gets too wide. */}
+          <div className="mt-8 max-w-4xl overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-line text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+                  <td className="py-4 pr-4" />
+                  <th scope="col" className="py-4 pr-4 font-semibold text-accent">
+                    {comparison.oursLabel}
                   </th>
-                  <td className="py-4 pr-4 font-semibold text-white">{row.ours}</td>
-                  <td className="py-4 text-muted">{row.theirs}</td>
+                  <th scope="col" className="py-4 font-semibold">
+                    {comparison.theirsLabel}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
+              </thead>
+              <tbody>
+                {comparison.rows.map((row) => (
+                  <tr key={row.label} className="border-b border-line">
+                    <th scope="row" className="py-4 pr-4 font-medium text-white/80">
+                      {row.label}
+                    </th>
+                    <td className="py-4 pr-4 font-semibold text-white">{row.ours}</td>
+                    <td className="py-4 text-muted">{row.theirs}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Section>
+      )}
 
       {/* ---- FAQ ---- */}
       <Section>
@@ -361,12 +371,14 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             <a href={installUrl(app, "footer")} rel="noopener" className={`${primaryButton} mt-9`}>
               Install free on Shopify
             </a>
-            <p className="mt-6 text-sm text-muted">
-              {page.finalCta.supportLine}{" "}
-              <BookCallButton className="font-semibold text-white underline-offset-4 transition-colors hover:text-accent hover:underline">
-                Book a call with Cracktab.
-              </BookCallButton>
-            </p>
+            {page.finalCta.supportLine && (
+              <p className="mt-6 text-sm text-muted">
+                {page.finalCta.supportLine}{" "}
+                <BookCallButton className="font-semibold text-white underline-offset-4 transition-colors hover:text-accent hover:underline">
+                  Book a call with Cracktab.
+                </BookCallButton>
+              </p>
+            )}
           </div>
         </div>
       </section>

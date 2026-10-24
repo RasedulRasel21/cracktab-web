@@ -4,20 +4,22 @@ import { useState } from "react";
 import Image from "next/image";
 
 /**
- * Click-to-play YouTube embed. Nothing from YouTube loads until the visitor
- * presses play, so the video costs the page no weight up front.
+ * Click-to-play video: a YouTube embed or a self-hosted file. Nothing loads
+ * until the visitor presses play, so the video costs the page no weight up
+ * front.
  *
- * The thumbnail is a local file (optional), not i.ytimg.com, so only the
- * player itself needs an exception in the CSP: add
- * https://www.youtube-nocookie.com to frame-src in next.config.ts when the
- * first video id goes live.
+ * The thumbnail is a local file (optional), not i.ytimg.com. A self-hosted
+ * file is covered by the CSP's media-src 'self'; a YouTube id needs
+ * https://www.youtube-nocookie.com added to frame-src in next.config.ts.
  */
 export default function VideoEmbed({
   videoId,
+  file,
   title,
   poster,
 }: {
-  videoId: string;
+  videoId?: string;
+  file?: { src: string; captions?: string };
   title: string;
   poster?: string;
 }) {
@@ -25,7 +27,14 @@ export default function VideoEmbed({
 
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-line bg-surface">
-      {playing ? (
+      {playing && file ? (
+        <video controls autoPlay playsInline poster={poster} className="absolute inset-0 h-full w-full">
+          <source src={file.src} type="video/mp4" />
+          {file.captions && (
+            <track kind="captions" src={file.captions} srcLang="en" label="English" default />
+          )}
+        </video>
+      ) : playing && videoId ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`}
           title={title}
