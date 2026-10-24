@@ -36,8 +36,9 @@ const contentSecurityPolicy = [
   `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com${isDev ? " ws:" : ""}`,
   "media-src 'self'",
   // Embeds: the Calendly booking calendar, the office map, the frame the
-  // Preferred Sources button opens, and GTM Preview / Tag Assistant.
-  "frame-src https://calendly.com https://www.google.com https://maps.google.com https://news.google.com https://www.googletagmanager.com https://tagassistant.google.com",
+  // Preferred Sources button opens, GTM Preview / Tag Assistant, and the
+  // click-to-play YouTube demo videos on the Shopify app pages.
+  "frame-src https://calendly.com https://www.google.com https://maps.google.com https://news.google.com https://www.googletagmanager.com https://tagassistant.google.com https://www.youtube-nocookie.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
