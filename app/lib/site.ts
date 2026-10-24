@@ -1,17 +1,17 @@
+import { APPS_HUB_PATH, appHref, shopifyApps } from "./apps";
+
 export const CALENDLY_URL = "https://calendly.com/cracktab2025/30min";
 
 /** `external: true` renders a plain anchor that opens in a new tab. */
 export type NavLink = { label: string; href: string; external?: boolean };
 
-export const SHOPIFY_APPS_URL = "https://aigrowthkits.app/";
-
-// Primary menu group. Shopify Apps points at our own app site, which lives on
-// its own domain, so it opens in a new tab rather than routing in-app.
+// Primary menu group. Shopify Apps goes to the apps hub; the mobile menu is a
+// flat list, so it stays one link rather than a dropdown of every app.
 export const primaryNav: NavLink[] = [
   { label: "Our Works", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "Shopify Themes", href: "/themes" },
-  { label: "Shopify Apps", href: SHOPIFY_APPS_URL, external: true },
+  { label: "Shopify Apps", href: APPS_HUB_PATH },
   { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -112,7 +112,18 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
       { label: "Our Works", href: "/work" },
       { label: "Services", href: "/services" },
       { label: "Shopify Themes", href: "/themes" },
-      { label: "Shopify Apps", href: SHOPIFY_APPS_URL, external: true },
+      { label: "Shopify Apps", href: APPS_HUB_PATH },
+    ],
+  },
+  {
+    // Apps without a live page yet are left out until their page exists.
+    heading: "Shopify Apps",
+    links: [
+      { label: "All apps", href: APPS_HUB_PATH },
+      ...shopifyApps.flatMap((app): NavLink[] => {
+        const link = appHref(app);
+        return link ? [{ label: app.name, ...link }] : [];
+      }),
     ],
   },
   {

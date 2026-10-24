@@ -71,7 +71,7 @@ export default function Footer() {
       <div className="relative z-10 mx-auto flex w-full max-w-360 flex-1 flex-col justify-between px-5 pb-10 pt-16 sm:px-8 sm:pt-20">
         {/* Top: nav (left) + address (right) */}
         <div className="flex flex-col gap-12 sm:flex-row sm:justify-between">
-          <div className="grid grid-cols-2 gap-10 sm:gap-16">
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 sm:gap-16">
             {footerColumns.map((col) => (
               <div key={col.heading}>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">

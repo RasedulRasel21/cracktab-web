@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPublished, getCategoryTree } from "./lib/blog";
 import type { CategoryNode } from "./lib/categories";
+import { APPS_HUB_PATH, appPath, appsWithPages } from "./lib/apps";
 import { SITE_URL, serviceDetails } from "./lib/site";
 import { caseStudies } from "./lib/site";
 
@@ -31,6 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/services", priority: 0.9 },
     { path: "/work", priority: 0.9 },
     { path: "/themes", priority: 0.8 },
+    { path: APPS_HUB_PATH, priority: 0.8 },
     { path: "/about", priority: 0.7 },
     { path: "/blog", priority: 0.7 },
     { path: "/contact", priority: 0.7 },
@@ -51,6 +53,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    // Only apps whose page is live — the rest join as their pages ship.
+    ...appsWithPages().map((app) => ({
+      url: `${SITE_URL}${appPath(app)}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
     ...caseStudies.map((study) => ({
       url: `${SITE_URL}/work/${study.slug}`,
