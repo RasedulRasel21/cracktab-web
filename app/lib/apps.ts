@@ -20,8 +20,12 @@ export type AppComparisonRow = { label: string; values: string[] };
 
 /** Everything the shared app page template needs. */
 export type AppPage = {
-  /** Without the brand — the root layout's title template appends it. */
+  /**
+   * Without the brand — the root layout's title template appends it — unless
+   * `seoTitleAbsolute` is set, for a doc's title tag that is already final.
+   */
   seoTitle: string;
+  seoTitleAbsolute?: boolean;
   metaDescription: string;
   eyebrow: string;
   heading: string;
@@ -40,7 +44,17 @@ export type AppPage = {
   videoHeading: string;
   problems: string[];
   features: AppFeature[];
-  steps: string[];
+  steps?: string[];
+  /**
+   * Migration section, rendered as #migrate (outreach links to it), after
+   * the block library.
+   */
+  migration?: {
+    heading: string;
+    body: string;
+    cta: { label: string; href: string };
+    steps: string[];
+  };
   whoFor?: string[];
   /** Tiles in the block library grid (names match BlockIcon's keys). */
   blocks?: { heading: string; items: string[] };
@@ -56,7 +70,13 @@ export type AppPage = {
    * `supportLine` leads into a book-a-call link, labelled `bookCallLabel`
    * (default "Book a call with Cracktab.").
    */
-  finalCta: { heading: string; supportLine?: string; bookCallLabel?: string };
+  finalCta: {
+    heading: string;
+    supportLine?: string;
+    bookCallLabel?: string;
+    /** A second button beside Install. */
+    secondary?: { label: string; href: string };
+  };
   /**
    * Apps in the "Other Cracktab apps" row, by slug. An object swaps in a
    * page-specific line for that card.
@@ -335,7 +355,101 @@ export const shopifyApps: ShopifyApp[] = [
     line: "Photo reviews, shopper Q&A and AI import from your old reviews app.",
     chips: ["Photo reviews", "Q&A", "AI import", "Klaviyo"],
     free: true,
-    pageLive: false,
+    pageLive: true,
+    // Copy from the content team's page doc. Claims the live App Store
+    // listing doesn't state are left out: the "Our take on honest reviews"
+    // quote (replying to reviews) and the FAQs on moderating/replying and
+    // on keeping review dates and photos on import.
+    page: {
+      seoTitle: "Free Shopify Reviews App with Photo Reviews & Q&A | Widgetly",
+      seoTitleAbsolute: true,
+      metaDescription:
+        "Widgetly Reviews adds photo and video reviews and a Q&A widget to Shopify, and imports reviews from Judge.me, Yotpo or any CSV with AI. Free.",
+      eyebrow: "Shopify app · Free",
+      heading: "Photo reviews and Q&A for Shopify, free",
+      subhead:
+        "Collect reviews with photos, answer shopper questions on the product page, and move your old reviews over in minutes with AI import.",
+      appStoreUrl: "https://apps.shopify.com/cracktab-reviews-and-loyalty",
+      demoLabel: "See the demo store",
+      videoHeading: "Import reviews and add Q&A in 6 minutes",
+      problems: [
+        "No reviews, no trust: shoppers leave to look elsewhere.",
+        "Unanswered questions (fit, materials, shipping) end up as abandoned carts.",
+        "Moving reviews between apps is messy, so stores stay on tools they've outgrown.",
+      ],
+      features: [
+        {
+          title: "Photo and video reviews",
+          body: "Star ratings and customer media on every product page.",
+        },
+        {
+          title: "Built-in Q&A",
+          body: "Shoppers ask, you answer, everyone sees it.",
+        },
+        {
+          title: "AI review import",
+          body: "Upload a CSV or JSON export from Judge.me, Yotpo or anywhere else. AI maps the fields.",
+        },
+        {
+          title: "Klaviyo review requests",
+          body: "Ask buyers for reviews after they've used the product.",
+        },
+        {
+          title: "Your brand, your style",
+          body: "Color presets and custom CSS.",
+        },
+        {
+          title: "Display options",
+          body: "Carousels, grids, filtering and an all-reviews page.",
+        },
+      ],
+      // The contact form has no topic preset yet, so this is plain /contact.
+      migration: {
+        heading: "Moving from another reviews app?",
+        body: "Shopify retired its own Product Reviews app, and many stores are still on it. Export your reviews, upload the file to Widgetly, and AI does the column matching. Need a hand? We'll do the migration for you, free.",
+        cta: { label: "Request free migration", href: "/contact" },
+        steps: [
+          "Export from your current app",
+          "Upload to Widgetly",
+          "Check the preview and publish",
+        ],
+      },
+      whoFor: [
+        "Stores leaving the retired Shopify Product Reviews app",
+        "Small stores that need reviews without a big monthly bill",
+        "Fashion and gear stores with fit questions",
+        "Klaviyo users",
+      ],
+      comparison: {
+        columns: ["Widgetly Reviews", "Typical free plans elsewhere"],
+        rows: [
+          { label: "Price", values: ["Free", "Free with paid upgrades"] },
+          { label: "Photo reviews", values: ["Yes", "Often limited"] },
+          { label: "Q&A", values: ["Built in", "Often a separate app or paid"] },
+          { label: "AI import from any file", values: ["Yes", "Usually fixed formats"] },
+          { label: "Klaviyo review requests", values: ["Yes", "Varies"] },
+        ],
+      },
+      faq: [
+        {
+          q: "Can I import from Judge.me or Yotpo?",
+          a: "Yes, upload their CSV or JSON export. Other formats work too.",
+        },
+        {
+          q: "Does it work with Klaviyo?",
+          a: "Yes, use the review request pages in a Klaviyo post-purchase flow.",
+        },
+        {
+          q: "Is it free?",
+          a: "Yes, free to install and use.",
+        },
+      ],
+      finalCta: {
+        heading: "Turn shoppers' questions into confidence",
+        secondary: { label: "Request free migration", href: "/contact" },
+      },
+      otherApps: ["ai-growth-kits", "conversion-rate-optimizer", "ai-seo"],
+    },
   },
   {
     slug: "custom-diamond-ring-builder",

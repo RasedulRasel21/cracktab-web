@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Accordion from "../../components/Accordion";
 import AppCard from "../../components/AppCard";
@@ -42,10 +43,10 @@ export async function generateMetadata({
   const app = findApp(slug);
   if (!app) return {};
 
-  const { seoTitle, metaDescription } = app.page;
+  const { seoTitle, seoTitleAbsolute, metaDescription } = app.page;
   const hero = findPublicAsset(appAsset(app.slug, "hero"));
   return {
-    title: seoTitle,
+    title: seoTitleAbsolute ? { absolute: seoTitle } : seoTitle,
     description: metaDescription,
     alternates: { canonical: appPath(app) },
     openGraph: {
@@ -73,9 +74,24 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
+function StepList({ steps }: { steps: string[] }) {
+  return (
+    <ol className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+      {steps.map((step, i) => (
+        <li key={step} className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
+          <span className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-accent">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <p className="mt-4 text-base leading-relaxed text-white">{step}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function Section({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
-    <section id={id} className="px-5 pb-20 sm:px-8 sm:pb-28">
+    <section id={id} className="scroll-mt-16 px-5 pb-20 sm:px-8 sm:pb-28">
       <div className="mx-auto w-full max-w-360 border-t border-line pt-12 sm:pt-14">{children}</div>
     </section>
   );
@@ -277,20 +293,25 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
         </Section>
       )}
 
+      {/* ---- Migration (#migrate) ---- */}
+      {page.migration && (
+        <Section id="migrate">
+          <SectionHeading>{page.migration.heading}</SectionHeading>
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted">{page.migration.body}</p>
+          <StepList steps={page.migration.steps} />
+          <Link href={page.migration.cta.href} className={`${primaryButton} mt-8`}>
+            {page.migration.cta.label}
+          </Link>
+        </Section>
+      )}
+
       {/* ---- How it works ---- */}
-      <Section>
-        <SectionHeading>How it works</SectionHeading>
-        <ol className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
-          {page.steps.map((step, i) => (
-            <li key={step} className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
-              <span className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-accent">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <p className="mt-4 text-base leading-relaxed text-white">{step}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
+      {page.steps && (
+        <Section>
+          <SectionHeading>How it works</SectionHeading>
+          <StepList steps={page.steps} />
+        </Section>
+      )}
 
       {/* ---- Demo video — only once the video exists ---- */}
       {(page.videoId || page.videoFile) && (
@@ -403,9 +424,16 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             <h2 className="mx-auto max-w-3xl font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.08] tracking-tight text-white">
               {page.finalCta.heading}
             </h2>
-            <a href={installUrl(app, "footer")} rel="noopener" className={`${primaryButton} mt-9`}>
-              Install free on Shopify
-            </a>
+            <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a href={installUrl(app, "footer")} rel="noopener" className={primaryButton}>
+                Install free on Shopify
+              </a>
+              {page.finalCta.secondary && (
+                <Link href={page.finalCta.secondary.href} className={secondaryButton}>
+                  {page.finalCta.secondary.label}
+                </Link>
+              )}
+            </div>
             {page.finalCta.supportLine && (
               <p className="mt-6 text-sm text-muted">
                 {page.finalCta.supportLine}{" "}
