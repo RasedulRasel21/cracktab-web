@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllPublished, getCategoryTree } from "./lib/blog";
 import type { CategoryNode } from "./lib/categories";
 import { APPS_HUB_PATH, appPath, appsWithPages } from "./lib/apps";
+import { appPrivacy } from "./lib/appPrivacy";
 import { SITE_URL, serviceDetails } from "./lib/site";
 import { caseStudies } from "./lib/site";
 
@@ -38,6 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/contact", priority: 0.7 },
     { path: "/faq", priority: 0.5 },
     { path: "/privacy", priority: 0.2 },
+    ...appPrivacy.map((app) => ({ path: `/privacy/${app.slug}`, priority: 0.2 })),
     { path: "/imprint", priority: 0.2 },
   ];
 
