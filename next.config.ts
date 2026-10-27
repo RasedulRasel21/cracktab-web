@@ -85,6 +85,11 @@ const nextConfig: NextConfig = {
       // The App Store listings point their privacy link at /privacy-policy;
       // the policy itself lives at /privacy.
       { source: "/privacy-policy", destination: "/privacy", permanent: true },
+      // The App Store listing form rejects any URL containing "shopify", so
+      // listing links (FAQ, support…) use /apps/<slug>. One segment only, so
+      // the image files under public/apps/<slug>/ are untouched.
+      { source: "/apps", destination: "/shopify-apps", permanent: true },
+      { source: "/apps/:slug", destination: "/shopify-apps/:slug", permanent: true },
     ];
   },
 
