@@ -4,7 +4,13 @@
  */
 const paths: Record<string, React.ReactNode> = {
   Upsell: <path d="M12 19V5M6 11l6-6 6 6" />,
-  "Cross-sell": <path d="M4 7h13l-3-3M20 17H7l3 3" />,
+  "Cart upsell": (
+    <>
+      <path d="M3 4h2l2.5 11h11L21 7H7" />
+      <circle cx="9" cy="19" r="1.5" />
+      <circle cx="17" cy="19" r="1.5" />
+    </>
+  ),
   "Countdown timer": (
     <>
       <circle cx="12" cy="13" r="8" />
@@ -17,21 +23,54 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M3 7l9 4 9-4M12 11v10" />
     </>
   ),
-  "Live visitors": (
+  "Social proof": (
     <>
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-      <circle cx="12" cy="12" r="3" />
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5a3 3 0 010 6M21 20c0-2.6-1.6-4.8-4-5.6" />
     </>
   ),
-  "Free shipping bar": (
+  "Estimated delivery": (
     <>
       <path d="M2 6h12v10H2zM14 10h4l4 4v2h-8" />
       <circle cx="6" cy="18" r="2" />
       <circle cx="18" cy="18" r="2" />
     </>
   ),
-  "Star ratings": <path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z" />,
-  Testimonials: <path d="M4 5h16v11H9l-5 4z" />,
+  "Benefits grid": (
+    <>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </>
+  ),
+  "Payment icons": (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20M6 15h4" />
+    </>
+  ),
+  Features: <path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9" />,
+  "Copy discount": (
+    <>
+      <path d="M20 12l-8 8-9-9V3h8z" />
+      <circle cx="7.5" cy="7.5" r="1.5" />
+    </>
+  ),
+  Badge: <rect x="3" y="8" width="18" height="8" rx="4" />,
+  "Direct checkout": <path d="M13 2L4 14h7l-1 8 9-12h-7z" />,
+  "Sticky add to cart": (
+    <>
+      <rect x="3" y="15" width="18" height="6" rx="2" />
+      <path d="M12 3v8M8 7l4 4 4-4" />
+    </>
+  ),
+  "Announcement bar": (
+    <>
+      <rect x="2" y="4" width="20" height="5" rx="1" />
+      <path d="M2 13h20M2 17h14" />
+    </>
+  ),
   "FAQ accordion": (
     <>
       <rect x="3" y="4" width="18" height="16" rx="2" />
@@ -44,7 +83,7 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M3 10h18M12 4v16" />
     </>
   ),
-  "Trust badges": (
+  "Guarantee banner": (
     <>
       <path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z" />
       <path d="M8.5 12l2.5 2.5 4.5-4.5" />
