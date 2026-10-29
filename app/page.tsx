@@ -7,10 +7,13 @@ import Testimonials from "./components/Testimonials";
 import HomeProcess from "./components/HomeProcess";
 import HomeFaq from "./components/HomeFaq";
 import CtaSection from "./components/CtaSection";
+import JsonLd from "./components/JsonLd";
+import { organizationSchema } from "./lib/schema";
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={organizationSchema} />
       <Hero />
       <Showcase />
       <Services />

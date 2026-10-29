@@ -1,6 +1,7 @@
 "use client";
 
 import { GoogleTagManager } from "@next/third-parties/google";
+import ContactClickTracker from "./ContactClickTracker";
 import { usePublicPage } from "./usePublicPage";
 
 /**
@@ -15,5 +16,10 @@ import { usePublicPage } from "./usePublicPage";
  */
 export default function TagManager({ gtmId }: { gtmId: string }) {
   if (!usePublicPage()) return null;
-  return <GoogleTagManager gtmId={gtmId} />;
+  return (
+    <>
+      <GoogleTagManager gtmId={gtmId} />
+      <ContactClickTracker />
+    </>
+  );
 }

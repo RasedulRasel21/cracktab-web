@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CALENDLY_URL } from "../lib/site";
+import { track } from "../lib/track";
 
 /**
  * "Book a Call" trigger that opens Calendly in an on-site modal instead of
@@ -49,6 +50,19 @@ export default function BookCallButton({
     triggerRef.current?.focus();
   };
 
+  // Calendly's embed posts calendly.event_scheduled to the parent window when
+  // a booking completes: the real conversion, not just the click.
+  useEffect(() => {
+    if (!open) return;
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin === "https://calendly.com" && e.data?.event === "calendly.event_scheduled") {
+        track("calendly_booking_complete");
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [open]);
+
   // Lock body scroll + close on Escape while the modal is up.
   useEffect(() => {
     if (!open) return;
@@ -72,6 +86,7 @@ export default function BookCallButton({
         rel="noopener noreferrer"
         aria-haspopup="dialog"
         onClick={(e) => {
+          track("calendly_click");
           // Let the browser handle new-tab/new-window intents normally.
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();

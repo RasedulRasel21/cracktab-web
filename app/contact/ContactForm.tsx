@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { useFormSubmit } from "../components/useFormSubmit";
+import { track } from "../lib/track";
 import { submitContact, type ContactState } from "./actions";
 import { countries } from "../lib/countries";
 
@@ -42,6 +44,13 @@ export default function ContactForm() {
   // runs, so a visitor who hit a validation or spam check would lose their
   // whole message. Success needs no clearing: it swaps the form for a panel.
   const [state, onSubmit, pending] = useFormSubmit(submitContact, initial);
+
+  // The lead conversion marketing's GTM and Google Ads setup listens for.
+  useEffect(() => {
+    if (state.delivered) {
+      track("contact_form_submit", { form_name: "contact", project_type: state.projectType });
+    }
+  }, [state]);
 
   if (state.status === "success") {
     return (

@@ -8,6 +8,15 @@ import TagManager from "./components/TagManager";
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID?.trim();
 import { SITE_URL } from "./lib/site";
 
+/**
+ * Search-engine ownership tokens, rendered as meta tags in every page's HTML.
+ * They live in the repo so a redeploy can never drop them (a hand-added tag
+ * or a file outside /public kept getting revoked). Google's token comes from
+ * Search Console → HTML tag method; empty means no tag is rendered.
+ */
+const GOOGLE_SITE_VERIFICATION = "";
+const BING_SITE_VERIFICATION = "C753A28E0FD80F498456F33B34703D09";
+
 // Self-hosted Urbanist (files in /public/fonts) — used site-wide.
 const urbanist = localFont({
   src: [
@@ -52,6 +61,10 @@ export const metadata: Metadata = {
     title: "Cracktab — Shopify Website Design and Development Agency",
     description:
       "Shopify stores built to perform. Built to last. From launch to scale.",
+  },
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION || undefined,
+    other: { "msvalidate.01": BING_SITE_VERIFICATION },
   },
   // The .ico and PNGs are for Google Search and browsers that don't take SVG
   // icons — Google requests /favicon.ico and wants a square of 48px or more.

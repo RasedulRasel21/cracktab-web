@@ -7,6 +7,12 @@ import disposableList from "disposable-email-domains/index.json";
 export type ContactState = {
   status: "idle" | "success" | "error";
   message: string;
+  /**
+   * True only when the email really went out. Honeypot and spam drops also
+   * report "success" to the sender, but mustn't count as a lead conversion.
+   */
+  delivered?: boolean;
+  projectType?: string;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -249,6 +255,8 @@ export async function submitContact(
     return {
       status: "success",
       message: "Thanks — your message is on its way. We'll be in touch shortly.",
+      delivered: true,
+      projectType: projectType || undefined,
     };
   } catch (err) {
     console.error("[contact] send failed:", err);

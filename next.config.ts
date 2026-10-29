@@ -29,11 +29,21 @@ const contentSecurityPolicy = [
   // connect.facebook.net and *.clarity.ms are the Meta Pixel and Microsoft
   // Clarity tags marketing publishes from inside GTM. Every tag they add
   // needs its origins here, or the browser blocks it with no visible error.
-  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
+  // snap.licdn.com and bat.bing.com are the LinkedIn Insight and Bing UET
+  // tags marketing plans to add, allowed ahead of time.
+  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://*.clarity.ms https://snap.licdn.com https://bat.bing.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.googletagmanager.com",
-  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com",
+  // GA4 falls back to image pixels when fetch fails, and Google Signals loads
+  // an audience pixel from the visitor's country domain (www.google.com.bd
+  // for the team's own visits; other countries' domains stay blocked, which
+  // only affects Signals, not page views).
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://www.google.com.bd https://stats.g.doubleclick.net https://*.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com",
   "font-src 'self'",
-  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com${isDev ? " ws:" : ""}`,
+  // A CSP wildcard needs at least one subdomain label: *.analytics.google.com
+  // does NOT match analytics.google.com, which is where GA4 sends its hits.
+  // Both are listed, plus www.google.com and stats.g.doubleclick.net (Google
+  // Signals and Ads linking). Without them GA4 recorded nothing.
+  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com${isDev ? " ws:" : ""}`,
   "media-src 'self'",
   // Embeds: the Calendly booking calendar, the office map, the frame the
   // Preferred Sources button opens, GTM Preview / Tag Assistant, and the
@@ -88,6 +98,12 @@ const nextConfig: NextConfig = {
       // The App Store listing form rejects any URL containing "shopify", so
       // listing links (FAQ, support…) use /apps/<slug>. One segment only, so
       // the image files under public/apps/<slug>/ are untouched.
+      // Renamed post: this URL was indexed in September and 404'd after.
+      {
+        source: "/blog/when-a-custom-shopify-app-beats-an-off-the-shelf-one",
+        destination: "/blog/shopify-apps-vs-custom-development",
+        permanent: true,
+      },
       { source: "/apps", destination: "/shopify-apps", permanent: true },
       { source: "/apps/:slug", destination: "/shopify-apps/:slug", permanent: true },
     ];

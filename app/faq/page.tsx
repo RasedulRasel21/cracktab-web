@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import PageHeader from "../components/PageHeader";
 import Accordion from "../components/Accordion";
 import CtaBand from "../components/CtaBand";
+import JsonLd from "../components/JsonLd";
 import { generalFaq } from "../lib/site";
+import { faqSchema } from "../lib/schema";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
+      <JsonLd data={faqSchema(generalFaq)} />
       <PageHeader
         center
         eyebrow="FAQ"

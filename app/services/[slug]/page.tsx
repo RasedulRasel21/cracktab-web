@@ -4,7 +4,9 @@ import CtaBand from "../../components/CtaBand";
 import BookCallButton from "../../components/BookCallButton";
 import ProcessPanel from "../../components/ProcessPanel";
 import WorkMosaic from "../../components/WorkMosaic";
+import JsonLd from "../../components/JsonLd";
 import { caseStudies, serviceDetails } from "../../lib/site";
+import { serviceSchema } from "../../lib/schema";
 
 export function generateStaticParams() {
   return serviceDetails.map((s) => ({ slug: s.slug }));
@@ -56,6 +58,7 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      <JsonLd data={serviceSchema(service)} />
       {/* ---- Hero ---- */}
       <section className="px-5 pb-14 pt-28 sm:px-8 sm:pb-20 sm:pt-36">
         <div className="mx-auto w-full max-w-360">
