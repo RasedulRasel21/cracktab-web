@@ -625,3 +625,104 @@ body:has(.studio-page) .site-chrome {
     animation: none !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  Light "cream" theme — homepage redesign (scoped while testing)     */
+/*  Anything inside `.theme-cream`, plus the header and menu on that   */
+/*  page, uses the light tokens. Other pages keep the dark theme.      */
+/* ------------------------------------------------------------------ */
+body:has(.theme-cream) {
+  --background: #f3eee4;
+  --foreground: #141413;
+  --muted: #5f594f;
+  --line: rgba(20, 20, 19, 0.12);
+  --surface: #fbf8f2;
+  --cream-2: #e9e2d4;
+  --olive: #4c7d00;
+  background: var(--background);
+  color: var(--foreground);
+}
+body:has(.theme-cream) ::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Header + slide-out menu + booking modal: swap hard-coded white text */
+body:has(.theme-cream) header .text-white,
+body:has(.theme-cream) .z-100 .text-white {
+  color: var(--foreground);
+}
+body:has(.theme-cream) header .hover\:text-accent:hover,
+body:has(.theme-cream) header .text-accent {
+  color: var(--olive);
+}
+body:has(.theme-cream) header .hover\:text-white:hover {
+  color: var(--foreground);
+}
+body:has(.theme-cream) header.bg-black\/80 {
+  background-color: rgb(243 238 228 / 0.85);
+}
+
+/* Footer stays dark: give it back the dark tokens */
+body:has(.theme-cream) footer {
+  --line: rgba(255, 255, 255, 0.1);
+  --muted: #9aa0a6;
+  --surface: #0b0b0d;
+}
+
+/* Lime text is unreadable on cream — use the deep olive instead */
+.theme-cream .text-accent,
+.theme-cream .group:hover .group-hover\:text-accent,
+.theme-cream .hover\:text-accent:hover {
+  color: var(--olive);
+}
+.theme-cream .cream-acc .text-white {
+  color: var(--foreground);
+}
+
+/* Range input used by the revenue calculator */
+.leak-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent) var(--pct), rgba(255, 255, 255, 0.14) var(--pct));
+  outline-offset: 6px;
+}
+.leak-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid var(--accent);
+  cursor: pointer;
+}
+.leak-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid var(--accent);
+  cursor: pointer;
+}
+
+/* Progress line under the active method step */
+@keyframes method-progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.method-progress {
+  animation: method-progress 5s linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-cream .animate-marquee,
+  .method-progress {
+    animation: none;
+  }
+}
