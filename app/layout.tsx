@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+import BackToTop from "./components/BackToTop";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TagManager from "./components/TagManager";
@@ -98,6 +99,7 @@ export default function RootLayout({
             (tokens and remaps in globals.css). */}
         <main className="theme-cream site-cream flex flex-1 flex-col">{children}</main>
         <SmoothScroll />
+        <BackToTop />
         <div className="site-chrome contents">
           <Footer />
         </div>

@@ -25,6 +25,9 @@ export default function SmoothScroll() {
       anchors: { offset: -80 },
     });
 
+    // Exposed so other components (back-to-top) can scroll through Lenis.
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
+
     let raf = 0;
     const loop = (t: number) => {
       lenis.raf(t);
@@ -35,6 +38,7 @@ export default function SmoothScroll() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      delete (window as unknown as { lenis?: Lenis }).lenis;
     };
   }, []);
 
