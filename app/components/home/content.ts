@@ -5,8 +5,10 @@
  */
 
 export const hero = {
-  eyebrow: "Helping DTC brands grow revenue from the traffic they already have",
+  /** H1 for SEO, shown as the small line above the headline. */
   h1: "Shopify CRO Agency",
+  /** The big visual headline (not the H1). */
+  headline: "Helping DTC brands turn more visitors into revenue",
   lead:
     "We find exactly where your shoppers stall — product page, cart, checkout or the offer itself — then A/B test the fix on live traffic and keep only what earns more.",
   support:
@@ -20,22 +22,32 @@ export const whoFor =
   "Cracktab is the Shopify CRO partner for DTC brands doing $250K to $10M+ a year. We combine structured experiments, in-house design and development, and apps we built ourselves to turn your existing traffic into more customers.";
 
 export const clientNames = [
+  "The Conscious Bar",
+  "Pürishh",
+  "Greenwood Leather",
+  "Luxe Cosmetics",
+  "ForChics",
   "SeeTrue",
   "Die Schrothkur",
   "Collection Akhavan",
-  "ForChics",
   "Notary Scheiber",
-  "SEZ Group",
-  "Orbes",
 ];
 
+/** Real mobile screenshots of client stores — mostly product pages. */
 export const phoneScreens = [
-  { src: "/home/screen-seetrue.jpg", label: "SeeTrue Glasses" },
-  { src: "/home/screen-blome.jpg", label: "Blome theme" },
-  { src: "/home/screen-schrothkur.jpg", label: "Die Schrothkur" },
-  { src: "/home/screen-dune.jpg", label: "Dune theme" },
-  { src: "/home/screen-skinova.jpg", label: "Skinova theme" },
-  { src: "/home/screen-verve.jpg", label: "Verve theme" },
+  { src: "/home/screens/tcb-pdp.jpg", store: "The Conscious Bar", page: "Product page" },
+  { src: "/home/screens/purishh-pdp.jpg", store: "Pürishh", page: "Product page" },
+  { src: "/home/screens/tcb-home.jpg", store: "The Conscious Bar", page: "Homepage" },
+  { src: "/home/screens/greenwood-pdp.jpg", store: "Greenwood Leather", page: "Product page" },
+  { src: "/home/screens/greenwood-collection.jpg", store: "Greenwood Leather", page: "Collection page" },
+  { src: "/home/screens/luxe-pdp.jpg", store: "Luxe Cosmetics", page: "Product page" },
+  { src: "/home/screens/tcb-drawer.jpg", store: "The Conscious Bar", page: "Cart drawer" },
+  { src: "/home/screens/forchics-pdp.jpg", store: "ForChics", page: "Product page" },
+  { src: "/home/screens/purishh-home.jpg", store: "Pürishh", page: "Homepage" },
+  { src: "/home/screens/seetrue-pdp.jpg", store: "SeeTrue", page: "Product page" },
+  { src: "/home/screens/luxe-cart.jpg", store: "Luxe Cosmetics", page: "Cart page" },
+  { src: "/home/screens/schrothkur-pdp.jpg", store: "Die Schrothkur", page: "Product page" },
+  { src: "/home/screens/akhavan-home.jpg", store: "Collection Akhavan", page: "Homepage" },
 ];
 
 export const proof = {
@@ -59,64 +71,24 @@ export const problem = {
 };
 
 export const oneTeam = {
-  eyebrow: "How we're different",
-  title: "Research, Design, Development And Testing. One Team. No Handoffs.",
+  eyebrow: "Before vs after · The Conscious Bar",
+  title: "Same Product. Same Traffic. A Page Built To Sell.",
   body:
-    "The person who finds the problem designs the fix and writes the code that ships it. Nothing gets lost between a CRO consultant, a freelance designer and whoever maintains your theme. One team, one accountability, one invoice.",
-  /** Replace with the measured lift from a real test before going live. */
-  result: "[+X%]",
-  resultLabel: "rev/session",
+    "Real screenshots from The Conscious Bar. Before is their live product page; after is the page our team researched, designed and coded. Drag the handle to compare, then switch between desktop, mobile and the cart drawer.",
 };
 
 export const method = {
-  eyebrow: "The method",
-  title: "Measure. Rank. Test. Ship. Report.",
+  eyebrow: "What we actually ship",
+  title: "Real Widgets From Real Product Pages And Carts.",
   body:
-    "Five steps, every month. We start from your own analytics, heatmaps and session replays — never a best-practice checklist — and nothing becomes permanent until it has proved itself on your traffic.",
-  steps: [
-    {
-      key: "measure",
-      no: "01",
-      title: "Measure",
-      lead: "Find where the revenue leaks.",
-      body: "Where shoppers stall, by device and traffic source. From GA4, heatmaps and session replays on your store — not benchmarks from someone else's.",
-    },
-    {
-      key: "rank",
-      no: "02",
-      title: "Rank",
-      lead: "Fix the biggest leak first.",
-      body: "Every finding becomes a change with a target number and a priority. You see the whole backlog, and why the top item is the top item.",
-    },
-    {
-      key: "test",
-      no: "03",
-      title: "Test",
-      lead: "Let your shoppers decide.",
-      body: "We design and code both variants and split live traffic between them. Content, layout, price, offer and shipping are all testable.",
-    },
-    {
-      key: "ship",
-      no: "04",
-      title: "Ship",
-      lead: "Winners become your theme.",
-      body: "Winning variants become permanent theme code you own. Losers are removed, and what we learned goes back into the backlog.",
-    },
-    {
-      key: "report",
-      no: "05",
-      title: "Report",
-      lead: "One page. Plain language.",
-      body: "Every month: what won, what it was worth, what's next. No dashboard login needed.",
-    },
-  ],
+    "These are the blocks we build into client themes most often, taken from The Conscious Bar redesign. Every one is a working demo: tap, toggle and add to see what it does for the shopper.",
 };
 
 export const builder = {
-  eyebrow: "Built in-house",
+  eyebrow: "Built in-house · The Conscious Bar",
   title: "When Your Theme Can't Do It, We Build It.",
   body:
-    "Bundle builders, subscription pickers, gift flows, free-shipping bars — the features that raise order value, built straight into your theme instead of bolted on with five apps. Try one.",
+    "Bundle builders, subscription pickers, gift flows and free-shipping bars, built straight into the theme instead of bolted on with five apps. This is the build-your-own-box flow we made for The Conscious Bar. Try it.",
 };
 
 export const apps = {
@@ -143,23 +115,6 @@ export const services = {
   cta: "See all services",
 };
 
-export const pricing = {
-  eyebrow: "Pricing",
-  title: "No Lock-In. No Long Contracts. No Guesswork.",
-  body:
-    "CRO retainers start at $450 a month, billed month to month — cancel whenever you like. The audit comes first, it's free, and what we find is yours to keep either way.",
-  price: "$450",
-  per: "/ month",
-  includes: [
-    "Analytics, heatmap and session-replay research",
-    "A ranked test backlog with target numbers",
-    "Design and code for every variant",
-    "A/B tests on your live traffic",
-    "Winners shipped as theme code you own",
-    "A one-page report every month",
-  ],
-};
-
 export const faq = [
   {
     q: "What does a Shopify CRO agency actually do?",
@@ -179,7 +134,7 @@ export const faq = [
   },
   {
     q: "Is there a long contract?",
-    a: "No. Retainers start at $450 a month, billed month to month, and you can cancel any time.",
+    a: "No. We work month to month, and you can cancel any time.",
   },
   {
     q: "Do you work with Shopify Plus?",

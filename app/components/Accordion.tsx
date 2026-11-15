@@ -42,7 +42,7 @@ export default function Accordion({ items }: { items: Faq[] }) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="max-w-2xl pb-7 pl-9 pr-2 text-sm leading-relaxed text-muted">
+                <p className="max-w-2xl pb-7 pl-9 pr-2 text-base leading-relaxed text-muted sm:text-lg">
                   {it.a}
                 </p>
               </div>

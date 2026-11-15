@@ -3,51 +3,42 @@
 import { useEffect, useState } from "react";
 import { PhoneFrame } from "./ui";
 
-const SIZES = [
-  { label: "15 ml", price: 32 },
-  { label: "30 ml", price: 48 },
-  { label: "50 ml", price: 68 },
+/**
+ * The Conscious Bar product page on a phone: their live page ("Before")
+ * against the page Cracktab designed and coded ("Cracktab"). Flavours,
+ * pack sizes and the add-to-bag button all work in the Cracktab view.
+ */
+
+const FLAVORS = [
+  { id: "smooth-dark-chocolate", name: "Smooth Dark Chocolate" },
+  { id: "orange-blossom", name: "Orange Blossom" },
+  { id: "almond-sea-salt", name: "Almond Sea Salt" },
+  { id: "roasted-hazelnut", name: "Roasted Hazelnut" },
+  { id: "toasted-coconut-flakes", name: "Toasted Coconut Flakes" },
+  { id: "espresso-crunch", name: "Espresso Crunch" },
 ];
 
-function Bottle() {
-  return (
-    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true">
-      <defs>
-        <linearGradient id="oil" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#f6c86a" />
-          <stop offset="1" stopColor="#d99a2b" />
-        </linearGradient>
-        <linearGradient id="glass" x1="0" x2="1">
-          <stop offset="0" stopColor="#ffffff" stopOpacity=".55" />
-          <stop offset=".5" stopColor="#ffffff" stopOpacity=".1" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity=".45" />
-        </linearGradient>
-      </defs>
-      <ellipse cx="100" cy="176" rx="52" ry="7" fill="#000" opacity=".08" />
-      <rect x="62" y="70" width="76" height="104" rx="14" fill="url(#oil)" />
-      <rect x="62" y="70" width="76" height="104" rx="14" fill="url(#glass)" />
-      <rect x="70" y="104" width="60" height="30" rx="3" fill="#fff" opacity=".85" />
-      <rect x="78" y="112" width="44" height="4" rx="2" fill="#141413" opacity=".7" />
-      <rect x="84" y="121" width="32" height="3" rx="1.5" fill="#141413" opacity=".35" />
-      <rect x="80" y="50" width="40" height="22" rx="4" fill="#f4f1ea" />
-      <rect x="88" y="26" width="24" height="26" rx="10" fill="#fff" />
-      <rect x="132" y="96" width="44" height="10" rx="5" fill="#fff" transform="rotate(28 150 100)" />
-      <rect x="150" y="118" width="6" height="40" rx="3" fill="#fff" opacity=".9" transform="rotate(28 150 100)" />
-    </svg>
-  );
-}
+const PACKS = [
+  { n: 1, label: "1 bar", price: 7.5, note: "$35 min order" },
+  { n: 6, label: "6 bars", price: 45, note: "Mix flavours", tag: "Popular" },
+  { n: 12, label: "Case of 12", price: 78, note: "Free shipping", tag: "Best value" },
+];
+
+const FREE_SHIP = 70;
+const img = (id: string) => `/home/clients/tcb-${id}.jpg`;
 
 export default function HeroPhone() {
-  const [variant, setVariant] = useState<"A" | "B">("B");
-  const [size, setSize] = useState(1);
+  const [variant, setVariant] = useState<"before" | "after">("after");
+  const [flavor, setFlavor] = useState(0);
+  const [pack, setPack] = useState(1);
   const [cart, setCart] = useState(0);
   const [added, setAdded] = useState(false);
   const [touched, setTouched] = useState(false);
 
-  // Gently alternate variants until the visitor interacts.
+  // Alternate the two versions until the visitor interacts.
   useEffect(() => {
     if (touched) return;
-    const id = window.setInterval(() => setVariant((v) => (v === "A" ? "B" : "A")), 3200);
+    const id = window.setInterval(() => setVariant((v) => (v === "before" ? "after" : "before")), 3600);
     return () => window.clearInterval(id);
   }, [touched]);
 
@@ -57,59 +48,63 @@ export default function HeroPhone() {
     return () => window.clearTimeout(id);
   }, [added]);
 
-  const price = SIZES[size].price;
-  const b = variant === "B";
+  const touch = () => setTouched(true);
+  const after = variant === "after";
+  const f = FLAVORS[flavor];
+  const p = PACKS[pack];
+  const toShip = Math.max(0, FREE_SHIP - p.price);
 
   return (
-    <div className="relative mx-auto w-full max-w-[22rem]">
-      {/* A/B switch */}
+    <div className="relative mx-auto w-full max-w-[22.5rem]">
+      {/* Before / Cracktab switch */}
       <div className="mb-5 flex items-center justify-center gap-3">
-        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted">Live A/B test</span>
-        <div role="tablist" aria-label="Test variant" className="flex rounded-full border border-line bg-surface p-1">
-          {(["A", "B"] as const).map((v) => (
+        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">The Conscious Bar</span>
+        <div role="tablist" aria-label="Page version" className="flex rounded-full border border-line bg-surface p-1">
+          {(["before", "after"] as const).map((v) => (
             <button
               key={v}
               role="tab"
               type="button"
               aria-selected={variant === v}
               onClick={() => {
-                setTouched(true);
+                touch();
                 setVariant(v);
               }}
               className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                 variant === v ? "bg-foreground text-background" : "text-muted hover:text-foreground"
               }`}
             >
-              {v === "A" ? "Control" : "Variant B"}
+              {v === "before" ? "Before" : "Cracktab"}
             </button>
           ))}
         </div>
       </div>
 
-      <PhoneFrame className="aspect-[9/17] w-full sm:aspect-[9/18.5]">
-        <div className="flex h-full flex-col bg-[#f6f5f2] text-[#141413]">
-          {/* status bar */}
-          <div className="flex items-center justify-between px-6 pt-3 text-[10px] font-semibold">
-            <span>9:41</span>
-            <span className="flex items-center gap-1">
-              <span className="h-2 w-3 rounded-[2px] bg-[#141413]" />
-            </span>
+      <PhoneFrame className="aspect-[9/18.6] w-full">
+        <div className="relative flex h-full flex-col bg-[#fbf7f0] text-[#2a1810]">
+          {/* promo bar */}
+          <div className="bg-[#4a1d0f] px-3 pb-1.5 pt-8 text-center text-[9.5px] font-semibold uppercase tracking-[0.06em] text-white">
+            {after ? "25% off core flavours · auto-applied" : (
+              <span className="underline">Subscribe &amp; save up to 30%</span>
+            )}
           </div>
-          {/* store header */}
-          <div className="flex items-center justify-between px-4 pb-2 pt-3">
+          {/* header */}
+          <div className="flex items-center justify-between px-4 py-2">
             <span className="flex flex-col gap-[3px]" aria-hidden="true">
-              <span className="h-[2px] w-4 bg-current" />
-              <span className="h-[2px] w-4 bg-current" />
-              <span className="h-[2px] w-3 bg-current" />
+              <span className="h-[1.5px] w-4 bg-current" />
+              <span className="h-[1.5px] w-4 bg-current" />
+              <span className="h-[1.5px] w-4 bg-current" />
             </span>
-            <span className="text-[12px] font-bold tracking-[0.35em]">NORTHFOLD</span>
+            <span className="font-serif text-[15px] leading-none tracking-tight">
+              <span className="text-[8px] align-top">The</span> Conscious <span className="text-[8px]">Bar</span>
+            </span>
             <span className="relative">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M6 7h12l-1 13H7L6 7Z" />
                 <path d="M9 7a3 3 0 0 1 6 0" />
               </svg>
               <span
-                className={`absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#141413] px-1 text-[9px] font-bold text-white transition-transform ${
+                className={`absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#4a1d0f] px-1 text-[9px] font-bold text-white transition-transform ${
                   added ? "scale-125" : "scale-100"
                 }`}
               >
@@ -118,125 +113,178 @@ export default function HeroPhone() {
             </span>
           </div>
 
-          {/* image */}
-          <div className="relative mx-0 aspect-[4/3.3] shrink-0 bg-[#f6dfe2]">
-            <div className="absolute inset-x-10 inset-y-3">
-              <Bottle />
-            </div>
-            <span
-              className={`absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold transition-all duration-500 ${
-                b ? "opacity-100" : "-translate-y-1 opacity-0"
-              }`}
-            >
-              Bestseller
-            </span>
-            <span className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1" aria-hidden="true">
-              <span className="h-1.5 w-4 rounded-full bg-white" />
-              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
-              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
-            </span>
+          {/* product image */}
+          <div className="relative mx-3 aspect-[4/3.2] shrink-0 overflow-hidden rounded-xl bg-[#e8d5bd]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={after ? f.id : "before"}
+              src={img(after ? f.id : "smooth-dark-chocolate")}
+              alt={after ? `${f.name} bar` : "Smooth Dark Chocolate bar"}
+              className="h-full w-full animate-[fade-in_.35s_ease] object-cover"
+            />
+            {after ? (
+              <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-semibold">
+                No added sugar · Sweetened with dates
+              </span>
+            ) : (
+              <span className="absolute -right-0 top-1/3 rounded-l-xl bg-[#3a1a10] px-1.5 py-3 text-[9px] font-semibold text-white [writing-mode:vertical-rl]">
+                Sweet Deal
+              </span>
+            )}
           </div>
 
           {/* details */}
-          <div className="flex flex-1 flex-col px-4 pt-3">
-            <div
-              className={`grid transition-all duration-500 ${b ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-            >
-              <div className="overflow-hidden">
-                <p className="flex items-center gap-1.5 pb-1.5 text-[10px] text-[#55534e]">
-                  <span className="tracking-[1px] text-[#141413]">★★★★★</span> 4.8 · 1,240 reviews
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className={`font-semibold leading-tight transition-all ${b ? "text-[15px]" : "text-[13px]"}`}>
-                  Daily Glow Facial Oil
-                </p>
-                <p className={`text-[10.5px] text-[#55534e] transition-opacity ${b ? "opacity-100" : "opacity-0"}`}>
-                  Squalane + rosehip
-                </p>
-              </div>
-              <p className={`font-semibold transition-all ${b ? "text-[15px]" : "text-[12px] text-[#55534e]"}`}>
-                ${price}
-              </p>
-            </div>
+          <div className="flex flex-1 flex-col overflow-hidden px-4 pt-2.5">
+            {!after && (
+              <span className="self-start rounded bg-[#1d1d1d] px-1.5 py-0.5 text-[9px] font-semibold text-white">Early Access Sale</span>
+            )}
+            <p className={`font-serif leading-tight ${after ? "text-[16px]" : "mt-1.5 text-[15px]"}`}>
+              {after ? f.name : "Smooth Dark Chocolate"}
+            </p>
+            <p className="mt-0.5 text-[10px] text-[#6b5a4e]">
+              <span className="tracking-[1px] text-[#2a1810]">★★★★★</span> 4.81{" "}
+              {after ? <span className="underline">6,830 reviews</span> : "(6830)"}
+            </p>
 
-            {/* sizes */}
-            <div className="mt-2.5 flex gap-1.5">
-              {SIZES.map((s, i) => (
-                <button
-                  key={s.label}
-                  type="button"
-                  onClick={() => {
-                    setTouched(true);
-                    setSize(i);
-                  }}
-                  className={`rounded-full px-3 py-1.5 text-[10.5px] font-medium transition-colors ${
-                    size === i
-                      ? "bg-[#141413] text-white"
-                      : b
-                        ? "bg-[#e9e7e2] text-[#141413]"
-                        : "border border-[#d6d3cc] bg-white text-[#141413]"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
+            {after ? (
+              <>
+                <div className="mt-1.5 flex flex-wrap gap-1">
+                  {["No added sugar", "2 ingredients", "Organic", "Vegan"].map((c) => (
+                    <span key={c} className="rounded-full border border-[#dccdbb] bg-white px-1.5 py-0.5 text-[8.5px] font-medium">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-1.5 flex items-baseline gap-1.5">
+                  <span className="font-serif text-[17px]">${(p.price / p.n).toFixed(2)}</span>
+                  <s className="text-[10px] text-[#9a8b7e]">$10.00</s>
+                  <span className="rounded-full bg-[#dff0d6] px-1.5 py-0.5 text-[8.5px] font-bold text-[#2f6b1f]">SAVE 25%</span>
+                </p>
+                <p className="text-[8.5px] text-[#6b5a4e]">Applied automatically at checkout, no code needed.</p>
 
-            <button
-              type="button"
-              onClick={() => {
-                setTouched(true);
-                setCart((c) => c + 1);
-                setAdded(true);
-              }}
-              className={`mt-3 w-full rounded-xl py-2.5 text-[12px] font-semibold transition-all ${
-                b ? "bg-[#141413] text-white" : "border border-[#141413] bg-transparent text-[#141413]"
-              }`}
-            >
-              {added ? "Added ✓" : b ? `Add to cart · $${price}` : "Add to cart"}
-            </button>
+                <div className="mt-1.5 flex gap-1">
+                  {FLAVORS.map((fl, i) => (
+                    <button
+                      key={fl.id}
+                      type="button"
+                      aria-label={fl.name}
+                      onClick={() => {
+                        touch();
+                        setFlavor(i);
+                      }}
+                      className={`h-8 w-8 shrink-0 overflow-hidden rounded-md border-2 ${i === flavor ? "border-[#4a1d0f]" : "border-transparent"}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img(fl.id)} alt="" className="h-full w-full object-cover" />
+                    </button>
+                  ))}
+                </div>
 
-            <div
-              className={`mt-2.5 flex justify-between text-[9.5px] text-[#55534e] transition-opacity duration-500 ${
-                b ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <span>✓ Free returns</span>
-              <span>✓ Vegan</span>
-              <span>✓ Ships in 24h</span>
-            </div>
+                <div className="mt-2 grid grid-cols-3 gap-1">
+                  {PACKS.map((pk, i) => (
+                    <button
+                      key={pk.n}
+                      type="button"
+                      onClick={() => {
+                        touch();
+                        setPack(i);
+                      }}
+                      className={`relative rounded-lg border px-1.5 pb-1 pt-1.5 text-left ${
+                        i === pack ? "border-[#4a1d0f] bg-[#f4e9da]" : "border-[#e2d6c6] bg-white"
+                      }`}
+                    >
+                      {pk.tag && (
+                        <span className="absolute -top-1.5 right-1 rounded bg-[#4a1d0f] px-1 text-[6.5px] font-bold uppercase text-white">
+                          {pk.tag}
+                        </span>
+                      )}
+                      <span className="block text-[9.5px] font-semibold">{pk.label}</span>
+                      <span className="block font-serif text-[10px]">${pk.price.toFixed(2)}</span>
+                      <span className="block text-[7.5px] text-[#6b5a4e]">{pk.note}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="mt-1.5 font-serif text-[14px]">$10.00</p>
+                <div className="mt-2 rounded-lg bg-[#efe9e1] p-2.5">
+                  <p className="text-[10.5px] font-semibold leading-snug">Use code EARLYACCESS25 at checkout for 25% off</p>
+                  <p className="mt-1 text-[10px]">
+                    $7.50 with code <span className="rounded-full bg-[#3a1a10] px-1.5 py-0.5 text-[8px] font-bold text-white">EARLYACCESS25</span>
+                  </p>
+                  <span className="mt-1.5 inline-block rounded-full bg-[#3a1a10] px-3 py-1 text-[9px] font-semibold text-white">Apply now</span>
+                </div>
+                <p className="mt-2 text-[9px] text-[#6b5a4e]">Flavor</p>
+                <div className="mt-1 grid grid-cols-3 gap-1.5">
+                  {FLAVORS.slice(0, 3).map((fl) => (
+                    <div key={fl.id} className="overflow-hidden rounded-lg border border-[#e2d6c6] bg-white p-1">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img(fl.id)} alt="" className="aspect-square w-full rounded object-cover" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
-          <span className="mx-auto mb-2 h-1 w-24 rounded-full bg-[#141413]" aria-hidden="true" />
+
+          {/* bottom: sticky add to bag vs. no button in view */}
+          {after ? (
+            <div className="flex items-center gap-2 border-t border-[#eadfce] bg-white px-3 py-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img(f.id)} alt="" className="h-8 w-8 rounded object-cover" />
+              <div className="min-w-0 flex-1 leading-tight">
+                <p className="truncate text-[9.5px] font-semibold">
+                  {p.label} · {f.name.split(" ")[0]}
+                </p>
+                <p className="text-[8.5px] text-[#6b5a4e]">
+                  ${p.price.toFixed(2)} · {toShip > 0 ? `$${toShip.toFixed(0)} to free shipping` : "Free shipping"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  touch();
+                  setCart((c) => c + p.n);
+                  setAdded(true);
+                }}
+                className="rounded-lg bg-[#4a1d0f] px-3 py-2 text-[10px] font-semibold text-white active:scale-95"
+              >
+                {added ? "Added ✓" : "Add to bag"}
+              </button>
+            </div>
+          ) : (
+            <div className="bg-[#c8372d] px-3 py-2.5 text-center text-[10px] font-semibold text-white">
+              Add to bag is 1.5 screens further down
+            </div>
+          )}
+          <span className="mx-auto my-1.5 h-1 w-24 rounded-full bg-[#2a1810]" aria-hidden="true" />
         </div>
       </PhoneFrame>
 
-      {/* floating result card */}
-      <div className="absolute -left-4 bottom-24 hidden w-44 rounded-2xl border border-line bg-surface/95 p-3 shadow-[0_18px_40px_-18px_rgba(20,20,19,0.35)] backdrop-blur sm:block lg:-left-16">
-        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-muted">Revenue / visitor</p>
-        <div className="mt-2 space-y-1.5">
-          <div>
-            <div className="flex justify-between text-[11px] text-muted">
-              <span>Control</span>
-            </div>
-            <div className="mt-1 h-1.5 rounded-full bg-[var(--cream-2)]">
-              <div className="h-full w-[52%] rounded-full bg-[#b9b2a5]" />
-            </div>
-          </div>
-          <div>
-            <div className="flex justify-between text-[11px] font-semibold text-foreground">
-              <span>Variant B</span>
-              <span className="text-[var(--olive)]">Winning</span>
-            </div>
-            <div className="mt-1 h-1.5 rounded-full bg-[var(--cream-2)]">
-              <div className="h-full w-[78%] rounded-full bg-accent" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <p className="mt-3 text-center text-[11px] text-muted">Example test on a demo store. Tap the sizes and the button.</p>
+      {/* what changed */}
+      <ul className="mt-4 grid grid-cols-3 gap-2">
+        {[
+          ["Real price first", "No code to copy"],
+          ["Pack picker", "Clears $35 min"],
+          ["Sticky add to bag", "Always in reach"],
+        ].map(([t, sub]) => (
+          <li
+            key={t}
+            className={`rounded-xl border px-2.5 py-2 text-center transition-colors ${
+              after ? "border-[var(--olive)] bg-surface" : "border-line bg-surface/60"
+            }`}
+          >
+            <span className={`block text-[12px] font-semibold leading-tight ${after ? "text-foreground" : "text-muted"}`}>
+              {after ? "✓ " : ""}{t}
+            </span>
+            <span className="mt-0.5 block text-[11px] leading-tight text-muted">{sub}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-center text-sm text-muted">
+        Before: their live page. Cracktab: our CRO redesign. Tap the flavours, packs and button.
+      </p>
     </div>
   );
 }

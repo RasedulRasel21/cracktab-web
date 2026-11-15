@@ -3,7 +3,7 @@ import Link from "next/link";
 import BookCallButton from "../BookCallButton";
 import Accordion from "../Accordion";
 import { shopifyApps, appHref, APPS_HUB_PATH } from "../../lib/apps";
-import { apps, close, faq, pricing, services } from "./content";
+import { apps, close, faq, services } from "./content";
 import { Eyebrow, SectionHead } from "./ui";
 
 export function HomeApps() {
@@ -77,38 +77,6 @@ export function HomeServices() {
           <Link href="/services" className="mt-8 inline-flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-wide text-foreground underline-offset-4 hover:underline">
             {services.cta} →
           </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function HomePricing() {
-  return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto grid w-full max-w-360 grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
-        <SectionHead eyebrow={pricing.eyebrow} title={pricing.title} body={pricing.body} />
-        <div className="rounded-3xl border border-foreground bg-surface p-7 shadow-[0_30px_70px_-35px_rgba(20,20,19,0.45)] sm:p-9">
-          <div className="flex items-center justify-between">
-            <p className="font-display text-lg font-semibold text-foreground">CRO retainer</p>
-            <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-ink">Month to month</span>
-          </div>
-          <p className="mt-5 flex items-baseline gap-2">
-            <span className="text-sm text-muted">From</span>
-            <span className="font-display text-6xl font-bold tracking-tight text-foreground">{pricing.price}</span>
-            <span className="text-muted">{pricing.per}</span>
-          </p>
-          <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-            {pricing.includes.map((i) => (
-              <li key={i} className="flex gap-2.5 text-sm text-foreground">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-accent-ink">✓</span>
-                {i}
-              </li>
-            ))}
-          </ul>
-          <BookCallButton className="mt-8 inline-flex h-13 w-full items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-black">
-            Start with a free CRO audit
-          </BookCallButton>
         </div>
       </div>
     </section>

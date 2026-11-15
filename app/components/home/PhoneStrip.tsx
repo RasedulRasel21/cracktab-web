@@ -10,19 +10,23 @@ export default function PhoneStrip() {
   return (
     <section aria-label="Stores we've built" className="pb-20 sm:pb-24">
       <div className="edge-fade group/strip overflow-hidden py-4">
-        <ul className="animate-marquee flex w-max gap-5 [animation-duration:60s] group-hover/strip:[animation-play-state:paused] sm:gap-7">
+        <ul className="animate-marquee flex w-max gap-5 [animation-duration:90s] group-hover/strip:[animation-play-state:paused] sm:gap-7">
           {row.map((s, i) => (
-            <li key={`${s.src}-${i}`} className="w-[10.5rem] shrink-0 sm:w-[12.5rem]" aria-hidden={i >= phoneScreens.length}>
-              <PhoneFrame className="group/phone aspect-[9/19]" notch>
+            <li key={`${s.src}-${i}`} className="w-[11rem] shrink-0 sm:w-[13rem]" aria-hidden={i >= phoneScreens.length}>
+              <PhoneFrame className="group/phone aspect-[9/19]" notch={false}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={s.src}
-                  alt={i < phoneScreens.length ? `${s.label} on mobile` : ""}
+                  alt={i < phoneScreens.length ? `${s.store} ${s.page.toLowerCase()} on mobile` : ""}
                   loading="lazy"
-                  className="absolute inset-x-0 top-0 w-full transition-transform duration-[6s] ease-in-out group-hover/phone:-translate-y-[70%]"
+                  decoding="async"
+                  className="absolute inset-x-0 top-0 w-full transition-transform duration-[6s] ease-in-out group-hover/phone:-translate-y-[62%]"
                 />
+                <span className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#141413]/85 px-2.5 py-1 text-[10px] font-semibold text-white">
+                  {s.page}
+                </span>
               </PhoneFrame>
-              <p className="mt-3 text-center text-xs font-medium text-muted">{s.label}</p>
+              <p className="mt-3 text-center text-sm font-medium text-muted">{s.store}</p>
             </li>
           ))}
         </ul>
@@ -33,7 +37,7 @@ export default function PhoneStrip() {
           {whoFor}
         </p>
         <div className="mx-auto mt-10 max-w-5xl rounded-2xl border border-line bg-surface px-5 py-5">
-          <p className="text-center text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted">
             Brands we&apos;ve built and optimised for
           </p>
           <ul className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">

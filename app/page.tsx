@@ -5,12 +5,11 @@ import PhoneStrip from "./components/home/PhoneStrip";
 import ProofVideo from "./components/home/ProofVideo";
 import LeakCalculator from "./components/home/LeakCalculator";
 import BeforeAfter from "./components/home/BeforeAfter";
-import MethodTabs from "./components/home/MethodTabs";
+import WidgetGrid from "./components/home/WidgetGrid";
 import BoxBuilderDemo from "./components/home/BoxBuilderDemo";
 import {
   HomeApps,
   HomeServices,
-  HomePricing,
   HomeFaqCream,
   HomeClose,
 } from "./components/home/HomeSections";
@@ -29,11 +28,10 @@ export default function Home() {
       <ProofVideo />
       <LeakCalculator />
       <BeforeAfter />
-      <MethodTabs />
+      <WidgetGrid />
       <BoxBuilderDemo />
       <HomeApps />
       <HomeServices />
-      <HomePricing />
       <HomeFaqCream />
       <HomeClose />
     </div>

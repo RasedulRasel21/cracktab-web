@@ -4,42 +4,36 @@ import { useMemo, useState } from "react";
 import { builder } from "./content";
 import { SectionHead } from "./ui";
 
-type Bar = { id: string; name: string; note: string; wrap: string; band: string; soldOut?: boolean };
+type Bar = { id: string; name: string; note: string; price: number; tag?: string };
 
+/* Real flavours, photos and prices from The Conscious Bar. */
 const BARS: Bar[] = [
-  { id: "salt", name: "Sea Salt Dark", note: "72% cacao, flaky salt", wrap: "#3b2a22", band: "#d8c3a5" },
-  { id: "hazel", name: "Hazelnut Praline", note: "Roasted, slow-ground", wrap: "#7a4b2a", band: "#f0d9b5" },
-  { id: "orange", name: "Blood Orange", note: "Candied peel, dark", wrap: "#b4441f", band: "#f6c9a8" },
-  { id: "matcha", name: "Matcha White", note: "Ceremonial grade", wrap: "#5f7a3a", band: "#dfe8c4" },
-  { id: "rasp", name: "Raspberry Ruby", note: "Freeze-dried fruit", wrap: "#a3304f", band: "#f5c6d3" },
-  { id: "brew", name: "Cold Brew Crunch", note: "Single-origin beans", wrap: "#2d2a26", band: "#cfc6b8", soldOut: true },
+  { id: "smooth-dark-chocolate", name: "Smooth Dark Chocolate", note: "70% dark, cacao + dates", price: 10, tag: "Bestseller" },
+  { id: "orange-blossom", name: "Orange Blossom", note: "Bright citrus notes", price: 10 },
+  { id: "almond-sea-salt", name: "Almond Sea Salt", note: "Roasted almonds, flaky salt", price: 10 },
+  { id: "roasted-hazelnut", name: "Roasted Hazelnut", note: "Slow-roasted hazelnuts", price: 10 },
+  { id: "toasted-coconut-flakes", name: "Toasted Coconut Flakes", note: "Crunchy toasted coconut", price: 10 },
+  { id: "candied-pistachio-limited-edition", name: "Candied Pistachio", note: "Limited edition", price: 11, tag: "Limited" },
 ];
 
-const PRICE = 9;
 const MIN = 4;
-const FREE_SHIP = 54;
-const SUB_OFF = 0.2;
+const FREE_SHIP = 70;
+const SUB_OFF = 0.3;
 
 function BarArt({ bar }: { bar: Bar }) {
   return (
-    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-      <ellipse cx="60" cy="108" rx="30" ry="4" fill="#000" opacity=".12" />
-      <rect x="38" y="14" width="44" height="92" rx="4" fill={bar.wrap} />
-      <rect x="38" y="44" width="44" height="34" fill={bar.band} />
-      <rect x="45" y="54" width="30" height="4" rx="2" fill={bar.wrap} opacity=".8" />
-      <rect x="49" y="62" width="22" height="3" rx="1.5" fill={bar.wrap} opacity=".45" />
-      <path d="M38 14h44l-6 6H44z" fill="#fff" opacity=".12" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={`/home/clients/tcb-${bar.id}.jpg`} alt="" loading="lazy" className="h-full w-full object-cover" />
   );
 }
 
 export default function BoxBuilderDemo() {
-  const [qty, setQty] = useState<Record<string, number>>({ orange: 1, hazel: 1 });
+  const [qty, setQty] = useState<Record<string, number>>({ "orange-blossom": 1, "roasted-hazelnut": 1 });
   const [plan, setPlan] = useState<"sub" | "once">("sub");
 
   const items = useMemo(() => BARS.filter((b) => (qty[b.id] ?? 0) > 0), [qty]);
   const count = items.reduce((n, b) => n + qty[b.id], 0);
-  const full = count * PRICE;
+  const full = items.reduce((n, b) => n + qty[b.id] * b.price, 0);
   const total = plan === "sub" ? full * (1 - SUB_OFF) : full;
   const toShip = Math.max(0, FREE_SHIP - full);
   const need = Math.max(0, MIN - count);
@@ -49,7 +43,7 @@ export default function BoxBuilderDemo() {
     setQty((q) => {
       const next = { ...q };
       let c = Object.values(next).reduce((a, b) => a + b, 0);
-      const avail = BARS.filter((b) => !b.soldOut);
+      const avail = BARS;
       let i = 0;
       while (c < 6) {
         const b = avail[i % avail.length];
@@ -68,10 +62,10 @@ export default function BoxBuilderDemo() {
         <div className="mt-12 rounded-[2rem] border border-line bg-[#fdf8ee] p-4 sm:p-8">
           <div className="text-center">
             <p className="text-sm text-[#55534e]">
-              <span className="tracking-[1px] text-[#c98a1b]">★★★★★</span> Demo store · try it
+              <span className="tracking-[1px] text-[#c98a1b]">★★★★★</span> 4.81 from 6,830 reviews · The Conscious Bar
             </p>
             <p className="mt-1 font-serif text-3xl text-[#2b1d14] sm:text-4xl">Build your box</p>
-            <p className="mt-1 text-sm text-[#55534e]">Mix any {MIN}+ bars. Subscribe and save {SUB_OFF * 100}%.</p>
+            <p className="mt-1 text-base text-[#55534e]">Mix any {MIN}+ bars. Subscribe and save {SUB_OFF * 100}% on your first box.</p>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_22rem]">
@@ -83,17 +77,18 @@ export default function BoxBuilderDemo() {
                     key={b.id}
                     className={`flex flex-col overflow-hidden rounded-2xl border bg-white transition-colors ${n > 0 ? "border-[#2b1d14]" : "border-[#e8e0d0]"}`}
                   >
-                    <div className="aspect-[5/4] bg-[linear-gradient(160deg,#efe2cc,#d9c2a0)] p-2">
+                    <div className="relative aspect-square overflow-hidden bg-[#efe2cc]">
                       <BarArt bar={b} />
+                      {b.tag && (
+                        <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#2b1d14]">{b.tag}</span>
+                      )}
                     </div>
                     <div className="flex flex-1 flex-col p-3">
                       <p className="text-sm font-semibold text-[#2b1d14]">{b.name}</p>
-                      <p className="text-xs text-[#7a7065]">{b.note}</p>
-                      <p className="mt-2 text-center text-sm font-semibold text-[#2b1d14]">${PRICE.toFixed(2)}</p>
+                      <p className="text-sm text-[#7a7065]">{b.note}</p>
+                      <p className="mt-2 text-center text-sm font-semibold text-[#2b1d14]">${b.price.toFixed(2)}</p>
                       <div className="mt-2">
-                        {b.soldOut ? (
-                          <span className="block rounded-full bg-[#a39587] py-2 text-center text-xs font-bold uppercase tracking-wide text-white">Sold out</span>
-                        ) : n === 0 ? (
+                        {n === 0 ? (
                           <button
                             type="button"
                             onClick={() => set(b.id, 1)}
@@ -141,7 +136,7 @@ export default function BoxBuilderDemo() {
                 {items.length === 0 && <li className="text-sm text-[#7a7065]">Your box is empty.</li>}
                 {items.map((b) => (
                   <li key={b.id} className="flex items-center gap-3 text-sm text-[#2b1d14]">
-                    <span className="h-9 w-9 shrink-0 rounded-lg bg-[#efe2cc] p-0.5">
+                    <span className="h-9 w-9 shrink-0 overflow-hidden rounded-lg bg-[#efe2cc]">
                       <BarArt bar={b} />
                     </span>
                     <span className="flex-1">{b.name}</span>
@@ -200,7 +195,7 @@ export default function BoxBuilderDemo() {
             </div>
           </div>
         </div>
-        <p className="mt-4 text-center text-xs text-muted">A working demo of a custom bundle builder we build into Shopify themes.</p>
+        <p className="mt-4 text-center text-sm text-muted">A working copy of the build-your-own-box flow we designed for The Conscious Bar. Prices from their store.</p>
       </div>
     </section>
   );

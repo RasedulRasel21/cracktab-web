@@ -4,125 +4,125 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { oneTeam } from "./content";
 import { SectionHead } from "./ui";
 
-/* Two coded storefront mock-ups of the same product page. */
+/*
+ * Real before/after screenshots from The Conscious Bar. "Before" is the live
+ * page; "after" is the Cracktab CRO redesign. Numbers on the screenshots
+ * match the notes under the slider.
+ */
 
-function Shot({ tone }: { tone: string }) {
-  return (
-    <div className={`absolute inset-0 overflow-hidden ${tone}`}>
-      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <circle cx="70" cy="30" r="18" fill="#fff" opacity=".25" />
-        <rect x="34" y="34" width="32" height="54" rx="7" fill="#e7b04f" />
-        <rect x="38" y="52" width="24" height="12" rx="2" fill="#fff" opacity=".85" />
-        <rect x="42" y="24" width="16" height="11" rx="2" fill="#f4f1ea" />
-        <rect x="45" y="14" width="10" height="11" rx="4" fill="#fff" />
-      </svg>
-    </div>
-  );
-}
+type View = {
+  key: string;
+  label: string;
+  before: string;
+  after: string;
+  /** width / height of the screenshots */
+  ratio: number;
+  maxW: string;
+  beforeNotes: [string, string][];
+  afterNotes: [string, string][];
+};
 
-function Before() {
-  return (
-    <div className="flex h-full flex-col bg-[#ececec] text-[#222]">
-      <div className="bg-[#c0392b] py-1 text-center text-[9px] font-bold uppercase text-white sm:text-[10px]">
-        !!! SALE SALE SALE — USE CODE SAVE10 — FREE SHIPPING OVER $100 — SALE !!!
-      </div>
-      <div className="flex items-center justify-between border-b border-[#ccc] bg-white px-4 py-2 text-[10px] sm:text-xs">
-        <span className="font-serif text-sm font-bold">Northfold Skincare Shop</span>
-        <span className="hidden gap-3 text-[#555] sm:flex">
-          <span>Home</span><span>Shop</span><span>Blog</span><span>About</span><span>FAQ</span><span>Contact</span><span>Wholesale</span>
-        </span>
-        <span>Cart (0)</span>
-      </div>
-      <div className="grid flex-1 grid-cols-[0.8fr_1.2fr] gap-4 p-4 sm:gap-6 sm:p-6">
-        <div className="space-y-2">
-          <div className="relative aspect-square w-full border-[6px] border-white bg-white outline outline-1 outline-[#ccc]">
-            <Shot tone="bg-[#d9d9d9]" />
-          </div>
-          <div className="grid grid-cols-4 gap-1">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="aspect-square border border-[#ccc] bg-[#ddd]" />
-            ))}
-          </div>
-        </div>
-        <div className="min-w-0 text-[9px] leading-snug text-[#444] sm:text-[11px]">
-          <p className="font-serif text-sm font-bold text-[#222] sm:text-lg">DAILY GLOW FACIAL OIL 30ML (SQUALANE/ROSEHIP) - NEW FORMULA</p>
-          <p className="mt-1 text-[#888]">SKU: NF-DGO-30-V2 · In stock</p>
-          <p className="mt-2 text-sm font-bold text-[#c0392b] sm:text-base">$48.00</p>
-          <p className="mt-2">
-            Our facial oil is made with natural ingredients. It contains squalane and rosehip and many other oils that are good for
-            your skin. Apply 2-3 drops morning and night. Avoid eyes. For external use only. Results may vary. See full ingredients
-            list below. Made in a facility that also handles nuts. Store in a cool dry place...
-          </p>
-          <div className="mt-3 flex items-center gap-2">
-            <span>Size:</span>
-            <span className="border border-[#aaa] bg-white px-2 py-0.5">30ml ▾</span>
-            <span>Qty:</span>
-            <span className="border border-[#aaa] bg-white px-2 py-0.5">1</span>
-          </div>
-          <span className="mt-3 inline-block bg-[#bbb] px-4 py-1.5 text-[10px] font-bold uppercase text-white">Add to cart</span>
-          <p className="mt-3 text-[#999]">No reviews yet. Be the first to write a review!</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+const VIEWS: View[] = [
+  {
+    key: "desktop",
+    label: "Product page · desktop",
+    before: "/home/before-after/tcb-desk-before.jpg",
+    after: "/home/before-after/tcb-desk-after.jpg",
+    ratio: 1519 / 948,
+    maxW: "max-w-5xl",
+    beforeNotes: [
+      ["4 discount messages compete", "Top bar, popup, code box and side tab"],
+      ["$10 is the headline price", "The real $7.50 sits in a grey box"],
+      ["8 large flavour cards", "Add to bag pushed 1,118px down"],
+      ["Mixed thumbnails and radii", "4 image radii and 5 button radii"],
+      ["No benefit summary", "No added sugar, organic, vegan only on the pack"],
+      ["Hidden $35 minimum", "Shoppers only find out in the cart"],
+    ],
+    afterNotes: [
+      ["One promo, auto-applied", "No code to copy, no popup"],
+      ["Sale price first", "$10 struck through, savings badge"],
+      ["Benefit chips", "Answer “is this actually healthy?”"],
+      ["Compact flavour swatches", "Add to bag above the fold"],
+      ["Pack picker", "6 bars by default, every pack clears $35"],
+      ["Subscribe + free-shipping progress", "Right at the button"],
+    ],
+  },
+  {
+    key: "mobile",
+    label: "Product page · mobile",
+    before: "/home/before-after/tcb-mob-before.jpg",
+    after: "/home/before-after/tcb-mob-after.jpg",
+    ratio: 798 / 1680,
+    maxW: "max-w-[26rem]",
+    beforeNotes: [
+      ["Sweet Deal tab", "Covers the product image"],
+      ["Code box", "Asks for a code the cart already applies"],
+      ["$10 shown first", "$7.50 sits lower in a grey box"],
+      ["Add to bag 1.5 screens down", "No sticky button on mobile"],
+    ],
+    afterNotes: [
+      ["Sticky add to bag", "Shows pack, price and distance to free shipping"],
+      ["Real price first", "No code needed"],
+      ["Benefit chips", "Above the price"],
+      ["Pack picker", "6 bars default, clears the $35 minimum"],
+    ],
+  },
+  {
+    key: "drawer",
+    label: "Cart drawer",
+    before: "/home/before-after/tcb-drawer-before.jpg",
+    after: "/home/before-after/tcb-drawer-after.jpg",
+    ratio: 900 / 1688,
+    maxW: "max-w-[28rem]",
+    beforeNotes: [
+      ["Two separate progress bars", "$70 shipping on top, $35 minimum below"],
+      ["Checkout greyed out", "Under $35, with no way to fix it here"],
+      ["No add-ons or case upgrade", "Nothing helps reach the minimum"],
+      ["Sweet Deal tab", "Covers the cart"],
+    ],
+    afterNotes: [
+      ["One milestone bar", "$35 to check out, $70 to ship free"],
+      ["Case of 12 upgrade", "Unlocks checkout and free shipping in one tap"],
+      ["One-tap flavour adds", "Fill the bag fast"],
+      ["Subscribe toggle", "With the real perks"],
+      ["Build your own box", "For shoppers who want variety"],
+      ["The button says what to do", "“Add 4 more bars to check out”"],
+    ],
+  },
+];
 
-function After() {
+const STATS = [
+  ["Add to bag position", "1,118px down", "Above the fold"],
+  ["Discount messages", "4", "1, auto-applied"],
+  ["Pack options", "1 bar", "1, 6 or 12 bars"],
+  ["Cart add-ons", "0", "5 one-tap offers"],
+];
+
+function Notes({ items, tone }: { items: [string, string][]; tone: "before" | "after" }) {
+  const dot = tone === "before" ? "bg-[#c8372d]" : "bg-[#2f6b1f]";
   return (
-    <div className="flex h-full flex-col bg-[#faf8f4] text-[#141413]">
-      <div className="bg-[#141413] py-1 text-center text-[9px] font-medium text-white sm:text-[10px]">
-        Free shipping over $50 · 60-day returns
-      </div>
-      <div className="flex items-center justify-between bg-white px-4 py-2.5 text-[10px] sm:text-xs">
-        <span className="hidden gap-4 text-[#55534e] sm:flex">
-          <span>Shop</span><span>Bestsellers</span><span>Routine finder</span>
-        </span>
-        <span className="text-xs font-bold tracking-[0.3em] sm:text-sm">NORTHFOLD</span>
-        <span className="rounded-full bg-[#141413] px-3 py-1 text-[10px] font-semibold text-white">Bag · 0</span>
-      </div>
-      <div className="grid flex-1 grid-cols-[1.05fr_0.95fr] gap-4 p-4 sm:gap-7 sm:p-6">
-        <div className="relative overflow-hidden rounded-xl">
-          <Shot tone="bg-[#f3d9dd]" />
-          <span className="absolute left-2 top-2 rounded-full bg-white px-2 py-0.5 text-[9px] font-semibold sm:text-[10px]">Bestseller</span>
-        </div>
-        <div className="flex min-w-0 flex-col justify-center text-[10px] sm:text-xs">
-          <p className="text-[#55534e]">
-            <span className="tracking-[1px] text-[#141413]">★★★★★</span> 4.8 · 1,240 reviews
-          </p>
-          <p className="mt-1.5 font-display text-base font-semibold leading-tight sm:text-2xl">Daily Glow Facial Oil</p>
-          <p className="mt-1 text-[#55534e]">Squalane + rosehip. Glow in 14 days or your money back.</p>
-          <div className="mt-3 flex gap-1.5">
-            {["15 ml", "30 ml", "50 ml"].map((s, i) => (
-              <span
-                key={s}
-                className={`rounded-full px-2.5 py-1 text-[10px] font-medium sm:text-[11px] ${i === 1 ? "bg-[#141413] text-white" : "bg-[#e9e7e2]"}`}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-          <span className="mt-3 block rounded-lg bg-[#141413] py-2 text-center text-[11px] font-semibold text-white sm:text-xs">
-            Add to cart · $48
+    <ol className="space-y-3">
+      {items.map(([t, s], i) => (
+        <li key={t} className="flex gap-3">
+          <span className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${dot}`}>
+            {i + 1}
           </span>
-          <div className="mt-2.5 flex flex-wrap gap-x-3 gap-y-1 text-[9px] text-[#55534e] sm:text-[10px]">
-            <span>✓ Free returns</span>
-            <span>✓ Vegan</span>
-            <span>✓ Ships in 24h</span>
-          </div>
-          <div className="mt-3 rounded-lg bg-white p-2 text-[9px] text-[#55534e] sm:text-[10px]">
-            “My skin hasn’t looked this good in years.” — Verified buyer
-          </div>
-        </div>
-      </div>
-    </div>
+          <span className="text-base leading-snug text-foreground">
+            <span className="font-semibold">{t}.</span> <span className="text-muted">{s}</span>
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }
 
 export default function BeforeAfter() {
+  const [view, setView] = useState(0);
   const [pos, setPos] = useState(50);
   const wrap = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const [hinted, setHinted] = useState(false);
+  const v = VIEWS[view];
 
   const move = useCallback((clientX: number) => {
     const el = wrap.current;
@@ -140,10 +140,10 @@ export default function BeforeAfter() {
         if (!e.isIntersecting) return;
         setHinted(true);
         io.disconnect();
-        const frames = [50, 38, 28, 40, 62, 72, 60, 50];
-        frames.forEach((v, i) => window.setTimeout(() => !dragging.current && setPos(v), 250 + i * 140));
+        const frames = [50, 36, 26, 40, 64, 74, 60, 50];
+        frames.forEach((f, i) => window.setTimeout(() => !dragging.current && setPos(f), 250 + i * 150));
       },
-      { threshold: 0.5 },
+      { threshold: 0.4 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -165,33 +165,61 @@ export default function BeforeAfter() {
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={oneTeam.eyebrow} title={oneTeam.title} body={oneTeam.body} center />
 
-        <div className="relative mx-auto mt-14 max-w-5xl">
+        <div role="tablist" aria-label="Page" className="mx-auto mt-10 flex w-fit flex-wrap justify-center gap-2 rounded-full border border-line bg-surface p-1.5">
+          {VIEWS.map((x, i) => (
+            <button
+              key={x.key}
+              role="tab"
+              type="button"
+              aria-selected={i === view}
+              onClick={() => {
+                setView(i);
+                setPos(50);
+              }}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:px-5 ${
+                i === view ? "bg-foreground text-background" : "text-muted hover:text-foreground"
+              }`}
+            >
+              {x.label}
+            </button>
+          ))}
+        </div>
+
+        <div className={`relative mx-auto mt-8 ${v.maxW}`}>
           <div className="mb-3 flex justify-between px-1 font-serif text-lg italic text-muted sm:text-2xl">
             <span>before cracktab</span>
             <span>after cracktab</span>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_40px_90px_-40px_rgba(20,20,19,0.45)]">
-            <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="mx-auto rounded-md bg-[var(--cream-2)] px-6 py-1 text-[11px] text-muted">northfold.com/products/daily-glow</span>
-            </div>
+            {v.key === "desktop" && (
+              <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                <span className="mx-auto rounded-md bg-[var(--cream-2)] px-6 py-1 text-xs text-muted">
+                  theconsciousbar.co/products/smooth-dark-chocolate
+                </span>
+              </div>
+            )}
             <div
               ref={wrap}
-              className="relative aspect-[4/3] cursor-ew-resize touch-none select-none sm:aspect-[16/9]"
+              key={v.key}
+              className="relative cursor-ew-resize touch-none select-none bg-white"
+              style={{ aspectRatio: String(v.ratio) }}
               onPointerDown={(e) => {
                 dragging.current = true;
                 move(e.clientX);
               }}
             >
-              <div className="absolute inset-0">
-                <After />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={v.after} alt={`The Conscious Bar ${v.label.toLowerCase()} after the Cracktab redesign`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
               <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-                <Before />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={v.before} alt={`The Conscious Bar ${v.label.toLowerCase()} before`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
               </div>
+              <span className="absolute left-3 top-3 rounded-full bg-[#c8372d] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">Before</span>
+              <span className="absolute right-3 top-3 rounded-full bg-[#2f6b1f] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">After</span>
               <div className="absolute inset-y-0 z-10 w-0.5 bg-[#141413]" style={{ left: `${pos}%` }}>
                 <button
                   type="button"
@@ -213,18 +241,32 @@ export default function BeforeAfter() {
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="absolute -bottom-7 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 sm:gap-4 sm:py-2 sm:pl-2 sm:pr-6 shadow-[0_20px_40px_-18px_rgba(20,20,19,0.4)]">
-            <span className="whitespace-nowrap rounded-full bg-[#141413] px-4 py-2 font-display text-lg font-bold text-white sm:px-5 sm:py-2.5 sm:text-2xl">
-              {oneTeam.result} <span className="text-xs font-medium text-white/70 sm:text-base">{oneTeam.resultLabel}</span>
-            </span>
-            <svg width="30" height="20" viewBox="0 0 30 20" fill="none" stroke="currentColor" strokeWidth="2.2" className="text-foreground" aria-hidden="true">
-              <path d="M2 17l8-8 5 5 11-11M19 3h7v7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
+          <div>
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-[#c8372d]">Before</p>
+            <Notes items={v.beforeNotes} tone="before" />
+          </div>
+          <div>
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-[#2f6b1f]">After</p>
+            <Notes items={v.afterNotes} tone="after" />
           </div>
         </div>
-        <p className="mx-auto mt-14 max-w-xl text-center text-xs text-muted">
-          Illustration of a typical product-page test. Drag the handle to compare.
+
+        <dl className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-3 lg:grid-cols-4">
+          {STATS.map(([l, b, a]) => (
+            <div key={l} className="rounded-2xl border border-line bg-surface p-5">
+              <dt className="text-xs font-bold uppercase tracking-[0.14em] text-muted">{l}</dt>
+              <dd className="mt-3">
+                <s className="block text-sm text-[#c8372d]">{b}</s>
+                <span className="mt-1 block font-serif text-xl text-[#2f6b1f] sm:text-2xl">{a}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mx-auto mt-6 max-w-xl text-center text-sm text-muted">
+          Before: live page, Nov 15, 2026. After: Cracktab CRO redesign. Every change ships as an A/B test.
         </p>
       </div>
     </section>

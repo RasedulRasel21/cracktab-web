@@ -74,7 +74,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 sm:gap-16">
             {footerColumns.map((col) => (
               <div key={col.heading}>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/60">
                   {col.heading}
                 </h3>
                 <ul className="mt-4 flex flex-col gap-2.5">
@@ -86,14 +86,14 @@ export default function Footer() {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-medium text-white/70 transition-colors hover:text-accent"
+                          className="text-base font-medium text-white/75 transition-colors hover:text-accent"
                         >
                           {link.label}
                         </a>
                       ) : (
                         <Link
                           href={link.href}
-                          className="text-sm font-medium text-white/70 transition-colors hover:text-accent"
+                          className="text-base font-medium text-white/75 transition-colors hover:text-accent"
                         >
                           {link.label}
                         </Link>
@@ -107,7 +107,7 @@ export default function Footer() {
 
           {/* Address — right side, left-aligned text. The phone sits with the
               office it reaches rather than floating above both. */}
-          <div className="flex flex-col gap-5 text-sm text-white/70 sm:items-start sm:text-left">
+          <div className="flex flex-col gap-5 text-base text-white/75 sm:items-start sm:text-left">
             {contact.offices.map((office) => (
               <p key={office.label} className="leading-relaxed">
                 <span className="block font-semibold text-white">
@@ -129,7 +129,7 @@ export default function Footer() {
 
         {/* Bottom bar: copyright + legal (left) · socials (right) */}
         <div className="mt-16 flex flex-col gap-6 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/50">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/60">
             <span>© 2026 Cracktab. All rights reserved.</span>
             <Link href="/imprint" className="transition-colors hover:text-white">
               Imprint

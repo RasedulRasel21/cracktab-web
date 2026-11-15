@@ -1,5 +1,6 @@
 import { proof } from "./content";
 import { SectionHead } from "./ui";
+import AutoVideo from "./AutoVideo";
 
 export default function ProofVideo() {
   return (
@@ -10,7 +11,7 @@ export default function ProofVideo() {
           <dl className="mt-10 grid grid-cols-2 gap-3 sm:gap-4">
             {proof.stats.map((s) => (
               <div key={s.label} className="rounded-2xl border border-line bg-surface p-5">
-                <dt className="text-xs leading-snug text-muted sm:text-sm">{s.label}</dt>
+                <dt className="text-sm leading-snug text-muted sm:text-base">{s.label}</dt>
                 <dd className="mt-3 flex items-baseline gap-2">
                   <span className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{s.value}</span>
                   {s.delta && (
@@ -20,7 +21,7 @@ export default function ProofVideo() {
               </div>
             ))}
           </dl>
-          <p className="mt-4 text-xs text-muted">Figures as shown in the recording. Deltas compare with the previous 30 days.</p>
+          <p className="mt-4 text-sm text-muted">Figures as shown in the recording. Deltas compare with the previous 30 days.</p>
         </div>
 
         <div className="relative mx-auto w-full max-w-[24rem]">
@@ -39,19 +40,12 @@ export default function ProofVideo() {
                 Real recording
               </span>
             </div>
-            <video
+            <AutoVideo
               className="block aspect-[384/594] w-full bg-white object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
+              src="/home/store-results.mp4"
               poster="/home/store-results-poster.jpg"
-              aria-label="Screen recording of a client's Shopify analytics dashboard"
-            >
-              <source src="/home/store-results.webm" type="video/webm" />
-              <source src="/home/store-results.mp4" type="video/mp4" />
-            </video>
+              label="Screen recording of a client's Shopify analytics dashboard"
+            />
           </div>
         </div>
       </div>
