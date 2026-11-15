@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "lenis/dist/lenis.css";
 import "./globals.css";
+import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TagManager from "./components/TagManager";
@@ -95,6 +97,7 @@ export default function RootLayout({
         {/* `theme-cream site-cream`: every page uses the light cream design
             (tokens and remaps in globals.css). */}
         <main className="theme-cream site-cream flex flex-1 flex-col">{children}</main>
+        <SmoothScroll />
         <div className="site-chrome contents">
           <Footer />
         </div>

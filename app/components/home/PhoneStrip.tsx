@@ -1,5 +1,6 @@
 import { PhoneFrame } from "./ui";
 import { clientNames, phoneScreens, whoFor } from "./content";
+import MobilePhoneCarousel from "./MobilePhoneCarousel";
 
 /**
  * Row of phones showing real mobile storefronts. The strip drifts sideways;
@@ -9,7 +10,10 @@ export default function PhoneStrip() {
   const row = [...phoneScreens, ...phoneScreens];
   return (
     <section aria-label="Stores we've built" className="pb-20 sm:pb-24">
-      <div className="edge-fade group/strip overflow-hidden py-4">
+      {/* Phones: swipeable auto-advancing carousel; the centred store scrolls. */}
+      <MobilePhoneCarousel />
+      {/* Tablet and up: drifting strip, hover a phone to scroll its page. */}
+      <div className="edge-fade group/strip hidden overflow-hidden py-4 md:block">
         <ul className="animate-marquee flex w-max gap-5 [animation-duration:90s] group-hover/strip:[animation-play-state:paused] sm:gap-7">
           {row.map((s, i) => (
             <li key={`${s.src}-${i}`} className="w-[11rem] shrink-0 sm:w-[13rem]" aria-hidden={i >= phoneScreens.length}>

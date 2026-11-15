@@ -6,19 +6,23 @@ import { SectionHead } from "./ui";
 
 /*
  * Six blocks we build into client themes, as small working demos.
- * Products, prices and rules come from The Conscious Bar redesign.
+ * Products, prices and rules come from the client stores named on each card
+ * (The Conscious Bar, Luxe Cosmetics, ForChics and Pürishh).
  */
 
 const img = (id: string) => `/home/clients/tcb-${id}.jpg`;
+const pic = (name: string) => `/home/clients/${name}.jpg`;
 const money = (n: number) => `$${n.toFixed(2)}`;
 
 function Card({
+  brand,
   where,
   title,
   body,
   hint,
   children,
 }: {
+  brand: string;
   where: string;
   title: string;
   body: string;
@@ -26,14 +30,15 @@ function Card({
   children: ReactNode;
 }) {
   return (
-    <li className="flex flex-col overflow-hidden rounded-3xl border border-line bg-surface">
-      <div className="flex min-h-[19rem] items-center justify-center bg-[#f6efe4] p-5 sm:p-6">
+    <li className="flex w-[86%] shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-line bg-surface sm:w-[60%] md:w-auto">
+      <div className="ui-demo flex min-h-[19rem] items-center justify-center bg-[#f6efe4] p-5 sm:p-6">
         <div className="w-full max-w-[20rem] text-[#2a1810]">{children}</div>
       </div>
       <div className="flex flex-1 flex-col border-t border-line p-6">
-        <span className="self-start rounded-full bg-[var(--cream-2)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
-          {where}
-        </span>
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full bg-[var(--cream-2)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">{where}</span>
+          <span className="rounded-full border border-line px-3 py-1 text-xs font-semibold text-foreground">{brand}</span>
+        </div>
         <h3 className="mt-4 font-display text-xl font-semibold text-foreground">{title}</h3>
         <p className="mt-2 text-base leading-relaxed text-muted">{body}</p>
         <p className="mt-auto pt-4 text-sm font-semibold text-[var(--olive)]">↳ {hint}</p>
@@ -42,43 +47,47 @@ function Card({
   );
 }
 
-/* 1 · Pack picker */
+/* 1 · Bundle picker — ForChics Eyelash Enhancing Serum, store prices */
 function PackPicker() {
   const packs = [
-    { n: 1, label: "1 bar", price: 7.5, note: "$35 min order" },
-    { n: 6, label: "6 bars", price: 45, note: "Mix flavours", tag: "Popular" },
-    { n: 12, label: "Case of 12", price: 78, note: "Free shipping", tag: "Best value" },
+    { n: 1, label: "1 bottle", price: 29.94, was: 39.95 },
+    { n: 2, label: "2 bottles", price: 44.99, was: 79.99 },
+    { n: 3, label: "3 bottles", price: 54.99, was: 119.99, tag: "Best value" },
   ];
   const [i, setI] = useState(1);
   const p = packs[i];
-  const clears = p.price >= 35;
   return (
     <div className="rounded-2xl bg-white p-4 shadow-sm">
-      <p className="text-xs font-medium text-[#6b5a4e]">Choose your pack</p>
-      <div className="mt-2 grid grid-cols-3 gap-1.5">
+      <div className="flex items-center gap-2.5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={pic("forchics-lash-serum")} alt="" className="h-11 w-11 rounded-lg object-cover" />
+        <p className="text-sm font-semibold leading-tight">Eyelash Enhancing Serum</p>
+      </div>
+      <div className="mt-3 space-y-1.5">
         {packs.map((pk, k) => (
           <button
             key={pk.n}
             type="button"
             onClick={() => setI(k)}
-            className={`relative rounded-xl border px-2 pb-2 pt-3 text-left transition-colors ${
-              k === i ? "border-[#4a1d0f] bg-[#f4e9da]" : "border-[#e2d6c6] hover:border-[#b9a68f]"
+            className={`relative flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left transition-colors ${
+              k === i ? "border-[#7a1f3d] bg-[#fbeef2]" : "border-[#e2d6c6] hover:border-[#b9a68f]"
             }`}
           >
-            {pk.tag && (
-              <span className="absolute -top-2 right-1.5 rounded bg-[#4a1d0f] px-1.5 text-[9px] font-bold uppercase text-white">{pk.tag}</span>
-            )}
-            <span className="block text-xs font-semibold">{pk.label}</span>
-            <span className="block font-serif text-sm">{money(pk.price)}</span>
-            <span className="block text-[10px] text-[#6b5a4e]">{pk.note}</span>
+            <span className="flex items-center gap-2">
+              <span className={`h-3.5 w-3.5 rounded-full border-2 ${k === i ? "border-[#7a1f3d] bg-[#7a1f3d]" : "border-[#c9b8a5]"}`} />
+              <span className="text-xs font-semibold">{pk.label}</span>
+              <span className="text-[10px] text-[#6b5a4e]">{money(pk.price / pk.n)} each</span>
+            </span>
+            <span className="text-right">
+              <span className="block font-serif text-sm">{money(pk.price)}</span>
+              <s className="block text-[10px] text-[#9a8b7e]">{money(pk.was)}</s>
+            </span>
+            {pk.tag && <span className="absolute -top-2 right-2 rounded bg-[#7a1f3d] px-1.5 text-[9px] font-bold uppercase text-white">{pk.tag}</span>}
           </button>
         ))}
       </div>
-      <p className={`mt-3 text-xs font-semibold ${clears ? "text-[#2f6b1f]" : "text-[#c8372d]"}`}>
-        {clears ? "✓ Clears the $35 minimum order" : "✕ Below the $35 minimum — can't check out"}
-      </p>
-      <button type="button" className="mt-2 w-full rounded-xl bg-[#4a1d0f] py-2.5 text-sm font-semibold text-white">
-        Add {p.label.toLowerCase()} to bag · {money(p.price)}
+      <button type="button" className="mt-3 w-full rounded-xl bg-[#7a1f3d] py-2.5 text-sm font-semibold text-white">
+        Add to cart · save {money(p.was - p.price)}
       </button>
     </div>
   );
@@ -91,11 +100,11 @@ function StickyAtc() {
     <div className="relative mx-auto h-[17rem] w-[12.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-[#1a1a1a] bg-[#fbf7f0] shadow-lg">
       <div className="h-full overflow-y-auto pb-14 [scrollbar-width:none]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img("smooth-dark-chocolate")} alt="" className="aspect-square w-full object-cover" />
+        <img src={pic("luxe-eye-balm")} alt="" className="aspect-square w-full object-cover" />
         <div className="space-y-2 p-3">
-          <p className="font-serif text-sm">Smooth Dark Chocolate</p>
-          <p className="text-[10px] text-[#6b5a4e]">★★★★★ 4.81 · 6,830 reviews</p>
-          {["What's inside", "Dates vs sugar", "Reviews", "FAQ", "Best sellers"].map((s) => (
+          <p className="text-sm font-semibold">Korean Under Eye Balm</p>
+          <p className="text-[10px] text-[#6b5a4e]">★★★★★ 4.86 · 10,839 reviews</p>
+          {["How it works", "Ingredients", "Before & after", "Reviews", "FAQ"].map((s) => (
             <div key={s} className="rounded-lg bg-[#efe6d8] p-2">
               <p className="text-[10px] font-semibold">{s}</p>
               <div className="mt-1 h-1.5 w-4/5 rounded bg-[#e0d2bf]" />
@@ -106,14 +115,14 @@ function StickyAtc() {
       </div>
       <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 border-t border-[#eadfce] bg-white px-2 py-1.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img("smooth-dark-chocolate")} alt="" className="h-7 w-7 rounded object-cover" />
+        <img src={pic("luxe-eye-balm")} alt="" className="h-7 w-7 rounded object-cover" />
         <span className="flex-1 text-[9px] leading-tight">
-          <b>6 bars</b> · $45.00
+          <b>Under Eye Balm</b>
           <br />
-          <span className="text-[#6b5a4e]">$25 to free shipping</span>
+          <span className="text-[#6b5a4e]">$39.95 · 30-day refund</span>
         </span>
-        <button type="button" onClick={() => setAdded((a) => !a)} className="rounded-md bg-[#4a1d0f] px-2 py-1.5 text-[9px] font-semibold text-white">
-          {added ? "Added ✓" : "Add to bag"}
+        <button type="button" onClick={() => setAdded((a) => !a)} className="rounded-md bg-[#1a1a1a] px-2 py-1.5 text-[9px] font-semibold text-white">
+          {added ? "Added ✓" : "Add to cart"}
         </button>
       </div>
       <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-[9px] font-semibold text-white">
@@ -172,61 +181,68 @@ function MilestoneBar() {
   );
 }
 
-/* 4 · One-tap cart adds */
+/* 4 · One-tap cart adds — Luxe Cosmetics, store prices */
 function OneTapAdds() {
   const offers = [
-    { id: "orange-blossom", name: "Orange Blossom" },
-    { id: "almond-sea-salt", name: "Almond Sea Salt" },
-    { id: "roasted-hazelnut", name: "Roasted Hazelnut" },
+    { id: "luxe-lash-serum", name: "Lash Serum", price: 29.95 },
+    { id: "luxe-primer", name: "Primer", price: 23.99 },
+    { id: "luxe-brush", name: "Blend Brush", price: 21.99 },
   ];
+  const base = 39.95;
   const [inBag, setInBag] = useState<string[]>([]);
-  const subtotal = 7.5 * (1 + inBag.length);
+  const subtotal = base + offers.filter((o) => inBag.includes(o.id)).reduce((n, o) => n + o.price, 0);
   return (
     <div className="rounded-2xl bg-white p-4 shadow-sm">
-      <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#6b5a4e]">Or add bars in one tap</p>
+      <div className="flex items-center gap-2 border-b border-[#eadfce] pb-2.5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={pic("luxe-eye-balm")} alt="" className="h-9 w-9 rounded object-cover" />
+        <span className="flex-1 text-xs font-semibold">Korean Under Eye Balm</span>
+        <span className="font-serif text-sm">{money(base)}</span>
+      </div>
+      <p className="mt-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#6b5a4e]">Complete your routine</p>
       <div className="mt-2 grid grid-cols-3 gap-1.5">
         {offers.map((o) => {
           const on = inBag.includes(o.id);
           return (
             <div key={o.id} className={`rounded-xl border p-1.5 text-center transition-colors ${on ? "border-[#2f6b1f] bg-[#eef6ea]" : "border-[#e2d6c6]"}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img(o.id)} alt="" className="aspect-square w-full rounded-lg object-cover" />
+              <img src={pic(o.id)} alt="" className="aspect-square w-full rounded-lg object-cover" />
               <p className="mt-1 text-[10px] font-semibold leading-tight">{o.name}</p>
               <button
                 type="button"
                 onClick={() => setInBag((b) => (on ? b.filter((x) => x !== o.id) : [...b, o.id]))}
-                className={`mt-1 w-full rounded-full border py-1 text-[10px] font-semibold ${on ? "border-[#2f6b1f] bg-[#2f6b1f] text-white" : "border-[#4a1d0f]"}`}
+                className={`mt-1 w-full rounded-full border py-1 text-[10px] font-semibold ${on ? "border-[#2f6b1f] bg-[#2f6b1f] text-white" : "border-[#1a1a1a]"}`}
               >
-                {on ? "Added ✓" : "+ $7.50"}
+                {on ? "Added ✓" : `+ ${money(o.price)}`}
               </button>
             </div>
           );
         })}
       </div>
       <div className="mt-3 flex items-baseline justify-between border-t border-[#eadfce] pt-2.5 text-sm">
-        <span className="text-[#6b5a4e]">Subtotal · {1 + inBag.length} bars</span>
+        <span className="text-[#6b5a4e]">Subtotal · {1 + inBag.length} items</span>
         <span className="font-serif text-lg">{money(subtotal)}</span>
       </div>
     </div>
   );
 }
 
-/* 5 · Subscribe toggle */
+/* 5 · Subscribe toggle — Pürishh Electrolytes, 20% off subscriptions */
 function SubscribeToggle() {
   const [on, setOn] = useState(false);
-  const price = 45;
+  const price = 39;
   return (
     <div className="rounded-2xl bg-white p-4 shadow-sm">
       <div className="flex items-center gap-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img("toasted-coconut-flakes")} alt="" className="h-11 w-11 rounded-lg object-cover" />
+        <img src={pic("purishh-electrolytes")} alt="" className="h-11 w-11 rounded-lg object-cover" />
         <div className="flex-1">
-          <p className="text-sm font-semibold">6 bars · mixed</p>
-          <p className="text-xs text-[#6b5a4e]">{on ? "Every 4 weeks" : "One-time purchase"}</p>
+          <p className="text-sm font-semibold">Electrolytes · Lemon Lime</p>
+          <p className="text-xs text-[#6b5a4e]">{on ? "Subscription" : "One-time purchase"}</p>
         </div>
         <p className="text-right font-serif">
           {on && <s className="mr-1 text-xs text-[#9a8b7e]">{money(price)}</s>}
-          {money(on ? price * 0.7 : price)}
+          {money(on ? price * 0.8 : price)}
         </p>
       </div>
       <button
@@ -240,14 +256,12 @@ function SubscribeToggle() {
           <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${on ? "left-[18px]" : "left-0.5"}`} />
         </span>
         <span className="text-xs leading-snug">
-          <b>Subscribe and save:</b> 30% off your first order, $30 gift every 3rd order
+          <b>Subscribe and save 20%</b> on every delivery
         </span>
       </button>
-      <ul className={`mt-3 grid grid-cols-2 gap-1 text-[11px] transition-opacity ${on ? "opacity-100" : "opacity-40"}`}>
-        {["Skip or cancel any time", "Early access to new flavours", "Free gift every 3rd box", "Change flavours monthly"].map((t) => (
-          <li key={t}>✓ {t}</li>
-        ))}
-      </ul>
+      <p className={`mt-3 text-center text-[11px] font-semibold transition-opacity ${on ? "text-[#2f6b1f] opacity-100" : "opacity-0"}`}>
+        You save {money(price * 0.2)} on this order
+      </p>
     </div>
   );
 }
@@ -304,23 +318,23 @@ export default function WidgetGrid() {
     <section className="py-20 sm:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={method.eyebrow} title={method.title} body={method.body} />
-        <ul className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <Card where="Product page" title="Pack picker" body="Six bars by default and a case of 12. Every pack clears the $35 minimum, so nobody hits a wall in the cart." hint="Tap a pack">
+        <ul className="-mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-3 [scrollbar-width:none] sm:-mx-8 sm:px-8 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+          <Card brand="ForChics" where="Product page" title="Bundle picker" body="Buy 1, 2 or 3 with the per-bottle price and the saving spelled out, so the bigger bundle sells itself." hint="Pick a bundle">
             <PackPicker />
           </Card>
-          <Card where="Product page · mobile" title="Sticky add to bag" body="The button, pack, price and distance to free shipping follow the shopper down the page." hint="Scroll inside the phone">
+          <Card brand="Luxe Cosmetics" where="Product page · mobile" title="Sticky add to cart" body="The button, price and refund promise follow the shopper down a long product page." hint="Scroll inside the phone">
             <StickyAtc />
           </Card>
-          <Card where="Product page" title="One auto-applied promo" body="The real price first, savings badge and benefit chips — instead of a code shoppers have to copy." hint="Switch before and after">
+          <Card brand="The Conscious Bar" where="Product page" title="One auto-applied promo" body="The real price first, savings badge and benefit chips, instead of a code shoppers have to copy." hint="Switch before and after">
             <AutoPromo />
           </Card>
-          <Card where="Cart drawer" title="Milestone bar" body="One bar for both goals: $35 to check out and $70 to ship free. The button says exactly what to do next." hint="Add bars with +">
+          <Card brand="The Conscious Bar" where="Cart drawer" title="Milestone bar" body="One bar for both goals: $35 to check out and $70 to ship free. The button says exactly what to do next." hint="Add bars with +">
             <MilestoneBar />
           </Card>
-          <Card where="Cart drawer" title="One-tap flavour adds" body="Matching flavours added straight from the cart, so shoppers fill the bag without going back." hint="Add a flavour">
+          <Card brand="Luxe Cosmetics" where="Cart drawer" title="One-tap cross-sells" body="Products that complete the routine, added straight from the cart without going back to browse." hint="Add a product">
             <OneTapAdds />
           </Card>
-          <Card where="Cart drawer · cart page" title="Subscribe toggle" body="Subscription offered where the decision happens, with the real perks instead of a block of text." hint="Flip the switch">
+          <Card brand="Pürishh" where="Product page · cart" title="Subscribe toggle" body="Subscription offered where the decision happens, with the saving shown on the price itself." hint="Flip the switch">
             <SubscribeToggle />
           </Card>
         </ul>

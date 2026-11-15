@@ -10,11 +10,10 @@ export type NavLink = { label: string; href: string; external?: boolean };
 export const primaryNav: NavLink[] = [
   { label: "Our Works", href: "/work" },
   { label: "Services", href: "/services" },
-  { label: "Shopify Themes", href: "/themes" },
-  { label: "Shopify Apps", href: APPS_HUB_PATH },
-  { label: "Blog", href: "/blog" },
-  { label: "About Us", href: "/about" },
+  { label: "How We Work", href: "/how-we-work" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  // Shopify Themes, Shopify Apps and Blog are linked from the footer only.
 ];
 
 // Secondary, lighter group
@@ -38,44 +37,26 @@ export type Service = {
 // Homepage "glimpse" — a curated subset; the full list lives on /services.
 export const services: Service[] = [
   {
-    title: "Shopify Development",
+    title: "Ecommerce Management & CRO",
     description:
-      "Custom Shopify and Shopify Plus stores, built from scratch and tuned for speed. We handle everything from theme development and migrations to third-party integrations, so your store is fast, scalable, and easy to manage as you grow.",
-    href: "/services/shopify-development",
-    tag: "Shopify Plus Partner",
-  },
-  {
-    title: "Shopify App Development",
-    description:
-      "Custom Shopify apps built to solve problems the App Store can't. Whether it's automating a manual workflow, connecting Shopify to your internal systems, or building a feature unique to your business, we design and develop apps that fit into your store without slowing it down.",
-    href: "/services/shopify-app-development",
-  },
-  {
-    title: "UI/UX Design",
-    description:
-      "Store design that's built to convert, not just look good. We map out user flows, wireframe key pages, and design interfaces that reduce friction at checkout — so visitors have a clear path from landing page to purchase.",
-    href: "/services/ui-ux-design",
-  },
-  {
-    title: "Ecommerce SEO",
-    description:
-      "Technical and on-page SEO built specifically for Shopify stores. From site structure and page speed to product page optimization and content strategy, we help your store rank for the searches that actually drive buyers, not just traffic.",
-    href: "/services/ecommerce-seo",
-  },
-  {
-    title: "Ecommerce Growth & CRO",
-    description:
-      "Data-driven conversion rate optimization to turn more visitors into customers. We run A/B tests, analyze funnel drop-off, and refine everything from product pages to checkout flow — so growth comes from your existing traffic, not just ad spend.",
+      "Your outsourced ecommerce team: day-to-day store management plus a monthly programme of research, A/B tests, redesigns, speed, SEO and email that grows revenue from the traffic you already have.",
     href: "/services/ecommerce-growth-cro",
-  },
-  {
-    title: "Custom Business Websites",
-    description:
-      "Professional websites tailored to your goals — from corporate sites to landing pages and web apps. Built with clean code and a design that reflects your brand, these are made to load fast, scale easily, and support whatever comes next.",
-    href: "/services/custom-business-websites",
     featured: true,
   },
-];
+  {
+    title: "Shopify Development",
+    description:
+      "New Shopify and Shopify Plus stores, redesigns and migrations, designed around how your customers buy and built for speed and SEO from day one.",
+    href: "/services/shopify-development",
+    tag: "Shopify Plus",
+  },
+  {
+    title: "Shopify Theme & App Development",
+    description:
+      "Custom theme sections, bundle and subscription builders, private and public Shopify apps, integrations and automation, built when the App Store can't do it.",
+    href: "/services/shopify-app-development",
+  },
+]
 
 // ------------------------------------------------------------------
 //  Section 3 — Proud clients
@@ -129,6 +110,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
   {
     heading: "Company",
     links: [
+      { label: "How We Work", href: "/how-we-work" },
       { label: "About Us", href: "/about" },
       { label: "Contact", href: "/contact" },
       { label: "FAQ", href: "/faq" },
@@ -182,9 +164,20 @@ export type ServiceDetail = {
   process: string[];
   bullets: string[];
   examples: string[]; // case-study slugs featured under "Example Work"
+  /** Short card copy for the services overview. */
+  summary?: string;
+  /** What changes for the store, shown as the outcome strip. */
+  outcomes?: string[];
+  /** The former standalone services this one now covers, in detail. */
+  capabilities?: { slug: string; title: string; body: string; items: string[] }[];
+  faq?: Faq[];
 };
 
-export const serviceDetails: ServiceDetail[] = [
+/**
+ * The original 15 service pages. Their content now lives inside the three
+ * services below (as "capabilities"); their URLs redirect (next.config.ts).
+ */
+const legacyServices: ServiceDetail[] = [
   {
     slug: "shopify-development",
     name: "Shopify Development",
@@ -593,6 +586,211 @@ export const serviceDetails: ServiceDetail[] = [
 ];
 
 // Our proven process
+/** Build one merged service from the legacy pages it replaces. */
+function fold(slugs: string[]): NonNullable<ServiceDetail["capabilities"]> {
+  return slugs.map((slug) => {
+    const s = legacyServices.find((x) => x.slug === slug);
+    if (!s) throw new Error(`Unknown legacy service ${slug}`);
+    return { slug, title: s.name, body: s.whyMatters, items: s.bullets };
+  });
+}
+
+/** The three services Cracktab offers. */
+export const serviceDetails: ServiceDetail[] = [
+  {
+    slug: "ecommerce-growth-cro",
+    name: "Ecommerce Management & CRO",
+    heading: "Ecommerce Management & CRO",
+    summary:
+      "Your outsourced ecommerce team. We run the store day to day and grow revenue from the traffic you already have: research, A/B tests, redesigns, speed, SEO, email and the operations behind them.",
+    intro:
+      "One team that runs your Shopify store and makes it sell more every month. We find where revenue leaks, design and code the fixes, test them against your real traffic, and handle the day-to-day operations so nothing slips while the store grows.",
+    whoFor:
+      "Live Shopify brands with steady traffic that want more revenue from the visitors they already pay for, and founders who need an experienced ecommerce manager without hiring a full in-house team.",
+    whyMatters:
+      "Most stores stop improving the day they launch. Ad costs rise, competitors copy your offer, and the product pages that worked last year quietly stop converting. A monthly programme of research, testing and store management keeps revenue per visitor climbing, and because research, design, development and analysis sit in one team, nothing gets lost between agencies.",
+    process: [
+      "Audit analytics, recordings, speed and the full funnel",
+      "Prioritise a testing roadmap by revenue impact",
+      "Design, build and A/B test every change",
+      "Roll out winners, report monthly, repeat",
+    ],
+    bullets: [
+      "Conversion audits",
+      "A/B and split testing",
+      "Landing page optimization",
+      "Cart abandonment optimization",
+      "Revenue tracking",
+      "Monthly performance reporting",
+      "Store operations",
+      "Product and inventory management",
+    ],
+    outcomes: [
+      "Higher conversion rate",
+      "Bigger average order value",
+      "More repeat purchases",
+      "A faster, cleaner store",
+      "One accountable team",
+    ],
+    capabilities: fold([
+      "shopify-conversion-audit",
+      "ecommerce-growth-cro",
+      "shopify-store-redesign",
+      "ui-ux-design",
+      "shopify-speed-optimization",
+      "ecommerce-seo",
+      "digital-marketing",
+      "ecommerce-management",
+      "branding-visual-identity",
+      "ai-business-automation",
+    ]),
+    faq: [
+      {
+        q: "What does an ecommerce manager from Cracktab actually do?",
+        a: "We run the store the way an in-house ecommerce manager would: product and collection updates, promotions, apps and integrations, subscription and B2B setup, email flows and reporting, plus a monthly CRO programme that tests and ships improvements.",
+      },
+      {
+        q: "How soon will we see results from CRO?",
+        a: "The audit and first fixes usually land in the first month. A/B tests need enough traffic to reach a reliable result, which for most stores means two to four weeks per test.",
+      },
+      {
+        q: "Do you need access to our analytics?",
+        a: "Yes. We work from Shopify analytics, GA4 and session recordings so every change is tied to revenue, not opinions.",
+      },
+      {
+        q: "Is there a long contract?",
+        a: "No. We work month to month and you can cancel any time.",
+      },
+    ],
+    examples: ["the-conscious-bar", "forchics", "seetrue-glasses"],
+  },
+  {
+    slug: "shopify-development",
+    name: "Shopify Development",
+    heading: "Shopify Development",
+    summary:
+      "New Shopify and Shopify Plus stores, redesigns and migrations, designed around how your customers buy and built for speed and SEO from day one.",
+    intro:
+      "Custom Shopify and Shopify Plus stores, redesigns and migrations. We design around how your customers buy, code a fast theme from scratch, move your data and rankings safely, and launch a store that is ready to convert from day one.",
+    whoFor:
+      "Brands launching on Shopify, moving from WooCommerce, Magento or BigCommerce, or outgrowing a template theme that no longer fits their catalogue and traffic.",
+    whyMatters:
+      "A slow or generic store loses sales before a visitor sees your products, and a careless migration can wipe out years of search traffic. We plan the structure, design every key page for conversion, build with clean code and handle redirects and SEO so the new store starts ahead of the old one.",
+    process: [
+      "Discovery, technical scoping and sitemap",
+      "UX research, wireframes and visual design",
+      "Custom build, data migration and integrations",
+      "QA, speed tuning, SEO checks and launch",
+    ],
+    bullets: [
+      "Custom theme development",
+      "Shopify Plus implementation",
+      "Mobile-first responsive design",
+      "Third-party integrations",
+      "Payment gateway setup",
+      "Multi-currency support",
+      "Performance optimization",
+      "Inventory management",
+    ],
+    outcomes: [
+      "A store built around your catalogue",
+      "Fast on every device",
+      "Rankings kept through migration",
+      "Easy for your team to manage",
+    ],
+    capabilities: fold([
+      "shopify-development",
+      "shopify-store-migration",
+      "shopify-store-redesign",
+      "ui-ux-design",
+      "ecommerce-seo",
+    ]),
+    faq: [
+      {
+        q: "How long does a new Shopify store take?",
+        a: "Typically 4–8 weeks depending on complexity. Simple stores can take 2–3 weeks; large custom builds 10–12 weeks.",
+      },
+      {
+        q: "Can you migrate our store without losing SEO?",
+        a: "Yes. We map every URL to a 301 redirect, carry over meta data, and check Search Console after launch so rankings and traffic carry across.",
+      },
+      {
+        q: "Do you build on Shopify Plus?",
+        a: "Yes, including checkout extensibility, B2B, multiple markets and expansion stores.",
+      },
+      {
+        q: "Will we be able to edit the store ourselves?",
+        a: "Yes. Every section is built for the theme editor and we hand over with training and documentation.",
+      },
+    ],
+    examples: ["seetrue-glasses", "collection-akhavan", "die-schrothkur"],
+  },
+  {
+    slug: "shopify-app-development",
+    name: "Shopify Theme & App Development",
+    heading: "Shopify Theme & App Development",
+    summary:
+      "Custom theme sections, bundle and subscription builders, private and public Shopify apps, integrations and automation, built when the App Store can't do it.",
+    intro:
+      "When your theme or the App Store can't do what your store needs, we build it. Custom theme sections and features, bundle and gift builders, private and public Shopify apps, integrations with your other systems, and automation that removes manual work.",
+    whoFor:
+      "Stores with a feature, workflow or integration no existing app covers, and brands paying for five apps that a single custom build could replace.",
+    whyMatters:
+      "Every extra app adds scripts, monthly fees and another thing that can break. A custom section or app built for exactly how you sell is faster, cheaper over time and fits your brand. We build in-house and publish our own apps on the Shopify App Store, so we know the platform's limits and how to work within them.",
+    process: [
+      "Map the feature or workflow in detail",
+      "Design the shopper and admin experience",
+      "Build and test against your real store data",
+      "Deploy, monitor and maintain",
+    ],
+    bullets: [
+      "Custom app development",
+      "Custom theme development",
+      "API integrations",
+      "Webhook implementations",
+      "Admin panel customization",
+      "Automation workflows",
+      "Data synchronization",
+      "Ongoing maintenance",
+    ],
+    outcomes: [
+      "Features your competitors don't have",
+      "Fewer apps and lower fees",
+      "Faster pages",
+      "Less manual work",
+    ],
+    capabilities: fold([
+      "shopify-app-development",
+      "custom-business-websites",
+      "web-application-development",
+    ]),
+    faq: [
+      {
+        q: "Should we build a custom app or use one from the App Store?",
+        a: "If an existing app does the job well, use it. We recommend custom work when apps slow the store down, can't match your workflow, or cost more over a year than building it once.",
+      },
+      {
+        q: "Can you build bundle builders and subscription flows into our theme?",
+        a: "Yes. Build-your-own-box flows, gift builders, subscription pickers and free-shipping bars are some of the features we build most often.",
+      },
+      {
+        q: "Do you maintain the app after launch?",
+        a: "Yes. We monitor, update for Shopify API changes and add features as your store grows.",
+      },
+    ],
+    examples: ["forchics", "the-conscious-bar"],
+  },
+];
+
+/** Old service URLs and the merged service that now covers them. */
+export const legacyServiceRedirects: Record<string, string> = Object.fromEntries(
+  serviceDetails.flatMap((s) =>
+    (s.capabilities ?? [])
+      .filter((c) => c.slug !== s.slug && !serviceDetails.some((x) => x.slug === c.slug))
+      .map((c) => [c.slug, s.slug] as const),
+  ),
+);
+
 export const processSteps: { no: string; title: string; description: string }[] =
   [
     {

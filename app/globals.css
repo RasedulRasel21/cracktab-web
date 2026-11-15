@@ -80,16 +80,71 @@
 .site-cream > :not(.theme-cream, .studio-page) .hover\:border-white:hover {
   border-color: var(--foreground);
 }
-/* Readable body copy: inner pages used 14px for most paragraphs. */
-.site-cream > :not(.theme-cream, .studio-page) p.text-sm,
-.site-cream > :not(.theme-cream, .studio-page) li.text-sm,
-.site-cream > :not(.theme-cream, .studio-page) dd.text-sm {
+/* One body-copy scale across the site: paragraphs, list items and
+   definitions are never below 16px; small print never below 14px.
+   UI mock-ups (.ui-demo: phones, widgets, the box builder) keep their
+   own scaled-down sizes on purpose. Uppercase labels are left alone. */
+.site-cream :is(p, li, dd, blockquote).text-sm:not(.ui-demo *, .uppercase),
+.site-cream div.text-sm.leading-relaxed:not(.ui-demo *) {
   font-size: 1rem;
   line-height: 1.65;
 }
-.site-cream > :not(.theme-cream, .studio-page) p.text-xs {
+.site-cream :is(p, li, dd).text-xs:not(.ui-demo *, .uppercase),
+.site-cream :is(p, li, dd).text-\[0\.8rem\]:not(.ui-demo *, .uppercase) {
   font-size: 0.875rem;
+  line-height: 1.55;
 }
+.site-cream :is(p, li, dd).text-base:not(.ui-demo *) {
+  line-height: 1.65;
+}
+
+/* Every button-like control gets the same hover: a small lift and shadow
+   on top of its own colour change. */
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-full"]:not(:disabled),
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-xl"][class*="bg-"]:not(:disabled),
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-lg"][class*="bg-"]:not(:disabled) {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-full"]:not(:disabled):hover,
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-xl"][class*="bg-"]:not(:disabled):hover,
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-lg"][class*="bg-"]:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -14px rgba(20, 20, 19, 0.45);
+}
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-full"]:not(:disabled):active,
+:is(main, header, footer, [role="dialog"]) :is(a, button)[class*="rounded-xl"][class*="bg-"]:not(:disabled):active {
+  transform: translateY(0) scale(0.98);
+}
+/* Bordered (secondary) buttons fill on hover. */
+.site-cream a[class*="rounded-full"][class*="border-line"]:hover,
+.site-cream button[class*="rounded-full"][class*="border-line"]:not([aria-selected]):hover {
+  border-color: var(--foreground);
+  background-color: var(--surface);
+}
+/* Plain text links in body copy. */
+.site-cream p a:not([class]):hover,
+.site-cream li a:not([class]):hover {
+  color: var(--olive);
+}
+
+/* Highlighted heading words use the logo's lime as a marker under dark
+   text (same treatment as "revenue" in the homepage hero). */
+.site-cream h1 .text-accent,
+.site-cream h2 .text-accent,
+.site-cream h3 .text-accent {
+  color: var(--foreground);
+  background-image: linear-gradient(
+    transparent 60%,
+    var(--accent) 60%,
+    var(--accent) 90%,
+    transparent 90%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-inline: 0.04em;
+}
+
 /* Opt-out: text on photos, overlays and dark panels stays light. */
 .on-dark .text-white,
 .on-dark.text-white,
@@ -541,8 +596,8 @@ body:has(.studio-page) .site-chrome {
    hand rather than pulling in a typography plugin for eight selectors.
    ------------------------------------------------------------------ */
 .prose {
-  color: var(--muted);
-  font-size: 1rem;
+  color: #3d3b36;
+  font-size: 1.0625rem;
   line-height: 1.75;
 }
 .prose > * + * {
@@ -554,7 +609,7 @@ body:has(.studio-page) .site-chrome {
 .prose h4,
 .prose h5,
 .prose h6 {
-  color: #fff;
+  color: var(--foreground);
   font-family: var(--font-display, inherit);
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -592,17 +647,17 @@ body:has(.studio-page) .site-chrome {
   letter-spacing: 0.08em;
 }
 .prose strong {
-  color: #fff;
+  color: var(--foreground);
   font-weight: 600;
 }
 .prose a {
-  color: var(--accent);
+  color: var(--olive);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
 }
 .prose a:hover {
-  color: #fff;
+  color: var(--foreground);
 }
 .prose ul,
 .prose ol {
@@ -618,12 +673,12 @@ body:has(.studio-page) .site-chrome {
   margin-top: 0.5em;
 }
 .prose li::marker {
-  color: var(--accent);
+  color: var(--olive);
 }
 .prose blockquote {
-  border-left: 2px solid var(--accent);
+  border-left: 3px solid var(--accent);
   padding-left: 1.25em;
-  color: #fff;
+  color: var(--foreground);
   font-style: italic;
 }
 .prose img {
@@ -644,7 +699,7 @@ body:has(.studio-page) .site-chrome {
   border-radius: 0.3rem;
   padding: 0.1em 0.35em;
   font-size: 0.88em;
-  color: #fff;
+  color: var(--foreground);
 }
 .prose pre {
   background: var(--surface);
@@ -677,7 +732,7 @@ body:has(.studio-page) .site-chrome {
 }
 .prose th {
   background: var(--surface);
-  color: #fff;
+  color: var(--foreground);
   font-weight: 600;
 }
 /* The resize handle the editor adds; harmless on the public page. */

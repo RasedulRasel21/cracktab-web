@@ -36,7 +36,7 @@ export default function PageHeader({
       >
         {eyebrow && (
           <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-foreground sm:text-sm">
-            <span className="h-2 w-2 rounded-full bg-[var(--olive)]" />
+            <span className="h-2 w-2 rounded-full bg-accent ring-1 ring-[#141413]/15" />
             {eyebrow}
           </span>
         )}

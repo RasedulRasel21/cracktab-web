@@ -105,6 +105,21 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/apps", destination: "/shopify-apps", permanent: true },
+      // 15 service pages were merged into three (see serviceDetails).
+      ...Object.entries({
+        "shopify-store-migration": "shopify-development",
+        "shopify-store-redesign": "shopify-development",
+        "ui-ux-design": "shopify-development",
+        "ecommerce-seo": "shopify-development",
+        "custom-business-websites": "shopify-app-development",
+        "web-application-development": "shopify-app-development",
+        "shopify-speed-optimization": "ecommerce-growth-cro",
+        "shopify-conversion-audit": "ecommerce-growth-cro",
+        "digital-marketing": "ecommerce-growth-cro",
+        "ecommerce-management": "ecommerce-growth-cro",
+        "branding-visual-identity": "ecommerce-growth-cro",
+        "ai-business-automation": "ecommerce-growth-cro",
+      }).map(([from, to]) => ({ source: `/services/${from}`, destination: `/services/${to}`, permanent: true })),
       { source: "/apps/:slug", destination: "/shopify-apps/:slug", permanent: true },
     ];
   },

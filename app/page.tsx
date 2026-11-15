@@ -7,6 +7,8 @@ import LeakCalculator from "./components/home/LeakCalculator";
 import BeforeAfter from "./components/home/BeforeAfter";
 import WidgetGrid from "./components/home/WidgetGrid";
 import BoxBuilderDemo from "./components/home/BoxBuilderDemo";
+import HomeCroFlow from "./components/home/HomeCroFlow";
+import HomeEcomManager from "./components/home/HomeEcomManager";
 import {
   HomeApps,
   HomeServices,
@@ -15,9 +17,9 @@ import {
 } from "./components/home/HomeSections";
 
 /**
- * Homepage — light "cream" redesign around the CRO offer. The `theme-cream`
- * wrapper switches the colour tokens (see globals.css) for this page only,
- * so the rest of the site keeps the dark theme until it is migrated.
+ * Homepage — light "cream" redesign around the CRO offer. Its root keeps
+ * `theme-cream` so the site-wide dark-to-cream remaps in globals.css skip it
+ * (the homepage is written for cream directly).
  */
 export default function Home() {
   return (
@@ -28,7 +30,9 @@ export default function Home() {
       <ProofVideo />
       <LeakCalculator />
       <BeforeAfter />
+      <HomeCroFlow />
       <WidgetGrid />
+      <HomeEcomManager />
       <BoxBuilderDemo />
       <HomeApps />
       <HomeServices />

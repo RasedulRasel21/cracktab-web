@@ -4,6 +4,9 @@ import PageHeader from "../../components/PageHeader";
 import CtaBand from "../../components/CtaBand";
 import CaseStudySlider from "../../components/CaseStudySlider";
 import { caseStudies } from "../../lib/site";
+import { fullScope } from "../../lib/cro";
+import BookCallButton from "../../components/BookCallButton";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -149,6 +152,45 @@ export default async function CaseStudyPage({
             <p className="mt-4 text-base leading-relaxed text-muted">
               {cs.focusResult}
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Everything we can run for a store, from SEO to subscriptions */}
+      <section className="pb-16 sm:pb-20">
+        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
+          <div className="rounded-[2rem] border border-line bg-surface p-6 sm:p-10">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div className="max-w-2xl">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent ring-1 ring-[#141413]/15" />
+                  Full-service CRO
+                </span>
+                <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-bold leading-[1.05] tracking-tight text-foreground">
+                  Everything We Handle, From SEO To Subscriptions.
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
+                  Stores like {cs.name} don&apos;t need five agencies. One team covers every lever that moves revenue, so nothing falls between the cracks.
+                </p>
+              </div>
+              <Link href="/how-we-work" className="inline-flex h-12 items-center justify-center rounded-full border border-line px-6 font-display text-sm font-semibold uppercase tracking-wide text-foreground hover:border-foreground">
+                How we work →
+              </Link>
+            </div>
+            <ul className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {fullScope.map((item) => (
+                <li key={item.title} className="rounded-2xl bg-[var(--cream-2)] p-5">
+                  <p className="flex items-center gap-2 font-display text-lg font-bold text-foreground">
+                    <span aria-hidden="true" className="text-[var(--olive)]">✓</span>
+                    {item.title}
+                  </p>
+                  <p className="mt-1.5 text-base leading-relaxed text-muted">{item.body}</p>
+                </li>
+              ))}
+            </ul>
+            <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background hover:bg-black">
+              Get a free CRO audit
+            </BookCallButton>
           </div>
         </div>
       </section>

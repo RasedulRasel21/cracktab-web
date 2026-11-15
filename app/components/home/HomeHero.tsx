@@ -14,7 +14,7 @@ export default function HomeHero() {
         <div>
           {/* H1 for search engines, styled as the line above the headline */}
           <h1 className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-sm font-bold uppercase tracking-[0.18em] text-foreground sm:text-base">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[var(--olive)]" />
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent ring-1 ring-[#141413]/15" />
             {hero.h1}
           </h1>
           <p className="mt-6 font-display text-[clamp(2.6rem,6.4vw,5.6rem)] font-bold leading-[0.98] tracking-[-0.025em] text-foreground">
@@ -27,25 +27,41 @@ export default function HomeHero() {
           <p className="mt-8 max-w-2xl text-lg font-semibold leading-snug text-foreground sm:text-xl">{hero.lead}</p>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">{hero.support}</p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-black">
+          <div className="mt-9 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
+            <BookCallButton className="inline-flex h-12 items-center justify-center rounded-full bg-foreground px-3 text-center font-display text-[0.8rem] font-semibold uppercase leading-tight tracking-wide text-background transition-colors hover:bg-black sm:h-13 sm:px-8 sm:text-sm">
               {hero.primaryCta}
             </BookCallButton>
             <a
               href="#proof"
-              className="inline-flex h-13 items-center justify-center gap-2 rounded-full border border-line bg-surface px-7 font-display text-sm font-semibold uppercase tracking-wide text-foreground transition-colors hover:border-foreground"
+              className="inline-flex h-12 items-center justify-center gap-1.5 rounded-full border border-line bg-surface px-3 text-center font-display text-[0.8rem] font-semibold uppercase leading-tight tracking-wide text-foreground transition-colors hover:border-foreground sm:h-13 sm:gap-2 sm:px-7 sm:text-sm"
             >
               {hero.secondaryCta}
               <span aria-hidden="true">↓</span>
             </a>
           </div>
 
-          <ul className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-2 text-base font-medium text-muted">
+          {/* Credentials: one scrolling row on phones, a wrapped list above. */}
+          <div className="edge-fade mt-8 overflow-hidden sm:hidden" aria-hidden="true">
+            <ul className="flex w-max animate-marquee gap-6 pr-6 text-[0.95rem] font-medium text-muted [animation-duration:22s]">
+              {[...hero.credentials, ...hero.credentials].map((c, i) => (
+                <li key={`${c}-${i}`} className="flex shrink-0 items-center gap-2">
+                  <span className="text-[var(--olive)]">✓</span>
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <ul className="mt-9 hidden flex-wrap items-center gap-x-5 gap-y-2 text-base font-medium text-muted sm:flex">
             {hero.credentials.map((c) => (
               <li key={c} className="flex items-center gap-2">
                 <span aria-hidden="true" className="text-[var(--olive)]">✓</span>
                 {c}
               </li>
+            ))}
+          </ul>
+          <ul className="sr-only sm:hidden">
+            {hero.credentials.map((c) => (
+              <li key={c}>{c}</li>
             ))}
           </ul>
         </div>

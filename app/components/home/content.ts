@@ -81,7 +81,7 @@ export const method = {
   eyebrow: "What we actually ship",
   title: "Real Widgets From Real Product Pages And Carts.",
   body:
-    "These are the blocks we build into client themes most often, taken from The Conscious Bar redesign. Every one is a working demo: tap, toggle and add to see what it does for the shopper.",
+    "The blocks we build into client themes most often, with real products and prices from The Conscious Bar, Luxe Cosmetics, ForChics and Pürishh. Every one is a working demo: tap, toggle and add to see what it does for the shopper.",
 };
 
 export const builder = {
@@ -105,12 +105,12 @@ export const services = {
   body:
     "Most brands come to us because traffic arrives and orders don't. Others are launching, outgrowing a DIY theme or leaving WooCommerce. We do that work too — built the same way, tested the same way, by the same people.",
   items: [
-    { label: "Shopify & Shopify Plus development", href: "/services" },
-    { label: "Store migration", href: "/services" },
-    { label: "UI/UX design", href: "/services" },
-    { label: "Ecommerce SEO", href: "/services" },
-    { label: "Custom app development", href: "/services" },
-    { label: "Speed optimisation", href: "/services" },
+    { label: "Ecommerce management & CRO", href: "/services/ecommerce-growth-cro" },
+    { label: "Shopify & Shopify Plus development", href: "/services/shopify-development" },
+    { label: "Store migration & redesign", href: "/services/shopify-development" },
+    { label: "Custom theme sections", href: "/services/shopify-app-development" },
+    { label: "Custom Shopify apps", href: "/services/shopify-app-development" },
+    { label: "SEO, speed & email", href: "/services/ecommerce-growth-cro" },
   ],
   cta: "See all services",
 };

@@ -26,6 +26,7 @@
     "bcryptjs": "^3.0.3",
     "disposable-email-domains": "^1.0.62",
     "jose": "^6.2.12",
+    "lenis": "1.3.11",
     "next": "16.2.10",
     "nodemailer": "^9.0.4",
     "pg": "^8.23.0",

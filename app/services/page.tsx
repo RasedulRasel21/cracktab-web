@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   // absolute — the doc title already carries the brand, so skip the template
   title: { absolute: "Shopify Development and Ecommerce Services | Cracktab" },
   description:
-    "Full-service Shopify agency offering development, migration, redesign, UI/UX, SEO, CRO, and marketing. Book a free consultation and scale your store today.",
+    "Three Shopify services: ecommerce management & CRO, Shopify development, and custom theme & app development. Book a free consultation and scale your store today.",
   alternates: { canonical: "/services" },
 };
 
@@ -48,35 +48,38 @@ export default function ServicesPage() {
         }
       />
 
-      {/* 7-service grid */}
+      {/* The three services */}
       <section className="pb-10">
-        <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {serviceDetails.map((s, i) => (
-              <Link
-                key={s.slug}
-                href={`/services/${s.slug}`}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
-              >
-                <div className="relative flex items-start justify-between gap-4">
-                  <span className="font-display text-sm font-semibold text-muted">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-muted transition-colors group-hover:text-accent">
-                    <ArrowUpRight />
-                  </span>
-                </div>
-                <div className="relative mt-10">
-                  <h3 className="font-display text-xl font-semibold tracking-tight text-white transition-colors group-hover:text-accent">
-                    {s.name}
-                  </h3>
-                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">
-                    {s.intro}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+        <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-5 px-5 sm:px-8 lg:grid-cols-3">
+          {serviceDetails.map((s, i) => (
+            <Link
+              key={s.slug}
+              href={`/services/${s.slug}`}
+              className={`group flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 sm:p-9 ${
+                i === 0 ? "border-foreground bg-foreground text-background on-dark" : "border-line bg-surface hover:border-foreground"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <span className={`font-display text-sm font-bold ${i === 0 ? "text-accent" : "text-muted"}`}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={i === 0 ? "text-accent" : "text-muted group-hover:text-foreground"}>
+                  <ArrowUpRight />
+                </span>
+              </div>
+              <h2 className={`mt-8 font-display text-2xl font-bold tracking-tight sm:text-3xl ${i === 0 ? "text-white" : "text-foreground"}`}>{s.name}</h2>
+              <p className={`mt-3 text-base leading-relaxed ${i === 0 ? "text-white/75" : "text-muted"}`}>{s.summary}</p>
+              <ul className="mt-6 space-y-2 border-t pt-6 text-base" style={{ borderColor: i === 0 ? "rgba(255,255,255,0.15)" : "var(--line)" }}>
+                {(s.capabilities ?? []).map((c) => (
+                  <li key={c.slug} className={`flex items-center gap-2.5 ${i === 0 ? "text-white/85" : "text-foreground"}`}>
+                    <span aria-hidden="true" className={i === 0 ? "text-accent" : "text-[var(--olive)]"}>✓</span>
+                    {c.title}
+                  </li>
+                ))}
+              </ul>
+              <span className={`mt-auto pt-8 font-display text-sm font-semibold uppercase tracking-wide ${i === 0 ? "text-accent" : "text-foreground"}`}>
+                Explore {s.name} →
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 

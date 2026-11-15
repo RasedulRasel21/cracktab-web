@@ -25,7 +25,7 @@ type View = {
 const VIEWS: View[] = [
   {
     key: "desktop",
-    label: "Product page · desktop",
+    label: "Desktop",
     before: "/home/before-after/tcb-desk-before.jpg",
     after: "/home/before-after/tcb-desk-after.jpg",
     ratio: 1519 / 948,
@@ -49,7 +49,7 @@ const VIEWS: View[] = [
   },
   {
     key: "mobile",
-    label: "Product page · mobile",
+    label: "Mobile",
     before: "/home/before-after/tcb-mob-before.jpg",
     after: "/home/before-after/tcb-mob-after.jpg",
     ratio: 798 / 1680,
@@ -161,11 +161,11 @@ export default function BeforeAfter() {
   }, [move]);
 
   return (
-    <section className="py-20 sm:py-28">
+    <section id="before-after" className="scroll-mt-20 py-20 sm:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={oneTeam.eyebrow} title={oneTeam.title} body={oneTeam.body} center />
 
-        <div role="tablist" aria-label="Page" className="mx-auto mt-10 flex w-fit flex-wrap justify-center gap-2 rounded-full border border-line bg-surface p-1.5">
+        <div role="tablist" aria-label="Page" className="mx-auto mt-10 flex w-fit flex-nowrap justify-center gap-1 rounded-full border border-line bg-surface p-1.5 sm:gap-2">
           {VIEWS.map((x, i) => (
             <button
               key={x.key}
@@ -176,7 +176,7 @@ export default function BeforeAfter() {
                 setView(i);
                 setPos(50);
               }}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:px-5 ${
+              className={`whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-semibold transition-colors sm:px-5 ${
                 i === view ? "bg-foreground text-background" : "text-muted hover:text-foreground"
               }`}
             >
@@ -213,10 +213,10 @@ export default function BeforeAfter() {
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={v.after} alt={`The Conscious Bar ${v.label.toLowerCase()} after the Cracktab redesign`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
+              <img src={v.after} alt={`The Conscious Bar ${v.key === "drawer" ? "cart drawer" : `${v.label.toLowerCase()} product page`} after the Cracktab redesign`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
               <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={v.before} alt={`The Conscious Bar ${v.label.toLowerCase()} before`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
+                <img src={v.before} alt={`The Conscious Bar ${v.key === "drawer" ? "cart drawer" : `${v.label.toLowerCase()} product page`} before`} className="absolute inset-0 h-full w-full object-cover object-top" draggable={false} />
               </div>
               <span className="absolute left-3 top-3 rounded-full bg-[#c8372d] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">Before</span>
               <span className="absolute right-3 top-3 rounded-full bg-[#2f6b1f] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">After</span>

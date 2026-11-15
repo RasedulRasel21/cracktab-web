@@ -36,7 +36,7 @@ export default function ProofVideo() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
               <span className="ml-2 text-xs font-medium text-muted">Shopify admin · Analytics</span>
               <span className="ml-auto inline-flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[var(--olive)]">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--olive)]" />
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent ring-1 ring-[#141413]/15" />
                 Real recording
               </span>
             </div>

@@ -16,7 +16,7 @@ export default function CtaSection() {
           {/* Left — eyebrow + headline */}
           <div>
             <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--olive)]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-accent ring-1 ring-[#141413]/15" />
               Get in touch
             </span>
             <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.02] tracking-tight text-foreground">

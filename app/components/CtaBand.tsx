@@ -18,7 +18,7 @@ export default function CtaBand({
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed opacity-80 sm:text-lg">{subtitle}</p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-[#141413] px-8 font-display text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-black">
+            <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-[#141413] px-8 font-display text-sm font-semibold uppercase tracking-wide text-[#fffdf8] transition-colors hover:bg-black">
               Get a free CRO audit
             </BookCallButton>
             <Link

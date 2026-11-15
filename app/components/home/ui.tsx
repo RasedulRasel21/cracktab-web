@@ -6,7 +6,7 @@ export function Eyebrow({ children, className = "" }: { children: ReactNode; cla
     <span
       className={`inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-muted sm:text-xs ${className}`}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-[var(--olive)]" />
+      <span className="h-1.5 w-1.5 rounded-full bg-accent ring-1 ring-[#141413]/15" />
       {children}
     </span>
   );

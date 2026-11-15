@@ -17,6 +17,8 @@ const listSelect = {
   excerpt: true,
   coverUrl: true,
   coverAlt: true,
+  /** Only used to fall back to the first inline image when there is no cover. */
+  bodyHtml: true,
   publishedAt: true,
   readingMins: true,
   category: { select: { name: true, slug: true } },
