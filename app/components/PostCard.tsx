@@ -46,7 +46,7 @@ export default function PostCard({
             <span>{post.readingMins} min read</span>
           </div>
 
-          <h3 className="mt-3 font-display text-lg font-medium leading-snug tracking-tight text-white transition-colors group-hover:text-accent">
+          <h3 className="mt-3 font-display text-lg font-semibold leading-snug tracking-tight text-white transition-colors group-hover:text-accent">
             {post.title}
           </h3>
           <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">

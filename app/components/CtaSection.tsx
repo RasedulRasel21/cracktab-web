@@ -3,7 +3,7 @@ import BookCallButton from "./BookCallButton";
 
 export default function CtaSection() {
   return (
-    <section className="relative overflow-hidden bg-black py-24 sm:py-32">
+    <section className="relative overflow-hidden py-24 sm:py-32">
       {/* Accent glow — same vocabulary as the CtaBand, anchored left so it
           sits behind the headline rather than the copy. */}
       <div
@@ -16,10 +16,10 @@ export default function CtaSection() {
           {/* Left — eyebrow + headline */}
           <div>
             <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--olive)]" />
               Get in touch
             </span>
-            <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1.02] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.02] tracking-tight text-foreground">
               Let&apos;s work <span className="text-accent">together</span>
             </h2>
           </div>
@@ -31,7 +31,7 @@ export default function CtaSection() {
               opinionated enough to change things.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong" />
+              <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-black" />
               <Link
                 href="/contact"
                 className="inline-flex h-13 items-center justify-center rounded-full border border-line px-8 font-display text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:border-accent hover:text-accent"

@@ -36,7 +36,7 @@ export default function Services() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Services
           </span>
-          <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+          <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.02] tracking-tight text-white">
             Our <span className="text-accent">service</span> offering
           </h2>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">

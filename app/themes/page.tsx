@@ -133,7 +133,7 @@ export default function ThemesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Live theme showcase
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Browse the collection
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -152,7 +152,7 @@ export default function ThemesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Built by agency experts
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Not marketplace files — agency-tested themes
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -172,7 +172,7 @@ export default function ThemesPage() {
                 <span className="font-display text-sm font-semibold text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-5 font-display text-lg font-medium tracking-tight text-white">
+                <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-white">
                   {f.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{f.body}</p>
@@ -192,14 +192,14 @@ export default function ThemesPage() {
             />
             <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
               <div>
-                <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-medium leading-[1.08] tracking-tight text-white">
+                <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-tight text-white">
                   Love the design, but need custom features?
                 </h2>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">
                   Our Shopify development team can tailor any Cracktab theme to
                   your exact operational and design requirements.
                 </p>
-                <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+                <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong">
                   Book a Consultation
                 </BookCallButton>
               </div>
@@ -224,7 +224,7 @@ export default function ThemesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Merchant reviews
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Loved by the merchants who ship on them
             </h2>
           </div>
@@ -262,7 +262,7 @@ export default function ThemesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Support &amp; docs
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Everything you need to launch
             </h2>
             <ul className="mt-8 flex flex-col gap-3">

@@ -48,7 +48,7 @@ export default function LivePreviewModal({
   const isDesktop = device === "desktop";
 
   return createPortal(
-    <div className="fixed inset-0 z-100 flex flex-col items-center justify-center p-4 sm:p-6">
+    <div className="on-dark fixed inset-0 z-100 flex flex-col items-center justify-center p-4 sm:p-6">
       <div
         onClick={onClose}
         aria-hidden="true"

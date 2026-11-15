@@ -39,7 +39,7 @@ function Card({ cs }: { cs: CaseStudy }) {
         href={`/work/${cs.slug}`}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]"
+        className="on-dark group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]"
       >
         <div
           // Top-anchored: these are site screenshots, so the header/hero is the
@@ -60,7 +60,7 @@ function Card({ cs }: { cs: CaseStudy }) {
         </span>
 
         <div className="absolute inset-x-0 bottom-0 translate-y-3 p-6 opacity-0 transition-all duration-300 group-hover/card:translate-y-0 group-hover/card:opacity-100 sm:p-8">
-          <h3 className="font-display text-3xl font-medium tracking-tight text-white sm:text-4xl">
+          <h3 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {cs.name}
           </h3>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">

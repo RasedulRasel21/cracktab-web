@@ -47,7 +47,7 @@ export default function PostArticle({ post }: { post: ArticlePost }) {
           )}
         </nav>
 
-        <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-white">
+        <h1 className="mt-6 font-display text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.025em] text-white">
           {post.title}
         </h1>
 

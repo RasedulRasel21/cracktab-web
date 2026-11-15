@@ -55,7 +55,7 @@ export default function ContactForm() {
   if (state.status === "success") {
     return (
       <div className="flex min-h-80 flex-col items-center justify-center rounded-2xl border border-accent/40 bg-accent/5 p-10 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-ink">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-foreground text-background">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M5 12.5l4 4 10-10"
@@ -66,7 +66,7 @@ export default function ContactForm() {
             />
           </svg>
         </span>
-        <h3 className="mt-6 font-display text-xl font-medium text-white">
+        <h3 className="mt-6 font-display text-xl font-semibold text-white">
           Message sent
         </h3>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
@@ -230,7 +230,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-5 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-5 inline-flex h-12 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong disabled:cursor-not-allowed disabled:opacity-70"
       >
         {pending ? "Sending…" : "Send Message"}
       </button>

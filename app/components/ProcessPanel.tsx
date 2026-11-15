@@ -32,7 +32,7 @@ export default function ProcessPanel({
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_2.2fr] lg:gap-16">
       {/* ---- Timeline ---- */}
       <div>
-        <h2 className="font-display text-xl font-medium tracking-tight text-white sm:text-2xl">
+        <h2 className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
           Our Process
         </h2>
 
@@ -96,7 +96,7 @@ export default function ProcessPanel({
 
       {/* ---- Panel the timeline drives ---- */}
       <div>
-        <h2 className="font-display text-xl font-medium tracking-tight text-white sm:text-2xl">
+        <h2 className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
           {showCards ? "What's included" : steps[active]}
         </h2>
 

@@ -42,7 +42,7 @@ export default function ServicesPage() {
         }
         subtitle="Your Shopify agency for every stage of growth. From building a store from scratch to complex Shopify Plus implementations, we specialize exclusively in ecommerce stores that convert — whether you're a first-time founder or an established brand ready to scale."
         action={
-          <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+          <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong">
             Get a Free Store Audit
           </BookCallButton>
         }
@@ -88,7 +88,7 @@ export default function ServicesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               How we work
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Our proven process
             </h2>
             <p className="mt-4 text-muted">
@@ -106,7 +106,7 @@ export default function ServicesPage() {
                 <span className="font-display text-sm font-semibold text-accent">
                   {step.no}
                 </span>
-                <h3 className="mt-5 font-display text-lg font-medium tracking-tight text-white">
+                <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-white">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -154,7 +154,7 @@ export default function ServicesPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               FAQ
             </span>
-            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.05] tracking-tight text-white">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.05] tracking-tight text-white">
               Services FAQ
             </h2>
           </div>

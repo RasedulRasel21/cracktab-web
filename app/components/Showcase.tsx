@@ -149,7 +149,7 @@ function CaseCard({ card }: { card: Card }) {
   };
 
   const shell =
-    "group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]";
+    "on-dark group/card relative block h-[360px] w-[320px] overflow-hidden rounded-2xl border border-line sm:h-[480px] sm:w-[460px] lg:h-[600px] lg:w-[600px]";
 
   const inner = (
     <>
@@ -179,7 +179,7 @@ function CaseCard({ card }: { card: Card }) {
 
         {/* content — bottom */}
         <div className="absolute inset-x-0 bottom-0 translate-y-3 p-6 opacity-0 transition-all duration-300 group-hover/card:translate-y-0 group-hover/card:opacity-100 sm:p-8">
-          <h3 className="font-display text-3xl font-medium tracking-tight text-white sm:text-4xl">
+          <h3 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {card.title}
           </h3>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
@@ -276,7 +276,7 @@ export default function Showcase() {
   return (
     <section className="overflow-hidden py-20 sm:py-28">
       <div className="mx-auto mb-12 w-full max-w-360 px-5 sm:mb-16 sm:px-8">
-        <h2 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+        <h2 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.02] tracking-tight text-white">
           Our finest <span className="text-accent">Case Studies</span>
         </h2>
       </div>

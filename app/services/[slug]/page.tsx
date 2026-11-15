@@ -28,7 +28,7 @@ export async function generateMetadata({
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-display text-xl font-medium tracking-tight text-white sm:text-2xl">
+    <h2 className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
       {children}
     </h2>
   );
@@ -62,7 +62,7 @@ export default async function ServiceDetailPage({
       {/* ---- Hero ---- */}
       <section className="px-5 pb-14 pt-28 sm:px-8 sm:pb-20 sm:pt-36">
         <div className="mx-auto w-full max-w-360">
-          <h1 className="max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+          <h1 className="max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[1.02] tracking-[-0.025em] text-white">
             {service.heading}
             <span className="text-accent">.</span>
           </h1>
@@ -71,7 +71,7 @@ export default async function ServiceDetailPage({
           </p>
 
           {/* Above-the-fold CTA — every service page needs one entry point */}
-          <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+          <BookCallButton className="mt-8 inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong">
             Get a Free Store Audit
           </BookCallButton>
         </div>

@@ -93,11 +93,11 @@ export default function AboutPage() {
         <WorldDotField />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_55%,#000)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_55%,var(--background))]"
         />
 
         <div className="relative mx-auto w-full max-w-360">
-          <h1 className="max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+          <h1 className="max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[1.02] tracking-[-0.025em] text-white">
             We build websites that <span className="text-accent">perform.</span>
           </h1>
           <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted sm:text-base">

@@ -91,7 +91,7 @@ export default async function CategoryPage({
             <span className="text-accent">{category.name}</span>
           </nav>
 
-          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1.04] tracking-tight text-white">
+          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.04] tracking-[-0.025em] text-white">
             {category.name}
           </h1>
 

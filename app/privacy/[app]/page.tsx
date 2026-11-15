@@ -32,7 +32,7 @@ function Section({
 }) {
   return (
     <div>
-      <h2 className="mb-3 font-display text-xl font-medium text-white">
+      <h2 className="mb-3 font-display text-xl font-semibold text-white">
         {n && <span className="text-accent">{n}. </span>}
         {heading}
       </h2>

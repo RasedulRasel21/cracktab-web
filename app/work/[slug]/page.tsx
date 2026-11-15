@@ -70,7 +70,7 @@ export default async function CaseStudyPage({
                   alt={`${cs.name} website`}
                   className="block w-full transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/45">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/45 on-dark">
                   <span className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     Visit Live Site
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -108,13 +108,13 @@ export default async function CaseStudyPage({
       <section className="pb-16 sm:pb-20">
         <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="font-display text-2xl font-medium tracking-tight text-white">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">
               The brief
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">{cs.brief}</p>
           </div>
           <div>
-            <h2 className="font-display text-2xl font-medium tracking-tight text-white">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">
               What we built
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({
       <section className="pb-16 sm:pb-20">
         <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="font-display text-2xl font-medium tracking-tight text-white">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">
               Key features
             </h2>
             <ul className="mt-6 flex flex-col gap-3">
@@ -143,7 +143,7 @@ export default async function CaseStudyPage({
             </ul>
           </div>
           <div>
-            <h2 className="font-display text-2xl font-medium tracking-tight text-white">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">
               Our focus &amp; the result
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -156,7 +156,7 @@ export default async function CaseStudyPage({
       {/* More work — same auto-scrolling slider as the homepage */}
       <section className="pb-20 sm:pb-28">
         <div className="mx-auto mb-8 w-full max-w-360 px-5 sm:px-8">
-          <h2 className="font-display text-xl font-medium tracking-tight text-white">
+          <h2 className="font-display text-xl font-semibold tracking-tight text-white">
             More work
           </h2>
         </div>

@@ -10,7 +10,7 @@ export default function Testimonials() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Testimonials
           </span>
-          <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.02] tracking-tight text-white">
+          <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.02] tracking-tight text-white">
             What our <span className="text-accent">clients</span> say
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-muted sm:text-base">

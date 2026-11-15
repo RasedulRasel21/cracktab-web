@@ -85,14 +85,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${urbanist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-black text-white font-sans">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {/* `site-chrome` is hidden on studio pages by CSS (see globals.css).
             A client-side URL check would need the studio path in the
             JavaScript served to every public visitor. */}
         <div className="site-chrome contents">
           <Header />
         </div>
-        <main className="flex flex-1 flex-col">{children}</main>
+        {/* `theme-cream site-cream`: every page uses the light cream design
+            (tokens and remaps in globals.css). */}
+        <main className="theme-cream site-cream flex flex-1 flex-col">{children}</main>
         <div className="site-chrome contents">
           <Footer />
         </div>

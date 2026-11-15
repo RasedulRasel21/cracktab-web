@@ -34,7 +34,7 @@ export default function WorkPage() {
                 href={`/work/${w.slug}`}
                 // Landscape box + top anchor: the images are site screenshots,
                 // so a portrait crop threw most of the design away.
-                className="group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-line"
+                className="on-dark group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-line"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-top transition-transform duration-700 ease-out group-hover:scale-105"
@@ -42,7 +42,7 @@ export default function WorkPage() {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
-                  <h3 className="font-display text-xl font-medium tracking-tight text-white sm:text-2xl">
+                  <h3 className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
                     {w.name}
                   </h3>
                   <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/80">

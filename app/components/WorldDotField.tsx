@@ -133,7 +133,7 @@ export default function WorldDotField({
           const a =
             ambient *
             (0.75 + 0.25 * Math.sin(t * 1.1 + hash(col, row) * 6.2831));
-          c.fillStyle = `rgba(214,220,228,${a})`;
+          c.fillStyle = `rgba(20,20,19,${a * 0.45})`;
           c.beginPath();
           c.arc(px, py, r0, 0, Math.PI * 2);
           c.fill();
@@ -183,7 +183,7 @@ export default function WorldDotField({
             const a = Math.min(1, 0.15 + f * 0.85);
             // hot white core at the freshest, brightest touch; lime otherwise
             c.fillStyle =
-              f > 0.85 ? `rgba(240,255,220,${a})` : `rgba(180,240,58,${a})`;
+              f > 0.85 ? `rgba(76,125,0,${a})` : `rgba(76,125,0,${a * 0.8})`;
             c.beginPath();
             c.arc(px, py, r0 * (1 + f * TRAIL_SWELL), 0, Math.PI * 2);
             c.fill();

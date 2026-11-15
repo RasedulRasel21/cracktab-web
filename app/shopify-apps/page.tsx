@@ -49,7 +49,7 @@ const appBySlug = (slug: string) => shopifyApps.find((app) => app.slug === slug)
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-medium leading-[1.1] tracking-tight text-white">
+    <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-[1.1] tracking-tight text-white">
       {children}
     </h2>
   );
@@ -112,7 +112,7 @@ export default function ShopifyAppsPage() {
             <div className="flex flex-col gap-4 sm:flex-row">
               <a
                 href="#apps"
-                className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong"
+                className="inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong"
               >
                 Browse the apps
               </a>
@@ -196,7 +196,7 @@ export default function ShopifyAppsPage() {
           <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
             {agencyReasons.map((reason) => (
               <li key={reason.title} className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
-                <h3 className="font-display text-xl font-medium tracking-tight text-white">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-white">
                   {reason.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{reason.body}</p>
@@ -221,7 +221,7 @@ export default function ShopifyAppsPage() {
                 CRO audits, A/B tests and redesigns.
               </p>
             </div>
-            <BookCallButton className="inline-flex h-13 shrink-0 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong" />
+            <BookCallButton className="inline-flex h-13 shrink-0 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong" />
           </div>
         </div>
       </section>

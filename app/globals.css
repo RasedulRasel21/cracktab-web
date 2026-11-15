@@ -32,6 +32,90 @@
 }
 
 /* ------------------------------------------------------------------ */
+/*  Site-wide cream theme                                              */
+/*  Every page sits inside <main class="theme-cream site-cream">.      */
+/*  Inner pages were written for a dark theme with hard-coded white    */
+/*  text; the rules below map those to the cream tokens. Anything on a */
+/*  photo or dark panel opts out with `on-dark`. The homepage root     */
+/*  (.theme-cream) is excluded because it is written for cream.        */
+/* ------------------------------------------------------------------ */
+.site-cream > :not(.theme-cream, .studio-page) .text-white,
+.site-cream > :not(.theme-cream, .studio-page).text-white,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/90,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/85,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/80,
+.site-cream > :not(.theme-cream, .studio-page) .hover\:text-white:hover,
+.site-cream > :not(.theme-cream, .studio-page) .group:hover .group-hover\:text-white {
+  color: var(--foreground);
+}
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/75,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/70,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/60,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/55,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/50 {
+  color: var(--muted);
+}
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/40,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/20,
+.site-cream > :not(.theme-cream, .studio-page) .text-white\/15 {
+  color: rgba(20, 20, 19, 0.35);
+}
+.site-cream > :not(.theme-cream, .studio-page) .bg-black,
+.site-cream > :not(.theme-cream, .studio-page).bg-black {
+  background-color: var(--background);
+}
+.site-cream > :not(.theme-cream, .studio-page) .bg-white\/3,
+.site-cream > :not(.theme-cream, .studio-page) .bg-white\/5,
+.site-cream > :not(.theme-cream, .studio-page) .bg-white\/10,
+.site-cream > :not(.theme-cream, .studio-page) .hover\:bg-white\/5:hover,
+.site-cream > :not(.theme-cream, .studio-page) .hover\:bg-white\/10:hover {
+  background-color: var(--cream-2);
+}
+.site-cream > :not(.theme-cream, .studio-page) .border-white\/10,
+.site-cream > :not(.theme-cream, .studio-page) .border-white\/20,
+.site-cream > :not(.theme-cream, .studio-page) .border-white\/40 {
+  border-color: var(--line);
+}
+.site-cream > :not(.theme-cream, .studio-page) .border-white,
+.site-cream > :not(.theme-cream, .studio-page) .hover\:border-white:hover {
+  border-color: var(--foreground);
+}
+/* Readable body copy: inner pages used 14px for most paragraphs. */
+.site-cream > :not(.theme-cream, .studio-page) p.text-sm,
+.site-cream > :not(.theme-cream, .studio-page) li.text-sm,
+.site-cream > :not(.theme-cream, .studio-page) dd.text-sm {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.site-cream > :not(.theme-cream, .studio-page) p.text-xs {
+  font-size: 0.875rem;
+}
+/* Opt-out: text on photos, overlays and dark panels stays light. */
+.on-dark .text-white,
+.on-dark.text-white,
+.on-dark .text-white\/90,
+.on-dark .text-white\/85,
+.on-dark .text-white\/80,
+.on-dark .hover\:text-white:hover {
+  color: #fff !important;
+}
+.on-dark .text-white\/75,
+.on-dark .text-white\/70,
+.on-dark .text-white\/60,
+.on-dark .text-white\/55,
+.on-dark .text-white\/50 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.on-dark .text-accent,
+.on-dark .group:hover .group-hover\:text-accent,
+.on-dark .hover\:text-accent:hover {
+  color: var(--accent) !important;
+}
+.on-dark .bg-white\/25 {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Base                                                               */
 /* ------------------------------------------------------------------ */
 * {

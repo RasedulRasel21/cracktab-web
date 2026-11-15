@@ -96,7 +96,7 @@ export default function ThemeCatalog() {
             </div>
             <div className="flex flex-1 flex-col p-5">
               <div className="flex items-center justify-between gap-3">
-                <h3 className="font-display text-lg font-medium tracking-tight text-white">
+                <h3 className="font-display text-lg font-semibold tracking-tight text-white">
                   {t.name}
                 </h3>
                 {t.price && (

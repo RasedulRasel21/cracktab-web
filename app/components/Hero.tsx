@@ -31,7 +31,7 @@ export default function Hero() {
               href="/work"
               className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/3 py-1.5 pl-1.5 pr-4 backdrop-blur-sm transition-colors hover:border-accent/50"
             >
-              <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-ink">
+              <span className="rounded-full bg-foreground px-2.5 py-0.5 text-xs font-semibold text-background">
                 New
               </span>
               <span className="text-sm">
@@ -41,14 +41,14 @@ export default function Hero() {
             </Link>
 
             {/* H1 leads with the brand — the homepage is what ranks for it. */}
-            <h1 className="mt-8 max-w-4xl font-display text-[clamp(2.25rem,5.2vw,4.5rem)] font-medium leading-[1.06] tracking-tight text-white">
+            <h1 className="mt-8 max-w-4xl font-display text-[clamp(2.25rem,5.2vw,4.5rem)] font-bold leading-[1.06] tracking-[-0.025em] text-white">
               Cracktab: Shopify Website Design and{" "}
               <span className="text-accent">Development Agency</span>
             </h1>
 
             {/* Above-the-fold CTAs */}
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong">
+              <BookCallButton className="inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong">
                 Get a Free Store Audit
               </BookCallButton>
               <Link

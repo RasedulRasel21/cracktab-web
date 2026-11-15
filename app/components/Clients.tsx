@@ -50,7 +50,7 @@ export default function Clients() {
                 src={logo.src}
                 alt=""
                 loading="lazy"
-                className={`${logo.size ?? DEFAULT_SIZE} w-auto object-contain opacity-60 brightness-0 invert transition-opacity duration-300 hover:opacity-100`}
+                className={`${logo.size ?? DEFAULT_SIZE} w-auto object-contain opacity-60 brightness-0 transition-opacity duration-300 hover:opacity-100`}
               />
             </li>
           ))}

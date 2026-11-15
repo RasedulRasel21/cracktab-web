@@ -38,7 +38,7 @@ export default function ContactPage() {
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
           Contact
         </span>
-        <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1.04] tracking-tight text-white">
+        <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.04] tracking-[-0.025em] text-white">
           Let&apos;s build your <span className="text-accent">website.</span>
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">

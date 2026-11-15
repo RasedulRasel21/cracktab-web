@@ -68,7 +68,7 @@ export async function generateMetadata({
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-medium leading-[1.1] tracking-tight text-white">
+    <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-[1.1] tracking-tight text-white">
       {children}
     </h2>
   );
@@ -98,7 +98,7 @@ function Section({ children, id }: { children: React.ReactNode; id?: string }) {
 }
 
 const primaryButton =
-  "inline-flex h-13 items-center justify-center rounded-full bg-accent px-8 font-display text-sm font-semibold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-strong";
+  "inline-flex h-13 items-center justify-center rounded-full bg-foreground px-8 font-display text-sm font-semibold uppercase tracking-wide text-background transition-colors hover:bg-foreground-strong";
 const secondaryButton =
   "inline-flex h-13 items-center justify-center rounded-full border border-line px-8 font-display text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:border-accent hover:text-accent";
 
@@ -188,7 +188,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             {page.eyebrow}
           </span>
-          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1.04] tracking-tight text-white">
+          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.04] tracking-[-0.025em] text-white">
             {page.heading}
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted sm:text-lg">
@@ -241,7 +241,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             {page.features.map((feature, i) => (
               <div key={feature.title} className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
                 <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                  <h2 className="font-display text-[clamp(1.5rem,3vw,2.25rem)] font-medium leading-[1.1] tracking-tight text-white">
+                  <h2 className="font-display text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-[1.1] tracking-tight text-white">
                     {feature.title}
                   </h2>
                   <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">{feature.body}</p>
@@ -265,7 +265,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {page.features.map((feature) => (
               <li key={feature.title} className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
-                <h2 className="font-display text-xl font-medium tracking-tight text-white">
+                <h2 className="font-display text-xl font-semibold tracking-tight text-white">
                   {feature.title}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{feature.body}</p>
@@ -421,7 +421,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(50rem_24rem_at_50%_0%,rgba(180,240,58,0.12),transparent_70%)]"
           />
           <div className="relative">
-            <h2 className="mx-auto max-w-3xl font-display text-[clamp(1.9rem,4vw,3rem)] font-medium leading-[1.08] tracking-tight text-white">
+            <h2 className="mx-auto max-w-3xl font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.08] tracking-tight text-white">
               {page.finalCta.heading}
             </h2>
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">

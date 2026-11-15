@@ -17,7 +17,7 @@ export default function ImprintPage() {
           <div className="max-w-3xl">
           <div className="space-y-10 text-base leading-relaxed text-muted">
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Company Information</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Company Information</h2>
               <p>
                 {/* TODO(legal): append the registered entity type, e.g. "Cracktab LLC". */}
                 Cracktab
@@ -27,7 +27,7 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Contact</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Contact</h2>
               <p>
                 Email: hello@cracktab.com
                 <br />
@@ -36,7 +36,7 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Business Registration</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Business Registration</h2>
               <p>
                 Ohio Business Registration Number: [Insert Number]
                 <br />
@@ -45,7 +45,7 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Responsible For Content</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Responsible For Content</h2>
               <p>
                 [Name of responsible individual/owner], Cracktab, 6545 Market Ave
                 N, Ste 100, Canton, OH 44721.
@@ -53,12 +53,12 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Additional Offices</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Additional Offices</h2>
               <p>Bangladesh office: D/233 Mirpur DOHS, Dhaka 1216, Bangladesh.</p>
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Disclaimer</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Disclaimer</h2>
               <p>
                 The content on this website is provided for general informational
                 purposes only. While we strive for accuracy, we make no
@@ -69,7 +69,7 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">External Links</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">External Links</h2>
               <p>
                 Our website may contain links to third-party websites. We are not
                 responsible for the content or privacy practices of external
@@ -78,7 +78,7 @@ export default function ImprintPage() {
             </div>
 
             <div>
-              <h2 className="mb-3 font-display text-xl font-medium text-white">Copyright</h2>
+              <h2 className="mb-3 font-display text-xl font-semibold text-white">Copyright</h2>
               <p>
                 © 2026 Cracktab. All rights reserved. Unauthorized use or
                 reproduction of this site&apos;s content is prohibited without

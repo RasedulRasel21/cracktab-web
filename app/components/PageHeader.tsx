@@ -25,8 +25,8 @@ export default function PageHeader({
         aria-hidden="true"
         className={`pointer-events-none absolute inset-x-0 top-0 h-80 ${
           center
-            ? "bg-[radial-gradient(60rem_28rem_at_50%_-10%,rgba(180,240,58,0.10),transparent_70%)]"
-            : "bg-[radial-gradient(60rem_28rem_at_20%_-10%,rgba(180,240,58,0.10),transparent_70%)]"
+            ? "bg-[radial-gradient(60rem_28rem_at_50%_-10%,rgba(180,240,58,0.18),transparent_70%)]"
+            : "bg-[radial-gradient(60rem_28rem_at_20%_-10%,rgba(180,240,58,0.18),transparent_70%)]"
         }`}
       />
       <div
@@ -35,16 +35,16 @@ export default function PageHeader({
         }`}
       >
         {eyebrow && (
-          <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-foreground sm:text-sm">
+            <span className="h-2 w-2 rounded-full bg-[var(--olive)]" />
             {eyebrow}
           </span>
         )}
-        <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1.04] tracking-tight text-white">
+        <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.025em] text-foreground">
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-6 max-w-4xl text-base leading-relaxed text-muted sm:text-lg">
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted sm:text-xl">
             {subtitle}
           </p>
         )}

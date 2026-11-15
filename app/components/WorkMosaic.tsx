@@ -101,7 +101,7 @@ export default function WorkMosaic({
               style={{ backgroundImage: `url(${tile.src})` }}
             />
             {tile.name && (
-              <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 to-transparent p-3 pt-10 font-display text-xs font-semibold tracking-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="absolute inset-x-0 bottom-0 on-dark bg-linear-to-t from-black/85 to-transparent p-3 pt-10 font-display text-xs font-semibold tracking-tight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 {tile.name}
               </span>
             )}
