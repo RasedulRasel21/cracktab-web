@@ -36,7 +36,7 @@ export default function WorkPage() {
                 ? "sm:col-span-2 lg:col-span-3 aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]"
                 : wide
                   ? "sm:col-span-2 lg:row-span-2 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto"
-                  : "aspect-[4/3]";
+                  : "aspect-[16/11]";
               const shown = hero ? 3 : wide ? 2 : 1;
               return (
                 <Link
@@ -52,45 +52,57 @@ export default function WorkPage() {
                   {hero && (
                     <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/60 to-black/10 lg:bg-linear-to-r lg:from-black/95 lg:via-black/70 lg:to-black/0" />
                   )}
-                  {/* Busy screenshots: text sits on a solid panel instead of over the image. */}
-                  <div
-                    className={`relative ${
-                      hero
-                        ? "p-6 sm:p-10 lg:flex lg:h-full lg:max-w-2xl lg:flex-col lg:justify-end lg:p-12"
-                        : "border-t border-white/10 bg-[#141413]/92 p-5 backdrop-blur-md sm:p-6"
-                    } ${wide ? "lg:p-8" : ""}`}
-                  >
-                    {w.stats && (
-                      <ul className="mb-4 flex flex-wrap gap-2">
-                        {w.stats.slice(0, shown).map((s) => (
-                          <li key={s.label} className="inline-flex items-baseline gap-2 rounded-full bg-accent px-3 py-1 text-accent-ink">
-                            <span className={`font-display font-bold ${hero || wide ? "text-base sm:text-xl" : "text-base"}`}>{s.value}</span>
-                            <span className="text-xs font-semibold">{s.label.toLowerCase()}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {hero && <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-accent">Featured case study</p>}
-                    <div className={wide ? "lg:flex lg:items-end lg:justify-between lg:gap-8" : ""}>
-                      <div>
-                        <h3 className={`font-display font-semibold tracking-tight text-white ${hero ? "text-3xl sm:text-5xl" : wide ? "text-2xl sm:text-4xl" : "text-xl"}`}>
-                          {w.name}
-                        </h3>
-                        <p className={`mt-2 leading-relaxed text-white/85 ${hero ? "max-w-xl text-base sm:text-lg" : wide ? "max-w-lg text-sm sm:text-base" : "text-sm"}`}>
-                          {w.teaser}
-                        </p>
-                        {w.scope && (hero || wide) && (
-                          <p className="mt-3 text-sm font-medium text-white/65">{w.scope.join(" · ")}</p>
-                        )}
+                  {hero || wide ? (
+                    <div
+                      className={`relative ${
+                        hero
+                          ? "p-6 sm:p-10 lg:flex lg:h-full lg:max-w-2xl lg:flex-col lg:justify-end lg:p-12"
+                          : "border-t border-white/10 bg-[#141413]/92 p-5 backdrop-blur-md sm:p-6 lg:p-8"
+                      }`}
+                    >
+                      {w.stats && (
+                        <ul className="mb-4 flex flex-wrap gap-2">
+                          {w.stats.slice(0, shown).map((s) => (
+                            <li key={s.label} className="inline-flex items-baseline gap-2 rounded-full bg-accent px-3 py-1 text-accent-ink">
+                              <span className="font-display text-base font-bold sm:text-xl">{s.value}</span>
+                              <span className="text-xs font-semibold">{s.label.toLowerCase()}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {hero && <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-accent">Featured case study</p>}
+                      <div className={wide ? "lg:flex lg:items-end lg:justify-between lg:gap-8" : ""}>
+                        <div>
+                          <h3 className={`font-display font-semibold tracking-tight text-white ${hero ? "text-3xl sm:text-5xl" : "text-2xl sm:text-4xl"}`}>
+                            {w.name}
+                          </h3>
+                          <p className={`mt-2 leading-relaxed text-white/85 ${hero ? "max-w-xl text-base sm:text-lg" : "max-w-lg text-sm sm:text-base"}`}>
+                            {w.teaser}
+                          </p>
+                          {w.scope && <p className="mt-3 text-sm font-medium text-white/65">{w.scope.join(" · ")}</p>}
+                        </div>
+                        <span className="mt-4 inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors group-hover:text-accent">
+                          View project
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                            <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
                       </div>
-                      <span className="mt-4 inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors group-hover:text-accent">
-                        View project
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    </div>
+                  ) : (
+                    // Small cards: a slim bar so the screenshot keeps most of the card.
+                    <div className="relative flex items-center gap-3 border-t border-white/10 bg-[#141413]/92 px-4 py-3 backdrop-blur-md sm:px-5">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate font-display text-lg font-semibold tracking-tight text-white">{w.name}</h3>
+                        <p className="truncate text-sm text-white/75">{w.scope ? w.scope.join(" · ") : w.teaser}</p>
+                      </div>
+                      <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-white transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-accent-ink">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                           <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
                     </div>
-                  </div>
+                  )}
                 </Link>
               );
             })}
