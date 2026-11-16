@@ -57,7 +57,7 @@ export default async function CaseStudyPage({
       {cs.stats && (
         <section className="pb-14">
           <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
-            <dl className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+            <dl className={`grid grid-cols-2 gap-3 ${cs.stats.length % 4 === 0 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
               {cs.stats.map((s) => (
                 <div key={s.label} className="min-w-0 rounded-2xl border border-line bg-surface p-4 sm:p-6">
                   <dt className="text-xs font-bold uppercase tracking-[0.12em] text-muted sm:text-sm">{s.label}</dt>
@@ -82,14 +82,14 @@ export default async function CaseStudyPage({
                 No mockups or rounded-up claims. This is the store&apos;s own Shopify Analytics dashboard, recorded as it is.
               </p>
             </div>
-            <div className="mx-auto w-full max-w-[24rem] overflow-hidden rounded-[1.75rem] border border-line bg-surface shadow-[0_40px_80px_-30px_rgba(20,20,19,0.4)]">
+            <div className="mx-auto w-full max-w-[20rem] overflow-hidden rounded-[1.75rem] border border-line bg-surface shadow-[0_40px_80px_-30px_rgba(20,20,19,0.4)]">
               <div className="flex items-center gap-2 border-b border-line px-4 py-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
                 <span className="ml-2 text-xs font-medium text-muted">Shopify admin · Analytics</span>
               </div>
-              <AutoVideo className="block aspect-[384/594] w-full bg-white object-cover" src={cs.video.src} poster={cs.video.poster} label={cs.video.caption} />
+              <AutoVideo className="block aspect-[384/800] w-full bg-white object-cover" src={cs.video.src} poster={cs.video.poster} label={cs.video.caption} />
             </div>
           </div>
         </section>

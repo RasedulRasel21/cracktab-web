@@ -891,11 +891,15 @@ export const caseStudies: CaseStudy[] = [
       { label: "Sessions in October", value: "425.7K", note: "+13% vs September" },
       { label: "Orders in October", value: "23.6K", note: "+12% vs September" },
       { label: "Returning customer rate", value: "32.09%", note: "Oct 2026" },
+      { label: "Sales, last 12 months", value: "$16.92M", note: "+234% year on year" },
+      { label: "Average order value, last 12 months", value: "$73.92", note: "+16% year on year" },
     ],
-    statsSource: "Shopify Analytics, October 2026 compared with September 2026. Cracktab manages the store month to month.",
-    // Analytics recording: add `video: { src, poster, caption }` once we have
-    // one of this store. /home/store-results.mp4 shows ~759 orders and $104K
-    // gross, which doesn't match The Conscious Bar's numbers above.
+    statsSource: "Shopify Analytics. Monthly figures: October 2026 vs September 2026. 12-month figures: Nov 2025 – Nov 2026 vs the year before. Cracktab manages the store month to month.",
+    video: {
+      src: "/cases/tcb-analytics.mp4",
+      poster: "/cases/tcb-analytics-poster.jpg",
+      caption: "Screen recording of The Conscious Bar's Shopify Analytics dashboard",
+    },
     review:
       "They understood our brand from the first call. The store looks exactly how we imagined it — clean, honest, and built for people who care about what they buy.",
     reviewer: "Founder, The Conscious Bar",
