@@ -39,7 +39,39 @@ export default async function CaseStudyPage({
     <>
       <PageHeader eyebrow="Our Works" title={cs.name} subtitle={cs.teaser} />
 
+      {/* What we did */}
+      {cs.scope && (
+        <section className="pb-8">
+          <ul className="mx-auto flex w-full max-w-360 flex-wrap gap-2 px-5 sm:px-8">
+            {cs.scope.map((s) => (
+              <li key={s} className="rounded-full border border-line bg-surface px-4 py-1.5 text-sm font-semibold text-foreground">
+                {s}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Real numbers from the store's analytics */}
+      {cs.stats && (
+        <section className="pb-14">
+          <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
+            <dl className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+              {cs.stats.map((s) => (
+                <div key={s.label} className="min-w-0 rounded-2xl border border-line bg-surface p-4 sm:p-6">
+                  <dt className="text-xs font-bold uppercase tracking-[0.12em] text-muted sm:text-sm">{s.label}</dt>
+                  <dd className="mt-2 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">{s.value}</dd>
+                  {s.note && <dd className="mt-1 text-sm font-medium text-[var(--olive)]">{s.note}</dd>}
+                </div>
+              ))}
+            </dl>
+            {cs.statsSource && <p className="mt-4 text-sm text-muted">{cs.statsSource}</p>}
+          </div>
+        </section>
+      )}
+
       {/* Client review */}
+      {cs.review && (
       <section className="pb-14">
         <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
           <figure className="max-w-4xl">
@@ -52,6 +84,7 @@ export default async function CaseStudyPage({
           </figure>
         </div>
       </section>
+      )}
 
       {/* Live site preview */}
       <section className="pb-16 sm:pb-20">

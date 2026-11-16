@@ -42,6 +42,12 @@ export default function WorkPage() {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
+                  {w.stats?.[0] && (
+                    <p className="mb-3 inline-flex items-baseline gap-2 rounded-full bg-accent px-3 py-1 text-accent-ink">
+                      <span className="font-display text-base font-bold">{w.stats[0].value}</span>
+                      <span className="text-xs font-semibold">{w.stats[0].label.toLowerCase()}</span>
+                    </p>
+                  )}
                   <h3 className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
                     {w.name}
                   </h3>

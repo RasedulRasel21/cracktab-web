@@ -665,7 +665,7 @@ export const serviceDetails: ServiceDetail[] = [
         a: "No. We work month to month and you can cancel any time.",
       },
     ],
-    examples: ["the-conscious-bar", "forchics", "seetrue-glasses"],
+    examples: ["the-conscious-bar", "purishh", "forchics"],
   },
   {
     slug: "shopify-development",
@@ -888,8 +888,14 @@ export type CaseStudy = {
   slug: string;
   name: string;
   teaser: string; // one-liner for the Work grid
-  review: string;
-  reviewer: string;
+  /** What Cracktab did for this store, shown as chips. */
+  scope?: string[];
+  /** Real numbers from the store's Shopify Analytics. The first one also shows on the Work grid. */
+  stats?: { label: string; value: string; note?: string }[];
+  /** Where and when the numbers come from. Required whenever stats are set. */
+  statsSource?: string;
+  review?: string;
+  reviewer?: string;
   liveUrl: string; // real URL, or "" if not available yet
   brief: string;
   whatWeBuilt: string;
@@ -904,6 +910,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "seetrue-glasses",
     name: "SeeTrue Glasses",
     teaser: "Refined, international-ready eyewear store.",
+    scope: ["Design", "Development", "SEO"],
     review:
       "Working with the team changed how customers experience our eyewear online. The site feels premium, loads fast, and our numbers show it.",
     reviewer: "Founder, SeeTrue Glasses",
@@ -927,6 +934,16 @@ export const caseStudies: CaseStudy[] = [
     slug: "the-conscious-bar",
     name: "The Conscious Bar",
     teaser: "Organic, date-sweetened chocolate bars on Shopify Plus, with B2B.",
+    scope: ["Ecommerce management", "CRO", "Shopify Plus & B2B"],
+    stats: [
+      { label: "Conversion rate", value: "4.82%", note: "Oct 2026" },
+      { label: "Average order value", value: "$86.15", note: "Oct 2026" },
+      { label: "Sales in October", value: "$2.11M", note: "+11% vs September" },
+      { label: "Sessions in October", value: "425.7K", note: "+13% vs September" },
+      { label: "Orders in October", value: "23.6K", note: "+12% vs September" },
+      { label: "Returning customer rate", value: "32.09%", note: "Oct 2026" },
+    ],
+    statsSource: "Shopify Analytics, October 2026 compared with September 2026. Cracktab manages the store month to month.",
     review:
       "They understood our brand from the first call. The store looks exactly how we imagined it — clean, honest, and built for people who care about what they buy.",
     reviewer: "Founder, The Conscious Bar",
@@ -944,13 +961,44 @@ export const caseStudies: CaseStudy[] = [
       "One-tap flavour adds and a case-of-12 upgrade in the cart",
     ],
     focusResult:
-      "Every change answers one question: what stops a shopper from checking out today? The redesign is our proposal for the page and isn't live on their store yet. Results will be added here once it is.",
+      "Every change answers one question: what stops a shopper from checking out today? The store already converts 4.82% of sessions, so the product page and cart redesign shown on our homepage is about lifting order value and the share of shoppers who reach checkout. It is our proposal for the page and isn't live yet.",
     img: "/works/Theconsciousbar.png",
+  },
+  {
+    slug: "purishh",
+    name: "Pürishh",
+    teaser: "Clean supplements brand with subscriptions, managed month to month.",
+    scope: ["Ecommerce management", "CRO", "Subscriptions"],
+    stats: [
+      { label: "Total sales, last 12 months", value: "$835K", note: "+33% year on year" },
+      { label: "Orders, last 12 months", value: "10.9K", note: "+40% year on year" },
+      { label: "Returning customer rate", value: "51.57%", note: "+94% year on year" },
+      { label: "Conversion rate", value: "3.81%", note: "Last 12 months" },
+      { label: "Average order value", value: "$66.28", note: "+3% year on year" },
+      { label: "Protein Powder sales", value: "$166.1K", note: "Up from $17.8K a year earlier" },
+    ],
+    statsSource: "Shopify Analytics, Nov 2025 – Oct 2026 compared with Nov 2024 – Oct 2025. Cracktab manages the store month to month.",
+    liveUrl: "https://purishh.com",
+    brief:
+      "Pürishh sells clean supplements: protein powder, electrolytes, creatine, vitamin D3 & K2, raw shilajit and raw honey. Most of their growth depends on shoppers coming back, so the store has to make subscribing, reordering and building a bundle easy.",
+    whatWeBuilt:
+      "We run the Shopify store month to month: theme work, product launches, landing pages for products like Vitamin D3 & K2 and Raw Shilajit, subscription and bundle offers, seasonal campaigns, and conversion fixes across product pages and the cart.",
+    features: [
+      "Month-to-month store management and theme work",
+      "Product landing pages for key supplements",
+      "Subscribe-and-save and build-your-box offers",
+      "Product launches and seasonal campaigns",
+      "Conversion fixes on product pages and the cart",
+    ],
+    focusResult:
+      "Repeat customers drive this brand, so the work centres on subscriptions and reorders. Over the last 12 months the returning customer rate nearly doubled to 51.57%, orders grew 40% and total sales grew 33%.",
+    img: "/works/purishh.jpg",
   },
   {
     slug: "forchics",
     name: "ForChics",
     teaser: "Vegan beauty brand rebuilt around trust and verified reviews.",
+    scope: ["CRO redesign"],
     review:
       "Our old site didn't build trust fast enough. This one does. Customers can see the reviews, the guarantee, and the results before they even scroll.",
     reviewer: "Founder, ForChics",
@@ -974,6 +1022,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "collection-akhavan",
     name: "Collection Akhavan",
     teaser: "A gallery-style store for handcrafted pieces.",
+    scope: ["Design", "Development", "SEO"],
     review:
       "The new store finally does justice to the craftsmanship behind each piece. It feels like walking into the showroom.",
     reviewer: "Collection Akhavan",
@@ -997,6 +1046,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "die-schrothkur",
     name: "Die Schrothkur",
     teaser: "A calm, content-forward wellness store.",
+    scope: ["Design", "Development", "SEO"],
     review:
       "The site finally feels as calming as what we offer. It was overdue.",
     reviewer: "Die Schrothkur",
