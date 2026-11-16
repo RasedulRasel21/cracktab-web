@@ -23,7 +23,7 @@ const SUB_OFF = 0.3;
 function BarArt({ bar }: { bar: Bar }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={`/home/clients/tcb-${bar.id}.jpg`} alt="" loading="lazy" className="h-full w-full object-cover" />
+    <img src={`/home/clients/tcb-${bar.id}.jpg`} alt={`${bar.name} chocolate bar`} loading="lazy" className="h-full w-full object-cover" />
   );
 }
 

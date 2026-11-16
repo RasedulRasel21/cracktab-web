@@ -73,7 +73,7 @@ export default function PostArticle({ post }: { post: ArticlePost }) {
           <div className="relative aspect-16/9 overflow-hidden rounded-2xl border border-line bg-black">
             <Image
               src={post.coverUrl}
-              alt={post.coverAlt ?? ""}
+              alt={post.coverAlt || post.title}
               fill
               priority
               sizes="(min-width: 1024px) 64rem, 100vw"

@@ -50,7 +50,7 @@ export default function VideoEmbed({
           className="group absolute inset-0 flex items-center justify-center"
         >
           {poster && (
-            <Image src={poster} alt="" fill sizes="(min-width: 1024px) 64rem, 100vw" className="object-cover" />
+            <Image src={poster} alt={title} fill sizes="(min-width: 1024px) 64rem, 100vw" className="object-cover" />
           )}
           <span className="relative inline-flex h-18 w-18 items-center justify-center rounded-full bg-accent text-accent-ink transition-transform duration-300 group-hover:scale-105">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

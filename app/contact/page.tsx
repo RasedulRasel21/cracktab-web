@@ -4,9 +4,9 @@ import BookCallButton from "../components/BookCallButton";
 import { EMAIL, contact } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Us & Book a Free CRO Audit",
   description:
-    "Call us, message us, or book a free audit — let's talk about your website.",
+    "Talk to Cracktab about your Shopify store. Call, message or book a free CRO audit and we'll show you where your store loses revenue and what to fix first.",
   alternates: { canonical: "/contact" },
 };
 

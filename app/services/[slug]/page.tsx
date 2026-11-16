@@ -14,6 +14,25 @@ export function generateStaticParams() {
   return serviceDetails.map((s) => ({ slug: s.slug }));
 }
 
+/** Search titles and descriptions, sized for Google (about 60 and 155 characters). */
+const SERVICE_SEO: Record<string, { title: string; description: string }> = {
+  "ecommerce-growth-cro": {
+    title: "Shopify CRO & Ecommerce Management",
+    description:
+      "One team that runs your Shopify store and grows revenue every month: CRO audits, A/B tests, design and code fixes, SEO, email and day-to-day operations.",
+  },
+  "shopify-development": {
+    title: "Shopify & Shopify Plus Development",
+    description:
+      "Custom Shopify and Shopify Plus stores, redesigns and migrations. Fast, hand-coded themes built around how your customers buy, launched ready to convert.",
+  },
+  "shopify-app-development": {
+    title: "Shopify Theme & App Development",
+    description:
+      "Custom Shopify theme sections, bundle and gift builders, private and public apps, and integrations with your other systems, built by a Shopify CRO agency.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -21,9 +40,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = serviceDetails.find((s) => s.slug === slug);
+  const seo = SERVICE_SEO[slug];
   return {
-    title: service?.name ?? "Service",
-    description: service?.intro,
+    title: seo?.title ?? service?.name ?? "Service",
+    description: seo?.description ?? service?.intro,
     alternates: { canonical: `/services/${slug}` },
   };
 }

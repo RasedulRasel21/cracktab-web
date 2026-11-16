@@ -5,9 +5,9 @@ import WorldDotField from "../components/WorldDotField";
 import SupportSlider, { type SupportItem } from "../components/SupportSlider";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Cracktab, a Shopify CRO Agency",
   description:
-    "Cracktab is a website design, development, and growth agency helping ambitious brands build better digital experiences and scale with confidence.",
+    "Cracktab is a Shopify CRO and development agency: one team of strategists, designers and developers helping DTC brands turn more visitors into revenue.",
   alternates: { canonical: "/about" },
 };
 

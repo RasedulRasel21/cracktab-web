@@ -20,8 +20,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
   return {
-    title: cs ? `${cs.name} — Case Study` : "Case Study",
-    description: cs?.teaser,
+    title: cs ? `${cs.name} Shopify Case Study` : "Case Study",
+    description: cs ? `${cs.teaser} See how Cracktab designed, built and grew this Shopify store: scope, process and results.` : undefined,
     alternates: { canonical: `/work/${slug}` },
   };
 }

@@ -7,7 +7,7 @@ import { ImageResponse } from "next/og";
  * LinkedIn, Facebook, X and Slack showed links with no image at all before.
  * Blog posts with a cover image and the Shopify app pages override it.
  */
-export const alt = "Cracktab — Shopify Website Design and Development Agency";
+export const alt = "Cracktab — Shopify CRO Agency for DTC Brands";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

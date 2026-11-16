@@ -10,7 +10,7 @@ import { faq } from "../components/home/content";
 import { faqSchema } from "../lib/schema";
 
 export const metadata: Metadata = {
-  title: "How We Do CRO",
+  title: "How We Do Shopify CRO, Step by Step",
   description:
     "Cracktab's Shopify CRO process, step by step: audit, research, prioritise, design and build, A/B test, roll out and report every month.",
   alternates: { canonical: "/how-we-work" },

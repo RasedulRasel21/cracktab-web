@@ -60,7 +60,7 @@ function PackPicker() {
     <div className="rounded-2xl bg-white p-4 shadow-sm">
       <div className="flex items-center gap-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pic("forchics-lash-serum")} alt="" className="h-11 w-11 rounded-lg object-cover" />
+        <img src={pic("forchics-lash-serum")} alt="ForChics Eyelash Enhancing Serum" className="h-11 w-11 rounded-lg object-cover" />
         <p className="text-sm font-semibold leading-tight">Eyelash Enhancing Serum</p>
       </div>
       <div className="mt-3 space-y-1.5">
@@ -100,7 +100,7 @@ function StickyAtc() {
     <div className="relative mx-auto h-[17rem] w-[12.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-[#1a1a1a] bg-[#fbf7f0] shadow-lg">
       <div className="h-full overflow-y-auto pb-14 [scrollbar-width:none]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pic("luxe-eye-balm")} alt="" className="aspect-square w-full object-cover" />
+        <img src={pic("luxe-eye-balm")} alt="Luxe Cosmetics eye balm" className="aspect-square w-full object-cover" />
         <div className="space-y-2 p-3">
           <p className="text-sm font-semibold">Korean Under Eye Balm</p>
           <p className="text-[10px] text-[#6b5a4e]">★★★★★ 4.86 · 10,839 reviews</p>
@@ -115,7 +115,7 @@ function StickyAtc() {
       </div>
       <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 border-t border-[#eadfce] bg-white px-2 py-1.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pic("luxe-eye-balm")} alt="" className="h-7 w-7 rounded object-cover" />
+        <img src={pic("luxe-eye-balm")} alt="Luxe Cosmetics eye balm" className="h-7 w-7 rounded object-cover" />
         <span className="flex-1 text-[9px] leading-tight">
           <b>Under Eye Balm</b>
           <br />
@@ -166,7 +166,7 @@ function MilestoneBar() {
       </div>
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-[#eadfce] p-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img("smooth-dark-chocolate")} alt="" className="h-9 w-9 rounded object-cover" />
+        <img src={img("smooth-dark-chocolate")} alt="The Conscious Bar Smooth Dark Chocolate bar" className="h-9 w-9 rounded object-cover" />
         <span className="flex-1 text-xs font-semibold">Smooth Dark</span>
         <div className="flex items-center rounded-full border border-[#4a1d0f]">
           <button type="button" aria-label="Remove a bar" onClick={() => setBars((b) => Math.max(1, b - 1))} className="h-7 w-7">−</button>
@@ -195,7 +195,7 @@ function OneTapAdds() {
     <div className="rounded-2xl bg-white p-4 shadow-sm">
       <div className="flex items-center gap-2 border-b border-[#eadfce] pb-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pic("luxe-eye-balm")} alt="" className="h-9 w-9 rounded object-cover" />
+        <img src={pic("luxe-eye-balm")} alt="Luxe Cosmetics eye balm" className="h-9 w-9 rounded object-cover" />
         <span className="flex-1 text-xs font-semibold">Korean Under Eye Balm</span>
         <span className="font-serif text-sm">{money(base)}</span>
       </div>
@@ -206,7 +206,7 @@ function OneTapAdds() {
           return (
             <div key={o.id} className={`rounded-xl border p-1.5 text-center transition-colors ${on ? "border-[#2f6b1f] bg-[#eef6ea]" : "border-[#e2d6c6]"}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={pic(o.id)} alt="" className="aspect-square w-full rounded-lg object-cover" />
+              <img src={pic(o.id)} alt={`Luxe Cosmetics ${o.name}`} className="aspect-square w-full rounded-lg object-cover" />
               <p className="mt-1 text-[10px] font-semibold leading-tight">{o.name}</p>
               <button
                 type="button"
@@ -235,7 +235,7 @@ function SubscribeToggle() {
     <div className="rounded-2xl bg-white p-4 shadow-sm">
       <div className="flex items-center gap-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pic("purishh-electrolytes")} alt="" className="h-11 w-11 rounded-lg object-cover" />
+        <img src={pic("purishh-electrolytes")} alt="Pürishh electrolytes" className="h-11 w-11 rounded-lg object-cover" />
         <div className="flex-1">
           <p className="text-sm font-semibold">Electrolytes · Lemon Lime</p>
           <p className="text-xs text-[#6b5a4e]">{on ? "Subscription" : "One-time purchase"}</p>

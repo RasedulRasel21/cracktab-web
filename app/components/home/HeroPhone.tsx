@@ -13,6 +13,8 @@ import { PhoneFrame } from "./ui";
  * Autoplay stops as soon as the visitor touches anything.
  */
 
+const barAlt = (id: string) => `The Conscious Bar ${FLAVORS.find((x) => x.id === id)?.name ?? "chocolate"} bar`;
+
 const FLAVORS = [
   { id: "smooth-dark-chocolate", name: "Smooth Dark Chocolate" },
   { id: "orange-blossom", name: "Orange Blossom" },
@@ -241,7 +243,7 @@ export default function HeroPhone() {
             >
               <div className="relative mx-3 aspect-[4/3.2] overflow-hidden rounded-xl bg-[#e8d5bd]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img key={after ? f.id : "b"} src={tcb(after ? f.id : "smooth-dark-chocolate")} alt="" className="h-full w-full animate-[fade-in_.35s_ease] object-cover" />
+                <img key={after ? f.id : "b"} src={tcb(after ? f.id : "smooth-dark-chocolate")} alt={barAlt(after ? f.id : "smooth-dark-chocolate")} className="h-full w-full animate-[fade-in_.35s_ease] object-cover" />
                 {after ? (
                   <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-semibold">No added sugar · Sweetened with dates</span>
                 ) : (
@@ -273,7 +275,7 @@ export default function HeroPhone() {
                       {FLAVORS.map((fl, i) => (
                         <button key={fl.id} type="button" aria-label={fl.name} onClick={() => { touch(); setFlavor(i); }} className={`h-8 w-8 shrink-0 overflow-hidden rounded-md border-2 ${i === flavor ? "border-[#4a1d0f]" : "border-transparent"}`}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={tcb(fl.id)} alt="" className="h-full w-full object-cover" />
+                          <img src={tcb(fl.id)} alt={barAlt(fl.id)} className="h-full w-full object-cover" />
                         </button>
                       ))}
                     </div>
@@ -332,7 +334,7 @@ export default function HeroPhone() {
                         {["orange-blossom", "almond-sea-salt", "roasted-hazelnut"].map((id) => (
                           <div key={id} className="relative aspect-[3/4] overflow-hidden rounded-lg">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={tcb(id)} alt="" className="h-full w-full object-cover" />
+                            <img src={tcb(id)} alt={barAlt(id)} className="h-full w-full object-cover" />
                             <span className="absolute inset-0 flex items-center justify-center text-[14px] text-white drop-shadow">▶</span>
                           </div>
                         ))}
@@ -348,7 +350,7 @@ export default function HeroPhone() {
                       {["toasted-coconut-flakes", "espresso-crunch", "orange-blossom"].map((id) => (
                         <div key={id} className="rounded-lg bg-white p-1">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={tcb(id)} alt="" className="aspect-square w-full rounded object-cover" />
+                          <img src={tcb(id)} alt={barAlt(id)} className="aspect-square w-full rounded object-cover" />
                           <p className="mt-0.5 text-center text-[8px] font-semibold">+ $7.50</p>
                         </div>
                       ))}
@@ -367,7 +369,7 @@ export default function HeroPhone() {
                       {FLAVORS.map((fl) => (
                         <div key={fl.id} className="overflow-hidden rounded-lg border border-[#e2d6c6] bg-white p-1">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={tcb(fl.id)} alt="" className="aspect-square w-full rounded object-cover" />
+                          <img src={tcb(fl.id)} alt={barAlt(fl.id)} className="aspect-square w-full rounded object-cover" />
                         </div>
                       ))}
                     </div>
@@ -379,7 +381,7 @@ export default function HeroPhone() {
             {after ? (
               <div className="flex items-center gap-2 border-t border-[#eadfce] bg-white px-3 py-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={tcb(f.id)} alt="" className="h-8 w-8 rounded object-cover" />
+                <img src={tcb(f.id)} alt={barAlt(f.id)} className="h-8 w-8 rounded object-cover" />
                 <div className="min-w-0 flex-1 leading-tight">
                   <p className="truncate text-[9.5px] font-semibold">{p.label} · {f.name.split(" ")[0]}</p>
                   <p className="text-[8.5px] text-[#6b5a4e]">${p.price.toFixed(2)} · {toShip > 0 ? `$${toShip.toFixed(0)} to free shipping` : "Free shipping"}</p>

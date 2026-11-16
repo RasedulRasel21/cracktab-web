@@ -469,7 +469,7 @@ export const shopifyApps: ShopifyApp[] = [
     // doc, and the FAQ and setup guide on aigrowthkits.app. There is no
     // cracktab.com page doc for this app yet.
     page: {
-      seoTitle: "Custom Diamond Ring Builder | Live Ring Pricing for Shopify",
+      seoTitle: "Diamond Ring Builder App with Live Pricing for Shopify",
       metaDescription:
         "Let shoppers build made-to-order diamond rings on your product page, priced live from your own rate sheet. Free plan for up to 5 ring products.",
       eyebrow: "Shopify app · Free plan available",

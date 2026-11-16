@@ -7,8 +7,9 @@ import { generalFaq } from "../lib/site";
 import { faqSchema } from "../lib/schema";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description: "General questions about working with Cracktab.",
+  title: "Shopify CRO & Development FAQ",
+  description:
+    "Answers to common questions about working with Cracktab on Shopify CRO, A/B testing, store development, custom apps and ongoing ecommerce management.",
   alternates: { canonical: "/faq" },
 };
 

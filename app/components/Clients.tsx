@@ -4,16 +4,16 @@
 // the default.
 const DEFAULT_SIZE = "h-8 sm:h-9";
 
-const logos: { src: string; size?: string }[] = [
-  { src: "/logos/logo1.png" }, // The Conscious Bar
-  { src: "/logos/logo2.png" },
-  { src: "/logos/logo3.svg" },
+const logos: { src: string; name: string; size?: string }[] = [
+  { src: "/logos/logo1.png", name: "The Conscious Bar" },
+  { src: "/logos/logo2.png", name: "ForChics" },
+  { src: "/logos/logo3.svg", name: "Glossier" },
   // Die Schrothkur — stacked lockup; its text is only ~20% of the box height,
   // so it still needs a slightly taller box than the wordmarks to stay legible.
-  { src: "/logos/logo6.svg", size: "h-10 sm:h-12" },
+  { src: "/logos/logo6.svg", name: "Die Schrothkur", size: "h-10 sm:h-12" },
   // akhavan collection — single-line wordmark whose cap height fills the box,
   // so it needs less than the default.
-  { src: "/logos/logo7.svg", size: "h-6 sm:h-7" },
+  { src: "/logos/logo7.svg", name: "Akhavan Collection", size: "h-6 sm:h-7" },
 ];
 
 // The -50% translate only loops seamlessly while each half is wider than the
@@ -48,7 +48,7 @@ export default function Clients() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={logo.src}
-                alt=""
+                alt={i >= logos.length ? "" : `${logo.name} logo`}
                 loading="lazy"
                 className={`${logo.size ?? DEFAULT_SIZE} w-auto object-contain opacity-60 brightness-0 transition-opacity duration-300 hover:opacity-100`}
               />

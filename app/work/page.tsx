@@ -5,9 +5,9 @@ import CtaBand from "../components/CtaBand";
 import { caseStudies } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Our Works",
+  title: "Shopify Store Case Studies & Our Work",
   description:
-    "A look at Shopify stores we've designed, built, and grown. Real brands, real results.",
+    "Shopify stores we've designed, built and grown for DTC brands like The Conscious Bar, ForChics and SeeTrue. See the scope, the process and the results.",
   alternates: { canonical: "/work" },
 };
 

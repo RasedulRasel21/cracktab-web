@@ -38,11 +38,11 @@ export const metadata: Metadata = {
   // The site had no canonical tag at all before — an SEO audit flagged it.
   alternates: { canonical: "/" },
   title: {
-    default: "Cracktab — Shopify Website Design and Development Agency",
+    default: "Shopify CRO Agency for DTC Brands | Cracktab",
     template: "%s · Cracktab",
   },
   description:
-    "Scale your Shopify store with Cracktab. Expert custom web development, store redesigns, and data-driven CRO strategies to boost conversions and sales.",
+    "Cracktab is a Shopify CRO agency helping DTC brands turn more visitors into revenue with research, A/B tests, store builds and ecommerce management.",
   keywords: [
     "Shopify agency",
     "Shopify Plus partner",
@@ -55,15 +55,15 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Cracktab",
-    title: "Cracktab — Shopify Website Design and Development Agency",
+    title: "Shopify CRO Agency for DTC Brands | Cracktab",
     description:
-      "Shopify stores built to perform. Built to last. From launch to scale.",
+      "Cracktab is a Shopify CRO agency helping DTC brands turn more visitors into revenue with research, A/B tests, store builds and ecommerce management.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cracktab — Shopify Website Design and Development Agency",
+    title: "Shopify CRO Agency for DTC Brands | Cracktab",
     description:
-      "Shopify stores built to perform. Built to last. From launch to scale.",
+      "Cracktab is a Shopify CRO agency helping DTC brands turn more visitors into revenue with research, A/B tests, store builds and ecommerce management.",
   },
   verification: {
     google: GOOGLE_SITE_VERIFICATION || undefined,

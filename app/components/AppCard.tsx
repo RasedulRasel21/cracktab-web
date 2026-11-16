@@ -41,7 +41,7 @@ export default function AppCard({
         {icon ? (
           <Image
             src={icon}
-            alt=""
+            alt={`${app.name} icon`}
             width={56}
             height={56}
             unoptimized={icon.endsWith(".svg")}
@@ -58,7 +58,7 @@ export default function AppCard({
       {vignette && (
         <Image
           src={vignette}
-          alt=""
+          alt={`${app.name} preview`}
           width={800}
           height={500}
           unoptimized={vignette.endsWith(".svg")}

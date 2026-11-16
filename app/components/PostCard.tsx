@@ -34,7 +34,7 @@ export default function PostCard({
           {cover ? (
             <Image
               src={cover}
-              alt={post.coverAlt ?? ""}
+              alt={post.coverAlt || post.title}
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               priority={priority}

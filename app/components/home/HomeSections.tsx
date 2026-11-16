@@ -25,7 +25,7 @@ export function HomeApps() {
             const inner = (
               <>
                 <div className="flex items-center gap-3">
-                  <Image src={`/apps/${app.slug}/icon.png`} alt="" width={48} height={48} className="h-12 w-12 rounded-xl" />
+                  <Image src={`/apps/${app.slug}/icon.png`} alt={`${app.name} app icon`} width={48} height={48} className="h-12 w-12 rounded-xl" />
                   <span className="rounded-full bg-[var(--cream-2)] px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted">
                     {app.badge}
                   </span>

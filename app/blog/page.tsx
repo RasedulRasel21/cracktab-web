@@ -4,9 +4,9 @@ import BlogListing from "../components/BlogListing";
 import { getCategoryTree, getPosts } from "../lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Shopify CRO & Ecommerce Blog",
   description:
-    "Build stories, industry notes, and behind-the-scenes content from the Cracktab team.",
+    "Practical Shopify CRO, development and ecommerce growth notes from the Cracktab team: what we test, what we build and what moves revenue.",
   alternates: { canonical: "/blog" },
 };
 
