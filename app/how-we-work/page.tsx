@@ -137,7 +137,7 @@ export default function HowWeWorkPage() {
                 ["Audit", "Add to bag sat 1,118px down; four discount messages competed."],
                 ["Research", "Shoppers didn't know about the $35 minimum until the cart."],
                 ["Build", "Real price first, pack picker, sticky add to bag, one milestone bar."],
-                ["Test", "Every change ships as an A/B test against the ~2% baseline."],
+                ["Test", "Each change is set to go live as an A/B test against the ~2% baseline."],
               ].map(([k, v]) => (
                 <li key={k} className="flex gap-3">
                   <span className="w-20 shrink-0 font-semibold sm:w-24">{k}</span>

@@ -168,7 +168,8 @@ export async function submitContact(
   const firstName = get("firstName");
   const lastName = get("lastName");
   const email = get("email");
-  const company = get("company");
+  const storeUrl = get("storeUrl");
+  const revenue = get("revenue");
   const projectType = get("projectType");
   const details = get("details");
 
@@ -180,7 +181,7 @@ export async function submitContact(
   if (!firstName || !email || !details) {
     return {
       status: "error",
-      message: "Please fill in your name, email, and project details.",
+      message: "Please fill in your name, email, and a short note.",
     };
   }
   if (!EMAIL_RE.test(email)) {
@@ -242,7 +243,8 @@ export async function submitContact(
         `Name: ${firstName} ${lastName}`.trim(),
         `Email: ${email}`,
         `Phone: ${phone || "—"}`,
-        `Company: ${company || "—"}`,
+        `Store: ${storeUrl || "—"}`,
+        `Monthly revenue: ${revenue || "—"}`,
         `Project type: ${projectType || "—"}`,
         "",
         "Project details:",

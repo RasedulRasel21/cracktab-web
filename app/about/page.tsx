@@ -113,11 +113,10 @@ export default function AboutPage() {
         <div className="mx-auto w-full max-w-360">
           <Prose heading="About Cracktab">
             <p>
-              Shopify is our primary area of expertise and the platform we work
-              with most often. However, we are not limited to Shopify — our team
-              also supports businesses across other ecommerce and website
-              platforms when the project, technology, or growth strategy
-              requires a different solution.
+              We are Shopify CRO specialists who also build. The same team that
+              finds where a store loses revenue designs the fix, codes it into
+              the theme or one of our own apps, and measures whether it earned
+              more. Shopify is where we focus, which is why we move fast on it.
             </p>
           </Prose>
 

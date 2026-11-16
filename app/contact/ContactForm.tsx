@@ -1,10 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFormSubmit } from "../components/useFormSubmit";
 import { track } from "../lib/track";
 import { submitContact, type ContactState } from "./actions";
 import { countries } from "../lib/countries";
+
+const PROJECT_TYPES = [
+  "Free CRO audit",
+  "Free video audit of my store",
+  "Ecommerce management & CRO",
+  "New Shopify store or redesign",
+  "Store migration",
+  "Custom theme or app development",
+  "SEO",
+  "Other",
+];
+
+/** ?type= values the site links to, mapped to an option above. */
+const TYPE_PARAM: Record<string, string> = {
+  audit: "Free CRO audit",
+  "video-audit": "Free video audit of my store",
+};
 
 const initial: ContactState = { status: "idle", message: "" };
 
@@ -44,6 +61,13 @@ export default function ContactForm() {
   // runs, so a visitor who hit a validation or spam check would lose their
   // whole message. Success needs no clearing: it swaps the form for a panel.
   const [state, onSubmit, pending] = useFormSubmit(submitContact, initial);
+  const typeRef = useRef<HTMLSelectElement>(null);
+
+  // Links like /contact?type=video-audit pre-select what the visitor came for.
+  useEffect(() => {
+    const t = TYPE_PARAM[new URLSearchParams(window.location.search).get("type") ?? ""];
+    if (t && typeRef.current) typeRef.current.value = t;
+  }, []);
 
   // The lead conversion marketing's GTM and Google Ads setup listens for.
   useEffect(() => {
@@ -134,14 +158,16 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="company" className={labelClass}>
-            Company Name
+          <label htmlFor="storeUrl" className={labelClass}>
+            Store URL
           </label>
           <input
-            id="company"
+            id="storeUrl"
             type="text"
-            name="company"
-            autoComplete="organization"
+            name="storeUrl"
+            placeholder="yourstore.com"
+            autoComplete="url"
+            inputMode="url"
             disabled={pending}
             className={fieldClass}
           />
@@ -181,13 +207,34 @@ export default function ContactForm() {
         </div>
 
         <div>
+          <label htmlFor="revenue" className={labelClass}>
+            Monthly Revenue
+          </label>
+          <div className="relative">
+            <select id="revenue" name="revenue" defaultValue="" disabled={pending} className={selectClass}>
+              <option value="" disabled>
+                Select…
+              </option>
+              <option>Under $20K</option>
+              <option>$20K – $50K</option>
+              <option>$50K – $250K</option>
+              <option>$250K – $1M</option>
+              <option>$1M+</option>
+              <option>Not launched yet</option>
+            </select>
+            <Chevron />
+          </div>
+        </div>
+
+        <div className="sm:col-span-2">
           <label htmlFor="projectType" className={labelClass}>
-            Project Type
+            What do you need?
           </label>
           <div className="relative">
             <select
               id="projectType"
               name="projectType"
+              ref={typeRef}
               defaultValue=""
               disabled={pending}
               className={selectClass}
@@ -195,12 +242,9 @@ export default function ContactForm() {
               <option value="" disabled>
                 Select…
               </option>
-              <option>New Shopify Store</option>
-              <option>Store Redesign</option>
-              <option>Store Migration</option>
-              <option>Custom App Development</option>
-              <option>SEO Optimization</option>
-              <option>Other</option>
+              {PROJECT_TYPES.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
             </select>
             <Chevron />
           </div>
@@ -209,7 +253,7 @@ export default function ContactForm() {
 
       <div className="mt-4">
         <label htmlFor="details" className={labelClass}>
-          Project Details
+          Anything we should know?
         </label>
         <textarea
           id="details"

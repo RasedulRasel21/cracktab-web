@@ -39,10 +39,10 @@ export default function ContactPage() {
           Contact
         </span>
         <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1.04] tracking-[-0.025em] text-white">
-          Let&apos;s build your <span className="text-accent">website.</span>
+          Get a free CRO audit of <span className="text-accent">your store.</span>
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-          Call us, message us, book a free audit.
+          Send your store URL and we&apos;ll show you where it loses sales and what we&apos;d fix first. Prefer a quick look? Pick &ldquo;Free video audit&rdquo; and we&apos;ll send a 3-minute video of your store.
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">

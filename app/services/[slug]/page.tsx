@@ -17,7 +17,7 @@ export function generateStaticParams() {
 /** Search titles and descriptions, sized for Google (about 60 and 155 characters). */
 const SERVICE_SEO: Record<string, { title: string; description: string }> = {
   "ecommerce-growth-cro": {
-    title: "Shopify CRO & Ecommerce Management",
+    title: "Shopify CRO Services and Ecommerce Management",
     description:
       "One team that runs your Shopify store and grows revenue every month: CRO audits, A/B tests, design and code fixes, SEO, email and day-to-day operations.",
   },
@@ -85,13 +85,25 @@ export default async function ServiceDetailPage({
       {/* ---- Hero ---- */}
       <section className="px-5 pb-14 pt-28 sm:px-8 sm:pb-20 sm:pt-36">
         <div className="mx-auto w-full max-w-360">
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-foreground sm:text-sm">
-            <span className="h-2 w-2 rounded-full bg-accent ring-1 ring-[#141413]/15" />
-            Service {String(index + 1).padStart(2, "0")} / {String(serviceDetails.length).padStart(2, "0")}
-          </span>
-          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[1.02] tracking-[-0.025em] text-foreground">
-            {service.heading}
-          </h1>
+          {service.h1 ? (
+            <h1 className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase leading-snug tracking-[0.16em] text-foreground sm:text-sm">
+              <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-accent ring-1 ring-[#141413]/15" />
+              {service.h1}
+            </h1>
+          ) : (
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-foreground sm:text-sm">
+              <span className="h-2 w-2 rounded-full bg-accent ring-1 ring-[#141413]/15" />
+              Service {String(index + 1).padStart(2, "0")} / {String(serviceDetails.length).padStart(2, "0")}
+            </span>
+          )}
+          {(() => {
+            const Big = service.h1 ? "p" : "h1";
+            return (
+              <Big className="mt-6 max-w-4xl font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[1.02] tracking-[-0.025em] text-foreground">
+                {service.heading}
+              </Big>
+            );
+          })()}
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
             {service.intro}
           </p>

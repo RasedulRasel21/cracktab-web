@@ -158,6 +158,8 @@ export type ServiceDetail = {
   slug: string;
   name: string;
   heading: string;
+  /** SEO H1, shown as the small line above the big heading (the heading then renders as a <p>). */
+  h1?: string;
   intro: string;
   whoFor: string;
   whyMatters: string;
@@ -600,11 +602,12 @@ export const serviceDetails: ServiceDetail[] = [
   {
     slug: "ecommerce-growth-cro",
     name: "Ecommerce Management & CRO",
-    heading: "Ecommerce Management & CRO",
+    h1: "Shopify CRO Services and Ecommerce Management",
+    heading: "One team that runs your store and makes it sell more.",
     summary:
       "Your outsourced ecommerce team. We run the store day to day and grow revenue from the traffic you already have: research, A/B tests, redesigns, speed, SEO, email and the operations behind them.",
     intro:
-      "One team that runs your Shopify store and makes it sell more every month. We find where revenue leaks, design and code the fixes, test them against your real traffic, and handle the day-to-day operations so nothing slips while the store grows.",
+      "Every month we find where your Shopify store leaks revenue, design and code the fixes, test them against your real traffic, and handle the day-to-day operations so nothing slips while the store grows.",
     whoFor:
       "Live Shopify brands with steady traffic that want more revenue from the visitors they already pay for, and founders who need an experienced ecommerce manager without hiring a full in-house team.",
     whyMatters:
@@ -917,30 +920,31 @@ export const caseStudies: CaseStudy[] = [
       "Trust badges and secure checkout messaging",
     ],
     focusResult:
-      "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. The results are reflected in the conversion, revenue, and page-speed numbers shown on this page.",
+      "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. Performance numbers will be added once the client approves sharing them.",
     img: "/works/seetrue.webp",
   },
   {
     slug: "the-conscious-bar",
     name: "The Conscious Bar",
-    teaser: "Clean-beauty Shopify Plus store built for eco-conscious shoppers.",
+    teaser: "Organic, date-sweetened chocolate bars on Shopify Plus, with B2B.",
     review:
       "They understood our brand from the first call. The store looks exactly how we imagined it — clean, honest, and built for people who care about what they buy.",
     reviewer: "Founder, The Conscious Bar",
     liveUrl: "https://theconsciousbar.co/",
     brief:
-      "The Conscious Bar needed a Shopify Plus store that reflected their clean-beauty values without slowing down for the sake of good looks — a common trade-off in beauty ecommerce.",
+      "The Conscious Bar sells organic, vegan chocolate bars sweetened with dates, to shoppers and to wholesale buyers. On the product page four discount messages competed for attention, the headline price wasn't the price shoppers paid, add to bag sat 1,118px down, and the $35 order minimum only showed up in the cart.",
     whatWeBuilt:
-      "A minimalist custom theme with ingredient and benefit-based filtering, wishlist support, and multi-currency checkout for shoppers outside the US. We tightened the purchase flow to reduce cart abandonment.",
+      "We work on their Shopify Plus store, including the B2B setup, and redesigned the product page and cart drawer for conversion: the real price first, one auto-applied promo, a pack picker so every order clears the minimum, a sticky add to bag on mobile, and a single milestone bar for checkout and free shipping.",
     features: [
-      "Ingredient and benefit-based filtering",
-      "Wishlist and save-for-later",
-      "Multi-currency checkout for international shoppers",
-      "Streamlined cart and checkout flow",
-      "Sustainability messaging built into product pages",
+      "Real sale price shown first, no code to copy",
+      "Benefit chips: no added sugar, organic, vegan",
+      "Pack picker that clears the $35 minimum",
+      "Sticky add to bag on mobile",
+      "One milestone bar for checkout and free shipping",
+      "One-tap flavour adds and a case-of-12 upgrade in the cart",
     ],
     focusResult:
-      "Sustainability and transparency needed to come through in the design itself, not just the product copy. Conversion and revenue have both climbed since launch, tracked in the stats shown on this page.",
+      "Every change answers one question: what stops a shopper from checking out today? The redesign is our proposal for the page and isn't live on their store yet. Results will be added here once it is.",
     img: "/works/Theconsciousbar.png",
   },
   {
@@ -963,7 +967,7 @@ export const caseStudies: CaseStudy[] = [
       "Above-the-fold trust signals",
     ],
     focusResult:
-      "Every design decision came back to one question — does this make a first-time visitor trust us faster. Conversion and revenue improvements are shown in the results section on this page.",
+      "Every design decision came back to one question — does this make a first-time visitor trust us faster. Performance numbers will be added once the client approves sharing them.",
     img: "/works/ForChics.png",
   },
   {

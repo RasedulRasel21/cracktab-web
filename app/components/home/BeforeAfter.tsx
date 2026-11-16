@@ -188,7 +188,7 @@ export default function BeforeAfter() {
         <div className={`relative mx-auto mt-8 ${v.maxW}`}>
           <div className="mb-3 flex justify-between px-1 font-serif text-lg italic text-muted sm:text-2xl">
             <span>before cracktab</span>
-            <span>after cracktab</span>
+            <span>after cracktab (proposed)</span>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_40px_90px_-40px_rgba(20,20,19,0.45)]">
@@ -266,7 +266,7 @@ export default function BeforeAfter() {
           ))}
         </dl>
         <p className="mx-auto mt-6 max-w-xl text-center text-sm text-muted">
-          Before: live page, Nov 15, 2026. After: Cracktab CRO redesign. Every change ships as an A/B test.
+          Before: live page, Nov 15, 2026. After: Cracktab’s proposed CRO redesign, not yet live on their store.
         </p>
       </div>
     </section>
