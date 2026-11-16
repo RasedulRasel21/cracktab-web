@@ -10,6 +10,7 @@ export default function PageHeader({
   subtitle,
   action,
   center = false,
+  eyebrowIsH1 = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -17,7 +18,11 @@ export default function PageHeader({
   /** Optional CTA rendered under the subtitle, above the fold. */
   action?: ReactNode;
   center?: boolean;
+  /** SEO pattern: the eyebrow pill is the H1 and the big title renders as a <p>. */
+  eyebrowIsH1?: boolean;
 }) {
+  const Eyebrow = eyebrowIsH1 ? "h1" : "span";
+  const Title = eyebrowIsH1 ? "p" : "h1";
   return (
     <section className="relative overflow-hidden pb-14 pt-32 sm:pb-20 sm:pt-40">
       {/* subtle lime glow */}
@@ -35,14 +40,14 @@ export default function PageHeader({
         }`}
       >
         {eyebrow && (
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-foreground sm:text-sm">
-            <span className="h-2 w-2 rounded-full bg-accent ring-1 ring-[#141413]/15" />
+          <Eyebrow className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 font-display text-xs font-bold uppercase leading-snug tracking-[0.18em] text-foreground sm:text-sm">
+            <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-accent ring-1 ring-[#141413]/15" />
             {eyebrow}
-          </span>
+          </Eyebrow>
         )}
-        <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.025em] text-foreground">
+        <Title className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.025em] text-foreground">
           {title}
-        </h1>
+        </Title>
         {subtitle && (
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted sm:text-xl">
             {subtitle}

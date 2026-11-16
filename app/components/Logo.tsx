@@ -1,13 +1,26 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 /**
  * Cracktab wordmark: three "traffic-light" dots + lowercase wordmark.
  * Pure CSS/SVG-free so it renders instantly with zero image requests.
  */
 export default function Logo({ className = "" }: { className?: string }) {
+  const pathname = usePathname();
   return (
     <Link
       href="/"
+      // Already on the homepage: glide back to the top instead of reloading.
+      onClick={(e) => {
+        if (pathname !== "/") return;
+        e.preventDefault();
+        if (window.location.hash) history.replaceState(null, "", "/");
+        const lenis = (window as unknown as { lenis?: { scrollTo: (t: number, o?: object) => void } }).lenis;
+        if (lenis) lenis.scrollTo(0, { duration: 1.1 });
+        else window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
       aria-label="Cracktab — home"
       className={`group inline-flex items-center gap-2.5 ${className}`}
     >

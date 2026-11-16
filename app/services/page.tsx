@@ -15,7 +15,7 @@ import {
 
 export const metadata: Metadata = {
   // absolute — the doc title already carries the brand, so skip the template
-  title: { absolute: "Shopify Development and Ecommerce Services | Cracktab" },
+  title: { absolute: "Shopify Development & CRO Services | Cracktab" },
   description:
     "Three Shopify services: ecommerce management & CRO, Shopify development, and custom theme & app development. Book a free consultation today.",
   alternates: { canonical: "/services" },
@@ -33,7 +33,8 @@ export default function ServicesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Services"
+        eyebrow="Shopify Development & CRO Services"
+        eyebrowIsH1
         title={
           <>
             Shopify services that{" "}

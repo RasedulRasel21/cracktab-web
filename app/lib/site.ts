@@ -865,6 +865,8 @@ export type CaseStudy = {
   stats?: { label: string; value: string; note?: string }[];
   /** Where and when the numbers come from. Required whenever stats are set. */
   statsSource?: string;
+  /** Screen recording of the store's analytics, shown on the case study page. */
+  video?: { src: string; poster: string; caption: string };
   review?: string;
   reviewer?: string;
   liveUrl: string; // real URL, or "" if not available yet
@@ -877,30 +879,6 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
-  {
-    slug: "seetrue-glasses",
-    name: "SeeTrue Glasses",
-    teaser: "Refined, international-ready eyewear store.",
-    scope: ["Design", "Development", "SEO"],
-    review:
-      "Working with the team changed how customers experience our eyewear online. The site feels premium, loads fast, and our numbers show it.",
-    reviewer: "Founder, SeeTrue Glasses",
-    liveUrl: "https://seetrueglasses.com",
-    brief:
-      "SeeTrue came to us with a Shopify store that didn't match the quality of their eyewear. Product pages felt generic, browsing by style or material was clunky, and international customers had no clear way to shop in their own currency.",
-    whatWeBuilt:
-      "A refined Shopify Plus store with polished product photography, filtering by style, material, and price, and a multi-region, multi-currency setup for their growing international base. Checkout was shortened to match the premium, frictionless feel the brand needed.",
-    features: [
-      "Style, material, and price filtering",
-      "Multi-region, multi-currency checkout",
-      "Mobile-first responsive layout",
-      "Shortened, frictionless checkout flow",
-      "Trust badges and secure checkout messaging",
-    ],
-    focusResult:
-      "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. Performance numbers will be added once the client approves sharing them.",
-    img: "/works/seetrue.webp",
-  },
   {
     slug: "the-conscious-bar",
     name: "The Conscious Bar",
@@ -915,6 +893,9 @@ export const caseStudies: CaseStudy[] = [
       { label: "Returning customer rate", value: "32.09%", note: "Oct 2026" },
     ],
     statsSource: "Shopify Analytics, October 2026 compared with September 2026. Cracktab manages the store month to month.",
+    // Analytics recording: add `video: { src, poster, caption }` once we have
+    // one of this store. /home/store-results.mp4 shows ~759 orders and $104K
+    // gross, which doesn't match The Conscious Bar's numbers above.
     review:
       "They understood our brand from the first call. The store looks exactly how we imagined it — clean, honest, and built for people who care about what they buy.",
     reviewer: "Founder, The Conscious Bar",
@@ -966,16 +947,37 @@ export const caseStudies: CaseStudy[] = [
     img: "/works/purishh.jpg",
   },
   {
+    slug: "luxe",
+    name: "Luxe",
+    teaser: "K-beauty and lash & brow care brand, product pages redesigned for conversion.",
+    scope: ["CRO redesign"],
+    liveUrl: "https://luxe-cosmetics.com",
+    brief:
+      "Luxe sells colour-changing K-beauty foundation, eyebrow lamination kits, lash serum, eye balm and primers to a large audience that mostly arrives from ads. Product pages had to explain each product faster and make it easier to buy the whole routine, not just one item.",
+    whatWeBuilt:
+      "A CRO redesign of the product page and cart: a set picker on the Eyebrow Lamination Kit, a benefit checklist and trust row next to the price, a sticky add to cart that carries the rating, and \u201ccomplete your routine\u201d cross-sells in the cart.",
+    features: [
+      "Set picker on the Eyebrow Lamination Kit",
+      "Benefit checklist and trust row by the price",
+      "Sticky add to cart with rating and reviews",
+      "\u201cComplete your routine\u201d cross-sells in the cart",
+      "Mobile-first product page layout",
+    ],
+    focusResult:
+      "Every change targets one step between landing on a product and checking out. Performance numbers will be added once the client approves sharing them.",
+    img: "/works/luxe.jpg",
+  },
+  {
     slug: "forchics",
     name: "ForChics",
-    teaser: "Vegan beauty brand rebuilt around trust and verified reviews.",
+    teaser: "Pheromone fragrance and beauty brand, redesigned for conversion.",
     scope: ["CRO redesign"],
     review:
       "Our old site didn't build trust fast enough. This one does. Customers can see the reviews, the guarantee, and the results before they even scroll.",
     reviewer: "Founder, ForChics",
-    liveUrl: "",
+    liveUrl: "https://forchics.com",
     brief:
-      "ForChics needed their vegan, cruelty-free beauty line to feel as credible as it is effective — trust was the real barrier to conversion, not product quality.",
+      "ForChics sells pheromone fragrances, body oil and lash and brow care, and needed the store to feel as credible as the products are effective — trust was the real barrier to conversion, not product quality.",
     whatWeBuilt:
       "We restructured the catalog by customer concern instead of product type, added a visible money-back guarantee, and surfaced verified before-and-after reviews above the fold. Automated email flows now handle abandoned carts and post-purchase reviews without manual work.",
     features: [
@@ -987,7 +989,31 @@ export const caseStudies: CaseStudy[] = [
     ],
     focusResult:
       "Every design decision came back to one question — does this make a first-time visitor trust us faster. Performance numbers will be added once the client approves sharing them.",
-    img: "/works/ForChics.png",
+    img: "/works/forchics-home.jpg",
+  },
+  {
+    slug: "seetrue-glasses",
+    name: "SeeTrue Glasses",
+    teaser: "Refined, international-ready eyewear store.",
+    scope: ["Design", "Development", "SEO"],
+    review:
+      "Working with the team changed how customers experience our eyewear online. The site feels premium, loads fast, and our numbers show it.",
+    reviewer: "Founder, SeeTrue Glasses",
+    liveUrl: "https://seetrueglasses.com",
+    brief:
+      "SeeTrue came to us with a Shopify store that didn't match the quality of their eyewear. Product pages felt generic, browsing by style or material was clunky, and international customers had no clear way to shop in their own currency.",
+    whatWeBuilt:
+      "A refined Shopify Plus store with polished product photography, filtering by style, material, and price, and a multi-region, multi-currency setup for their growing international base. Checkout was shortened to match the premium, frictionless feel the brand needed.",
+    features: [
+      "Style, material, and price filtering",
+      "Multi-region, multi-currency checkout",
+      "Mobile-first responsive layout",
+      "Shortened, frictionless checkout flow",
+      "Trust badges and secure checkout messaging",
+    ],
+    focusResult:
+      "We prioritized speed and clarity over decoration — a fast, easy-to-browse store still had to feel as elegant as the frames themselves. Performance numbers will be added once the client approves sharing them.",
+    img: "/works/seetrue.webp",
   },
   {
     slug: "collection-akhavan",

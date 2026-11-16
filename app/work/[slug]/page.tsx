@@ -4,6 +4,7 @@ import PageHeader from "../../components/PageHeader";
 import CtaBand from "../../components/CtaBand";
 import CaseStudySlider from "../../components/CaseStudySlider";
 import { caseStudies } from "../../lib/site";
+import AutoVideo from "../../components/home/AutoVideo";
 import { fullScope } from "../../lib/cro";
 import BookCallButton from "../../components/BookCallButton";
 import Link from "next/link";
@@ -66,6 +67,30 @@ export default async function CaseStudyPage({
               ))}
             </dl>
             {cs.statsSource && <p className="mt-4 text-sm text-muted">{cs.statsSource}</p>}
+          </div>
+        </section>
+      )}
+
+      {/* The analytics, recorded straight from the store's Shopify admin */}
+      {cs.video && (
+        <section className="pb-16">
+          <div className="mx-auto grid w-full max-w-360 grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.8fr] lg:gap-16">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted">Real recording</p>
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">The numbers, straight from Shopify.</h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+                No mockups or rounded-up claims. This is the store&apos;s own Shopify Analytics dashboard, recorded as it is.
+              </p>
+            </div>
+            <div className="mx-auto w-full max-w-[24rem] overflow-hidden rounded-[1.75rem] border border-line bg-surface shadow-[0_40px_80px_-30px_rgba(20,20,19,0.4)]">
+              <div className="flex items-center gap-2 border-b border-line px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                <span className="ml-2 text-xs font-medium text-muted">Shopify admin · Analytics</span>
+              </div>
+              <AutoVideo className="block aspect-[384/594] w-full bg-white object-cover" src={cs.video.src} poster={cs.video.poster} label={cs.video.caption} />
+            </div>
           </div>
         </section>
       )}
