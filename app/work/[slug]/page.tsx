@@ -89,7 +89,7 @@ export default async function CaseStudyPage({
                 <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
                 <span className="ml-2 text-xs font-medium text-muted">Shopify admin · Analytics</span>
               </div>
-              <AutoVideo className="block aspect-[384/800] w-full bg-white object-cover" src={cs.video.src} poster={cs.video.poster} label={cs.video.caption} />
+              <AutoVideo className="block h-auto w-full bg-white" src={cs.video.src} poster={cs.video.poster} label={cs.video.caption} />
             </div>
           </div>
         </section>

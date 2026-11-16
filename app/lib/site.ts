@@ -934,6 +934,11 @@ export const caseStudies: CaseStudy[] = [
       { label: "Protein Powder sales", value: "$166.1K", note: "Up from $17.8K a year earlier" },
     ],
     statsSource: "Shopify Analytics, Nov 2025 – Oct 2026 compared with Nov 2024 – Oct 2025. Cracktab manages the store month to month.",
+    video: {
+      src: "/cases/purishh-analytics.mp4",
+      poster: "/cases/purishh-analytics-poster.jpg",
+      caption: "Screen recording of Pürishh's Shopify Analytics dashboard",
+    },
     liveUrl: "https://purishh.com",
     brief:
       "Pürishh sells clean supplements: protein powder, electrolytes, creatine, vitamin D3 & K2, raw shilajit and raw honey. Most of their growth depends on shoppers coming back, so the store has to make subscribing, reordering and building a bundle easy.",
