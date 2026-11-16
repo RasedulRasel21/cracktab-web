@@ -67,7 +67,6 @@ export const clients: string[] = [
   "Die Schrothkur",
   "Notary Scheiber",
   "SEZ Group",
-  "Orbes",
   "The Conscious Bar",
   "ForChics",
   "Glossier",
@@ -286,7 +285,7 @@ const legacyServices: ServiceDetail[] = [
       "Integrations",
       "Ongoing support",
     ],
-    examples: ["sez-group", "orbes"],
+    examples: ["sez-group"],
   },
   {
     slug: "web-application-development",
@@ -340,7 +339,7 @@ const legacyServices: ServiceDetail[] = [
       "Conversion-focused layouts",
       "Performance improvements",
     ],
-    examples: ["orbes", "die-schrothkur"],
+    examples: ["die-schrothkur"],
   },
   {
     slug: "shopify-speed-optimization",
@@ -475,34 +474,7 @@ const legacyServices: ServiceDetail[] = [
       "Revenue tracking",
       "Monthly performance reporting",
     ],
-    examples: ["seetrue-glasses", "orbes"],
-  },
-  {
-    slug: "digital-marketing",
-    name: "Digital Marketing",
-    heading: "Digital Marketing Services",
-    intro:
-      "Great websites deserve great marketing. We help businesses generate qualified traffic, increase brand visibility, and turn visitors into customers through strategic digital campaigns.",
-    whoFor:
-      "Brands with a store or site ready for traffic, but no consistent system for turning that traffic into customers.",
-    whyMatters:
-      "Traffic on its own doesn't pay the bills — the right traffic does. We build campaigns around the customers most likely to convert, then keep adjusting based on what the data actually shows instead of running the same ads for months unchanged.",
-    process: [
-      "Audience and channel research",
-      "Campaign build and launch",
-      "Ongoing optimization based on real performance data",
-    ],
-    bullets: [
-      "Google Ads",
-      "Meta Ads",
-      "Email marketing",
-      "Marketing automation",
-      "Content strategy",
-      "Analytics and reporting",
-      "Audience targeting",
-      "Campaign optimization",
-    ],
-    examples: ["forchics", "collection-akhavan"],
+    examples: ["seetrue-glasses"],
   },
   {
     slug: "ecommerce-management",
@@ -556,7 +528,7 @@ const legacyServices: ServiceDetail[] = [
       "Packaging design",
       "Brand refresh",
     ],
-    examples: ["collection-akhavan", "orbes"],
+    examples: ["collection-akhavan"],
   },
   {
     slug: "ai-business-automation",
@@ -583,7 +555,7 @@ const legacyServices: ServiceDetail[] = [
       "Reporting dashboards",
       "Ongoing optimization",
     ],
-    examples: ["sez-group", "orbes"],
+    examples: ["sez-group"],
   },
 ];
 
@@ -642,7 +614,6 @@ export const serviceDetails: ServiceDetail[] = [
       "ui-ux-design",
       "shopify-speed-optimization",
       "ecommerce-seo",
-      "digital-marketing",
       "ecommerce-management",
       "branding-visual-identity",
       "ai-business-automation",
@@ -1092,29 +1063,6 @@ export const caseStudies: CaseStudy[] = [
     placeholder: true,
   },
   */
-  {
-    slug: "orbes",
-    name: "Orbes",
-    teaser: "A minimal, considered store for a design-led brand.",
-    review: "Simple, fast, and it actually looks like our brand now.",
-    reviewer: "Orbes",
-    liveUrl: "",
-    brief:
-      "Orbes wanted a Shopify store as minimal and considered as their product design, without it feeling empty or generic.",
-    whatWeBuilt:
-      "A clean, spacious layout built around strong product photography, with subtle motion and a fast, distraction-free checkout.",
-    features: [
-      "Spacious, minimal layout",
-      "Strong, large-scale product photography",
-      "Subtle motion and micro-interactions",
-      "Fast, distraction-free checkout",
-      "Mobile-first responsive design",
-    ],
-    focusResult:
-      "Minimal doesn't mean boring, so we focused on small, deliberate design details that add personality without adding clutter. Full performance numbers will be added once available.",
-    img: pexels(3735641, 900, 1100),
-    placeholder: true,
-  },
 ];
 
 // ------------------------------------------------------------------

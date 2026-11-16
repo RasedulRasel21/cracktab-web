@@ -218,25 +218,6 @@ export const serviceBulletNotes: Record<string, Record<string, string>> = {
       "A plain-language monthly report on what moved, what we're testing next, and why — no dashboard required.",
   },
 
-  "digital-marketing": {
-    "Google Ads":
-      "Campaigns built to catch buyers already searching for what you sell — Search, Shopping, and Performance Max, managed and refined weekly.",
-    "Meta Ads":
-      "Facebook and Instagram campaigns targeting the customers most likely to convert, not just the broadest possible audience.",
-    "Email marketing":
-      "Flows and campaigns that turn existing customers into repeat buyers — abandoned cart, post-purchase, and win-back sequences included.",
-    "Marketing automation":
-      "Triggered messages based on customer behavior, so the right offer reaches the right person without manual work on your end.",
-    "Content strategy":
-      "A content calendar tied to what your customers are actually searching for and responding to — not just a posting schedule.",
-    "Analytics and reporting":
-      "Clear reporting on what's driving revenue by channel, so budget decisions are based on data, not guesswork.",
-    "Audience targeting":
-      "Audiences built from real purchase behavior and intent signals, so ad spend reaches people likely to buy, not just likely to click.",
-    "Campaign optimization":
-      "Ongoing testing and adjustment of creative, targeting, and bids, so performance improves round over round instead of plateauing.",
-  },
-
   "ecommerce-management": {
     "Dedicated project manager":
       "One person who knows your store and coordinates every task across design, marketing, and development — no re-explaining your business to a new specialist each time.",

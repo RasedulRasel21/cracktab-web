@@ -115,11 +115,13 @@ const nextConfig: NextConfig = {
         "web-application-development": "shopify-app-development",
         "shopify-speed-optimization": "ecommerce-growth-cro",
         "shopify-conversion-audit": "ecommerce-growth-cro",
-        "digital-marketing": "ecommerce-growth-cro",
         "ecommerce-management": "ecommerce-growth-cro",
         "branding-visual-identity": "ecommerce-growth-cro",
         "ai-business-automation": "ecommerce-growth-cro",
       }).map(([from, to]) => ({ source: `/services/${from}`, destination: `/services/${to}`, permanent: true })),
+      // Removed pages: send old links somewhere useful instead of a 404.
+      { source: "/services/digital-marketing", destination: "/services", permanent: true },
+      { source: "/work/orbes", destination: "/work", permanent: true },
       { source: "/apps/:slug", destination: "/shopify-apps/:slug", permanent: true },
     ];
   },
