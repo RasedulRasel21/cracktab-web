@@ -49,11 +49,11 @@ const BRANDS: Brand[] = [
   {
     key: "luxe",
     name: "Luxe",
-    screen: "/home/screens/luxe-pdp.jpg",
+    screen: "/home/screens/luxe-brow-pdp.jpg",
     chips: [
-      ["Reviews up top", "10,839 ratings"],
-      ["Benefit icons", "Answers in a glance"],
-      ["FAQ by the button", "Objections handled"],
+      ["Set picker", "Single, Friends, Family"],
+      ["Benefit checklist", "Six reasons to buy"],
+      ["Trust row", "97,000+ happy customers"],
     ],
   },
   {
@@ -394,7 +394,7 @@ export default function HeroPhone() {
             <span className="mx-auto my-1.5 h-1 w-24 rounded-full bg-[#2a1810]" aria-hidden="true" />
           </div>
         ) : (
-          <div ref={scroller} onWheel={touch} onTouchStart={touch} className="h-full overflow-y-auto bg-white [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div ref={scroller} onWheel={touch} onTouchStart={touch} className="h-full overflow-y-auto bg-white pt-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img key={b.key} src={b.screen} alt={`${b.name} live product page on mobile`} className="block w-full animate-[fade-in_.4s_ease]" />
           </div>
