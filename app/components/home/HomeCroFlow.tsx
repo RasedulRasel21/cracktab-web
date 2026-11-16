@@ -5,7 +5,7 @@ import { SectionHead } from "./ui";
 /** Homepage summary of the CRO process; the full version is /how-we-work. */
 export default function HomeCroFlow() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead

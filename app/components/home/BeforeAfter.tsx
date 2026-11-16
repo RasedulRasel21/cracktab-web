@@ -161,7 +161,7 @@ export default function BeforeAfter() {
   }, [move]);
 
   return (
-    <section id="before-after" className="scroll-mt-20 py-20 sm:py-28">
+    <section id="before-after" className="scroll-mt-20 py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={oneTeam.eyebrow} title={oneTeam.title} body={oneTeam.body} center />
 
@@ -254,13 +254,13 @@ export default function BeforeAfter() {
           </div>
         </div>
 
-        <dl className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-3 lg:grid-cols-4">
+        <dl className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 lg:grid-cols-4">
           {STATS.map(([l, b, a]) => (
-            <div key={l} className="rounded-2xl border border-line bg-surface p-5">
+            <div key={l} className="min-w-0 rounded-2xl border border-line bg-surface p-4 sm:p-5">
               <dt className="text-xs font-bold uppercase tracking-[0.14em] text-muted">{l}</dt>
               <dd className="mt-3">
                 <s className="block text-sm text-[#c8372d]">{b}</s>
-                <span className="mt-1 block font-serif text-xl text-[#2f6b1f] sm:text-2xl">{a}</span>
+                <span className="mt-1 block font-display text-lg font-bold leading-tight text-[#2f6b1f] sm:text-2xl">{a}</span>
               </dd>
             </div>
           ))}

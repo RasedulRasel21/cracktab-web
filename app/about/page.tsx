@@ -89,7 +89,7 @@ export default function AboutPage() {
       {/* ---- Hero ---- */}
       {/* The header is fixed (h-14 / sm:h-16) and so takes no flow space —
           the matching top margin starts the hero below it instead of under it. */}
-      <section className="relative mt-14 flex min-h-[70vh] flex-col justify-center overflow-hidden px-5 pb-16 pt-16 sm:mt-16 sm:min-h-[85vh] sm:px-8 sm:pb-24 sm:pt-20">
+      <section className="relative mt-14 flex flex-col justify-center overflow-hidden px-5 pb-12 pt-12 sm:mt-16 sm:min-h-[85vh] sm:px-8 sm:pb-24 sm:pt-20">
         <WorldDotField />
         <div
           aria-hidden="true"

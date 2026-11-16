@@ -315,7 +315,7 @@ function AutoPromo() {
 
 export default function WidgetGrid() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={method.eyebrow} title={method.title} body={method.body} />
         <ul className="-mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-3 [scrollbar-width:none] sm:-mx-8 sm:px-8 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">

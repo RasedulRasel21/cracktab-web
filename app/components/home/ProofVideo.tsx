@@ -4,16 +4,16 @@ import AutoVideo from "./AutoVideo";
 
 export default function ProofVideo() {
   return (
-    <section id="proof" className="scroll-mt-20 py-20 sm:py-28">
+    <section id="proof" className="scroll-mt-20 py-14 sm:py-24 lg:py-28">
       <div className="mx-auto grid w-full max-w-360 grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_0.9fr] lg:gap-20">
         <div>
           <SectionHead eyebrow={proof.eyebrow} title={proof.title} body={proof.body} />
           <dl className="mt-10 grid grid-cols-2 gap-3 sm:gap-4">
             {proof.stats.map((s) => (
-              <div key={s.label} className="rounded-2xl border border-line bg-surface p-5">
+              <div key={s.label} className="min-w-0 rounded-2xl border border-line bg-surface p-4 sm:p-5">
                 <dt className="text-sm leading-snug text-muted sm:text-base">{s.label}</dt>
-                <dd className="mt-3 flex items-baseline gap-2">
-                  <span className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{s.value}</span>
+                <dd className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                  <span className="font-display text-[1.75rem] font-bold leading-none tracking-tight text-foreground sm:text-4xl">{s.value}</span>
                   {s.delta && (
                     <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-accent-ink">{s.delta}</span>
                   )}

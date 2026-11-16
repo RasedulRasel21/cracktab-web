@@ -8,7 +8,7 @@ import { Eyebrow, SectionHead } from "./ui";
 
 export function HomeApps() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHead eyebrow={apps.eyebrow} title={apps.title} body={apps.body} />
@@ -58,7 +58,7 @@ export function HomeApps() {
 
 export function HomeServices() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <div className="rounded-[2rem] border border-line bg-surface p-7 sm:p-12">
           <SectionHead eyebrow={services.eyebrow} title={services.title} body={services.body} />
@@ -85,7 +85,7 @@ export function HomeServices() {
 
 export function HomeFaqCream() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Eyebrow>FAQ</Eyebrow>

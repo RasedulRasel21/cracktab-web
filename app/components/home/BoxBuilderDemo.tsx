@@ -55,7 +55,7 @@ export default function BoxBuilderDemo() {
     });
 
   return (
-    <section className="ui-demo py-20 sm:py-28">
+    <section className="ui-demo py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={builder.eyebrow} title={builder.title} body={builder.body} />
 

@@ -6,7 +6,7 @@ import { SectionHead } from "./ui";
 /** "Hire us as your ecommerce manager" — benefits and an in-house comparison. */
 export default function HomeEcomManager() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="py-14 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-360 px-5 sm:px-8">
         <SectionHead eyebrow={ecomManager.eyebrow} title={ecomManager.title} body={ecomManager.body} />
 
@@ -23,17 +23,17 @@ export default function HomeEcomManager() {
             ))}
           </ul>
 
-          <div className="on-dark flex flex-col rounded-3xl bg-[#141413] p-6 sm:p-8">
+          <div className="on-dark flex flex-col rounded-3xl bg-[#141413] p-5 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">In-house hire vs Cracktab</p>
             <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
-              <div className="grid grid-cols-[1.1fr_1fr_1fr] bg-white/5 px-4 py-3 text-sm font-semibold text-white">
-                <span />
+              <div className="grid grid-cols-2 bg-white/5 px-4 py-3 text-sm font-semibold text-white sm:grid-cols-[1.1fr_1fr_1fr]">
+                <span className="hidden sm:block" />
                 <span className="text-white/60">In-house</span>
                 <span className="text-accent">Cracktab</span>
               </div>
               {ecomManager.compare.map(([k, a, b]) => (
-                <div key={k} className="grid grid-cols-[1.1fr_1fr_1fr] gap-2 border-t border-white/10 px-4 py-3.5 text-[0.95rem]">
-                  <span className="font-semibold text-white">{k}</span>
+                <div key={k} className="grid grid-cols-2 gap-x-3 gap-y-1 border-t border-white/10 px-4 py-3.5 text-[0.95rem] sm:grid-cols-[1.1fr_1fr_1fr] sm:gap-2">
+                  <span className="col-span-2 text-sm font-semibold uppercase tracking-[0.08em] text-white/60 sm:col-span-1 sm:text-[0.95rem] sm:normal-case sm:tracking-normal sm:text-white">{k}</span>
                   <span className="text-white/60">{a}</span>
                   <span className="font-medium text-white">{b}</span>
                 </div>

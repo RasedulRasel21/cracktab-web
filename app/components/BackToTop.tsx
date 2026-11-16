@@ -30,7 +30,7 @@ export default function BackToTop() {
       onClick={toTop}
       aria-label="Back to top"
       tabIndex={show ? 0 : -1}
-      className={`fixed bottom-5 right-5 z-[90] flex h-12 w-12 items-center justify-center rounded-full bg-[#141413] text-accent shadow-[0_12px_30px_-10px_rgba(20,20,19,0.6)] ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-black sm:bottom-7 sm:right-7 sm:h-13 sm:w-13 ${
+      className={`fixed bottom-5 right-5 z-[90] flex h-12 w-12 items-center justify-center rounded-full bg-[#141413] text-accent shadow-[0_12px_30px_-10px_rgba(20,20,19,0.6)] ring-2 ring-[#f3eee4] transition-all duration-300 hover:-translate-y-1 hover:bg-black sm:bottom-7 sm:right-7 sm:h-13 sm:w-13 max-sm:h-11 max-sm:w-11 ${
         show ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >

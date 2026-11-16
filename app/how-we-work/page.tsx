@@ -67,24 +67,25 @@ export default function HowWeWorkPage() {
       <section className="px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto w-full max-w-360">
           <SectionTitle eyebrow="The flow" title="Seven Steps, Repeated Every Month." body="Here is exactly what happens from the day you give us access, what you get at each step, and how long it takes." />
-          <ol className="relative mt-14 space-y-6 before:absolute before:bottom-6 before:left-[1.35rem] before:top-6 before:w-px before:bg-line sm:before:left-[1.85rem]">
+          <ol className="relative mt-10 space-y-5 before:absolute before:bottom-6 before:left-[1.85rem] before:top-6 before:hidden before:w-px before:bg-line sm:mt-14 sm:space-y-6 sm:before:block">
             {croSteps.map((s) => (
-              <li key={s.no} id={`step-${s.no}`} className="relative scroll-mt-24 pl-14 sm:pl-20">
-                <span className="absolute left-0 top-6 flex h-11 w-11 items-center justify-center rounded-full border border-line bg-accent font-display text-sm font-bold text-accent-ink sm:h-15 sm:w-15 sm:text-base">
+              <li key={s.no} id={`step-${s.no}`} className="relative scroll-mt-24 sm:pl-20">
+                <span className="relative z-10 mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-line bg-accent font-display text-sm font-bold text-accent-ink sm:absolute sm:left-0 sm:top-6 sm:mb-0 sm:h-15 sm:w-15 sm:text-base">
                   {s.no}
                 </span>
-                <div className="grid grid-cols-1 gap-6 rounded-3xl border border-line bg-surface p-6 sm:p-9 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+                <div className="grid grid-cols-1 gap-5 rounded-3xl border border-line bg-surface p-5 sm:gap-6 sm:p-9 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
                   <div>
                     <span className="text-sm font-semibold uppercase tracking-[0.14em] text-muted">{s.when}</span>
                     <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{s.title}</h3>
                     <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">{s.summary}</p>
-                    <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-[var(--cream-2)] px-4 py-2 text-sm font-semibold text-foreground">
-                      <span aria-hidden="true">📄</span> You get: {s.deliverable}
+                    <p className="mt-5 flex items-start gap-2 rounded-2xl bg-accent/25 px-4 py-3 text-[0.95rem] font-semibold leading-snug text-foreground sm:inline-flex sm:rounded-full sm:py-2">
+                      <span aria-hidden="true">📄</span>
+                      <span>You get: {s.deliverable}</span>
                     </p>
                   </div>
                   <ul className="grid content-start gap-2">
                     {s.what.map((w) => (
-                      <li key={w} className="flex items-start gap-3 rounded-xl bg-[var(--cream-2)] px-4 py-3 text-base text-foreground">
+                      <li key={w} className="flex items-start gap-3 rounded-xl bg-[var(--cream-2)] px-4 py-3 text-[0.95rem] leading-snug text-foreground sm:text-base">
                         <span aria-hidden="true" className="mt-0.5 text-[var(--olive)]">✓</span>
                         {w}
                       </li>
@@ -116,7 +117,7 @@ export default function HowWeWorkPage() {
       {/* Metrics + example */}
       <section className="px-5 pb-20 sm:px-8 sm:pb-28">
         <div className="mx-auto grid w-full max-w-360 grid-cols-1 gap-5 lg:grid-cols-2">
-          <div className="rounded-3xl bg-foreground p-8 text-background on-dark sm:p-10">
+          <div className="on-dark rounded-3xl bg-[#141413] p-6 text-white sm:p-10">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">What we measure</span>
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">Revenue, not clicks.</h2>
             <p className="mt-4 text-base leading-relaxed text-white/75 sm:text-lg">
@@ -124,11 +125,11 @@ export default function HowWeWorkPage() {
             </p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {croMetrics.map((m) => (
-                <li key={m} className="rounded-full border border-white/20 px-4 py-2 text-base font-medium text-white">{m}</li>
+                <li key={m} className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-[0.95rem] font-medium text-white">{m}</li>
               ))}
             </ul>
           </div>
-          <div className="rounded-3xl border border-line bg-surface p-8 sm:p-10">
+          <div className="rounded-3xl border border-line bg-surface p-6 sm:p-10">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">One example</span>
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">The Conscious Bar product page</h2>
             <ul className="mt-5 space-y-3 text-base text-foreground">
@@ -139,7 +140,7 @@ export default function HowWeWorkPage() {
                 ["Test", "Every change ships as an A/B test against the ~2% baseline."],
               ].map(([k, v]) => (
                 <li key={k} className="flex gap-3">
-                  <span className="w-24 shrink-0 font-semibold">{k}</span>
+                  <span className="w-20 shrink-0 font-semibold sm:w-24">{k}</span>
                   <span className="text-muted">{v}</span>
                 </li>
               ))}
