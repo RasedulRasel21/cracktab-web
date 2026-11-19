@@ -31,19 +31,23 @@ const contentSecurityPolicy = [
   // needs its origins here, or the browser blocks it with no visible error.
   // snap.licdn.com and bat.bing.com are the LinkedIn Insight and Bing UET
   // tags marketing plans to add, allowed ahead of time.
-  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://*.clarity.ms https://snap.licdn.com https://bat.bing.com${isDev ? " 'unsafe-eval'" : ""}`,
+  // *.apollo.io is Apollo's website visitor tracker, a Custom HTML tag in GTM
+  // (container GTM-WM6GSH8X). It loads from assets.apollo.io, reports visits
+  // back to Apollo and may use a pixel, so it is in script-, connect- and
+  // img-src. Don't add the script to the site code: GTM already loads it.
+  `script-src 'self' 'unsafe-inline' https://news.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net https://*.clarity.ms https://snap.licdn.com https://bat.bing.com https://*.apollo.io${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.googletagmanager.com",
   // GA4 falls back to image pixels when fetch fails, and Google Signals loads
   // an audience pixel from the visitor's country domain (www.google.com.bd
   // for the team's own visits; other countries' domains stay blocked, which
   // only affects Signals, not page views).
-  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://www.google.com.bd https://stats.g.doubleclick.net https://*.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://images.pexels.com https://news.google.com https://www.gstatic.com https://*.googleusercontent.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://www.google.com.bd https://stats.g.doubleclick.net https://*.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com https://*.apollo.io",
   "font-src 'self'",
   // A CSP wildcard needs at least one subdomain label: *.analytics.google.com
   // does NOT match analytics.google.com, which is where GA4 sends its hits.
   // Both are listed, plus www.google.com and stats.g.doubleclick.net (Google
   // Signals and Ads linking). Without them GA4 recorded nothing.
-  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://news.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://*.clarity.ms https://c.bing.com https://bat.bing.com https://px.ads.linkedin.com https://*.apollo.io${isDev ? " ws:" : ""}`,
   "media-src 'self'",
   // Embeds: the Calendly booking calendar, the office map, the frame the
   // Preferred Sources button opens, GTM Preview / Tag Assistant, and the
